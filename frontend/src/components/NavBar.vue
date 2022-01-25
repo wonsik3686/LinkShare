@@ -18,7 +18,8 @@
 
       <v-toolbar-items>
         <v-btn plain class="text-subtitle-1 font-weight-bold" to="/about">About</v-btn>
-        <v-btn plain class="text-subtitle-1 font-weight-bold">회원가입</v-btn>
+        <v-btn plain class="text-subtitle-1 font-weight-bold" @click.stop="SignupForm=true">회원가입</v-btn>
+        <SignupForm v-model="SignupForm"/>
         <v-btn plain class="text-subtitle-1 font-weight-bold">로그인</v-btn>
       </v-toolbar-items>
     </v-app-bar>
@@ -26,8 +27,18 @@
 </template>
 
 <script>
+import SignupForm from '@/components/SignupForm'
+
 export default {
   name: "NavBar",
+  components: {
+    SignupForm,
+  },
+  data () {
+    return {
+      SignupForm: false
+    }
+  }
 }
 </script>
 
