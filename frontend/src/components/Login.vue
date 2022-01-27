@@ -8,17 +8,15 @@
       <v-card-text>
         <v-container>
           <v-row align="center" justify="center">
-
             <v-col cols="11">
               <v-text-field label="이메일" placeholder="example@mail.com" required></v-text-field>
               <v-text-field label="비밀번호" placeholder="8~16자, 대소문자 포함" required></v-text-field>
+              <v-btn @click.stop="show=false" v-on:click="login" block color="blue">로그인</v-btn>
             </v-col>
-
           </v-row>
           
-          <v-row align="center" justify="center">
-            <v-btn block color="blue">로그인</v-btn>
-          </v-row>
+          <!-- <v-row align="center" justify="center">
+          </v-row> -->
         </v-container>
       </v-card-text>
       
@@ -26,7 +24,7 @@
 
       <v-container>
         <p class="text-center mx-5 head-border">SNS 계정으로 로그인</p>
-        <v-row align="center" justify="center">
+        <v-row class="mt-3" align="center" justify="center">
           <span class="mx-2"><GoogleLogin :component="component" /></span>
           <span class="mx-2"><KakaoLogin :component="component" /></span>
         </v-row>
@@ -44,8 +42,6 @@
 import GoogleLogin from "../components/user/snsLogin/Google.vue";
 import KakaoLogin from "../components/user/snsLogin/Kakao.vue";
 
-
-
 export default {
   components: {
     GoogleLogin,
@@ -53,6 +49,11 @@ export default {
   },
   props: {
     value: Boolean
+  },
+  methods: {
+    login() {
+      this.$router.replace('newsfeed')
+    }
   },
   computed: {
     show: {
