@@ -3,7 +3,6 @@ package com.web.ls.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.Instant;
 
 @ToString
 @Getter
@@ -19,8 +18,8 @@ public class User {
     @Column(name = "uid", nullable = false)
     private Integer id;
 
-    @Column(name = "isAdmin", nullable = false)
-    private Boolean isAdmin = false;
+    @Column(name = "admin", nullable = false)
+    private Boolean admin;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -34,9 +33,6 @@ public class User {
     @Lob
     @Column(name = "introduce")
     private String introduce;
-
-    @Column(name = "regtime", nullable = false)
-    private Instant regtime;
 
     @Column(name = "image_path")
     private String imagePath;
