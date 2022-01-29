@@ -2,31 +2,96 @@
   <v-dialog v-model="show" max-width="400px">
     <v-card justify="center">
       <v-card-title class="justify-center">
-        <p class="text-h5 font-weight-bold mt-3">회원가입</p>
+        <h1 class="text-h5 font-weight-bold mt-3">회원가입</h1>
       </v-card-title>
 
       <v-card-text>
-        <v-container>
-          <v-row align="center" justify="center">
-            <v-col cols="12">
-              <v-text-field label="닉네임"></v-text-field>
-              <v-text-field label="이메일" placeholder="example@email.com"></v-text-field>
-              <v-text-field label="비밀번호" placeholder="8~16자, 대소문자 포함"></v-text-field>
-              <v-text-field label="비밀번호 확인" placeholder="8~16자, 대소문자 포함"></v-text-field>
-              <br>
-              <v-btn block color="blue">회원가입</v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
+        <ValidationObserver v-slot="{ invalid }" ref="form">
+          <ValidationProvider
+            v-slot="{ errors }"
+            name="닉네임"
+            rules="required"
+          >
+            <v-text-field
+              v-model="params.user.nickname"
+              label="닉네임"
+              placeholder="닉네임을 입력해주세요"
+              :counter="30"
+              :error-count="1"
+              :error-messages="errors"
+              outlined
+            />
+          </ValidationProvider>
+
+          <ValidationProvider
+            v-slot="{ errors }"
+            name="이메일"
+            rules="required|email"
+          >
+            <v-text-field
+              v-model="params.user.email"
+              label="이메일"
+              placeholder="example@email.com"
+              :error-count="1"
+              :error-messages="errors"
+              outlined
+            />
+          </ValidationProvider>
+
+          <ValidationProvider
+            vid="password"
+            v-slot="{ errors }"
+            name="비밀번호"
+            rules="required|min:8"
+          >
+            <v-text-field
+              v-model="params.user.password"
+              label="비밀번호"
+              placeholder=""
+              :counter="100"
+              :type="showPassword1 ? 'text' : 'password'"
+              :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :error-count="1"
+              :error-messages="errors"
+              outlined
+              @click:append="showPassword1 = !showPassword1"
+            />
+          </ValidationProvider>
+          
+          <ValidationProvider
+            v-slot="{ errors }"
+            name="비밀번호 확인"
+            rules="required|confirmed:password"
+          >
+            <v-text-field
+              v-model="v"
+              label="비밀번호 확인"
+              placeholder=""
+              :counter="100"
+              :type="showPassword2 ? 'text' : 'password'"
+              :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
+              :error-count="1"
+              :error-messages="errors"
+              outlined
+              @click:append="showPassword2 = !showPassword2"
+            />
+          </ValidationProvider>
+
+          <v-btn
+            :disabled="invalid || loading"
+            :loading="loading"
+            block
+            color="blue"
+            class="white--text"
+            @click="signup"
+          >
+            회원가입
+          </v-btn>
+        </ValidationObserver>   
       </v-card-text>
 
       <v-container>
-        <p class="text-center mx-5 head-border">SNS 계정으로 로그인</p>
-        <br>
-        <v-row align="center" justify="center">
-          <span class="mx-2"><GoogleLogin /></span>
-          <span class="mx-2"><KakaoLogin/></span>
-        </v-row>
+        <snsLogin/>
       </v-container>
 
       <br>
@@ -38,15 +103,21 @@
 </template>
 
 <script>
-import GoogleLogin from "../components/snsLogin/Google.vue";
-import KakaoLogin from "../components/snsLogin/Kakao.vue";
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
+import { required, email, confirmed, min } from 'vee-validate/dist/rules'
+extend('required', required)
+extend('email', email)
+extend('confirmed', confirmed)
+extend('min', min)
+import snsLogin from "@/components/snsLogin/snsLogin"
 
 
 
 export default {
   components: {
-    GoogleLogin,
-    KakaoLogin,
+    ValidationProvider,
+    ValidationObserver,
+    snsLogin
   },
   props: {
     value: Boolean
@@ -60,7 +131,30 @@ export default {
         this.$emit('input', value)
       }
     }
-  }
+  },
+  data () {
+    return {
+      v: '',
+      showPassword1: false,
+      showPassword2: false,
+      loading: false,
+      params: {user: { nickname: '', email: '', password: ''} }
+    }
+  },
+  methods: {
+    signup () {
+      this.loading = true
+      setTimeout(() => {
+        this.formReset()
+        this.loading = false
+      }, 1500)
+    },
+    formReset () {
+      this.$refs.form.reset()
+      this.params = { user: { name: '', email: '', password: ''}}
+      this.v = ''
+    }
+  },
 }
 </script>
 
