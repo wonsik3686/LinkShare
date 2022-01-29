@@ -1,15 +1,11 @@
 <template>
-  <v-container>
-    <v-row align="center" justify="center">
+  <v-dialog v-model="show" max-width="400px">
+    <v-card justify="center">
+      <v-card-title class="justify-center">
+        <h1 class="text-h5 font-weight-bold mt-3">로그인</h1>
+      </v-card-title>
 
-      <v-col cols="12" class="text-center">
-        <h1 class="text-h5 font-weight-bold">
-          로그인
-        </h1>
-      </v-col>
-
-      <v-card flat width="80%" max-width="350">
-        <!-- v-form 태그의 validation이 유효한 경우 ture 반환 -->
+      <v-card-text>
         <ValidationObserver v-slot="{ invalid }" ref="form">
           <ValidationProvider
             v-slot="{ errors }"
@@ -64,22 +60,19 @@
           >
             로그인
           </v-btn>
-        </ValidationObserver>
-        
+        </ValidationObserver>   
+      </v-card-text>
 
-          <!-- true 반환된 경우 버튼 무효화 -->
-        
-
-        <v-card-text>
-          {{ params }}
-        </v-card-text>
-        
+      <v-container>
         <snsLogin/>
+      </v-container>
 
-      </v-card>
-
-    </v-row>
-  </v-container>
+      <br>
+      <v-card-actions class="justify-center">
+        <v-btn text @click.stop="show=false">Close</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -96,12 +89,24 @@ export default {
     ValidationObserver,
     snsLogin
   },
+  props: {
+    value: Boolean
+  },
   data () {
     return {
-      value: '',
       showPassword: false,
       loading: false,
       params: {user: { nickname: '', email: '', password: ''} }
+    }
+  },
+  computed: {
+    show: {
+      get () {
+        return this.value
+      },
+      set (value) {
+        this.$emit('input', value)
+      }
     }
   },
   methods: {

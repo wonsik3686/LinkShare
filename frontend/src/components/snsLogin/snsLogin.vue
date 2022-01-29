@@ -1,10 +1,11 @@
 <template>
   <v-form>
     <p class="text-center mx-5 head-border">SNS 계정으로 로그인</p>
-      <v-row align="center" justify="center">
-        <span class="mx-2"><GoogleLogin/></span>
-        <span class="mx-2"><KakaoLogin/></span>
-      </v-row>
+    <br>
+    <v-row align="center" justify="center">
+      <span class="mx-2"><GoogleLogin/></span>
+      <span class="mx-2"><KakaoLogin/></span>
+    </v-row>
   </v-form>
 </template>
 

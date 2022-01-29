@@ -20,10 +20,8 @@
         <v-btn plain class="text-subtitle-1 font-weight-bold" to="/about">About</v-btn>
         <v-btn plain class="text-subtitle-1 font-weight-bold" @click.stop="SignupForm=true">회원가입</v-btn>
         <SignupForm v-model="SignupForm"/>
-        <!-- <v-btn plain class="text-subtitle-1 font-weight-bold" @click.stop="Login=true">로그인</v-btn> -->
-        <!-- <Login v-model="Login"/> -->
-        <v-btn plain class="text-subtitle-1 font-weight-bold" to="/signup">signup</v-btn>
-        <v-btn plain class="text-subtitle-1 font-weight-bold" to="/login">login</v-btn>
+        <v-btn plain class="text-subtitle-1 font-weight-bold" @click.stop="LoginForm=true">로그인</v-btn>
+        <LoginForm v-model="LoginForm"/>
         <v-btn plain class="text-subtitle-1 font-weight-bold" to="/profile">profile</v-btn>
       </v-toolbar-items>
     </v-app-bar>
@@ -32,18 +30,18 @@
 
 <script>
 import SignupForm from '@/components/SignupForm'
-// import Login from '@/components/Login'
+import LoginForm from '@/components/LoginForm'
 
 export default {
   name: "NavBar",
   components: {
     SignupForm,
-    // Login,
+    LoginForm,
   },
   data () {
     return {
       SignupForm: false,
-      // Login: false,
+      LoginForm: false,
     }
   }
 }
