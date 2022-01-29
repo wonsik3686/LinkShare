@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Newsfeed from '../views/Newsfeed.vue'
 import Linkboxdetail from '../views/Linkboxdetail.vue'
+import Toplinkbox from '../views/Toplinkbox'
 
 
 Vue.use(VueRouter)
@@ -31,6 +32,11 @@ const routes = [
     name: 'Linkboxdetail',
     component: Linkboxdetail
   },
+  {
+    path: '/toplinkbox',
+    name: 'Toplinkbox',
+    component: Toplinkbox
+  }
 ]
 
 const router = new VueRouter({

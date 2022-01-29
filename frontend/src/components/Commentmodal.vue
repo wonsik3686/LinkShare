@@ -5,6 +5,8 @@
         <h4>개의 댓글이 있습니다</h4>
       </v-card-title>
 
+      <br>
+      <br>
       <v-divider class="mx-5"></v-divider>
 
       <v-card-actions class="justify-center">

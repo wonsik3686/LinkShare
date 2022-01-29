@@ -1,8 +1,14 @@
 <template>
   <v-container>
+    <br>
+    <br>
+
       <h1>📦 LinkShare 인기 박스</h1>
       <!-- https://iancoding.tistory.com/214 -->
-      <h5 class="text-end">더보기 +</h5>  
+      <button class="font-weight-bold" v-on:click="toplinkbox" >더보기 +</button>  
+    <Linkbox />
+    <Linkbox />
+    <Linkbox />
     <Linkbox />
 
     <br>
@@ -39,6 +45,11 @@ export default {
   data () {
     return {
       Interest: false,
+    }
+  },
+  methods: {
+    toplinkbox() {
+      this.$router.replace('toplinkbox')
     }
   }
 }
