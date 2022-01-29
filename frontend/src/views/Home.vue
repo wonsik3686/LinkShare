@@ -4,9 +4,7 @@
       <v-col cols="4">
         <p class="text-h1">Linkshare</p>
         <p class="text-h2">
-          Save content<br>
-          from<br>
-          anywhere
+          Home
         </p>
       </v-col>
       
@@ -18,13 +16,11 @@
 </template>
 
 <script>
-  // import HelloWorld from '../components/HelloWorld'
-
   export default {
     name: 'Home',
 
     components: {
-      // HelloWorld,
+      
     },
   }
 </script>

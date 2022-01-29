@@ -11,6 +11,8 @@
 
 <script>
 import NavBar from '@/components/NavBar'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'App',
   components: {
@@ -20,5 +22,13 @@ export default {
   data: () => ({
     //
   }),
+  computed: {
+    ...mapGetters(['loggedIn'])
+  },
+  watch: {
+    loggedIn(state) {
+      console.log('state', state)
+    }
+  },
 };
 </script>

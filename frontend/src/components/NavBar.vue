@@ -9,7 +9,7 @@
         style="cursor: pointer"
         @click="$router.push('/')"
       >
-      📁 LinkShare
+      LinkShare
       </v-toolbar-title>
 
       <v-spacer class="text-center">
@@ -18,16 +18,34 @@
 
       <v-toolbar-items>
         <v-btn plain class="text-subtitle-1 font-weight-bold" to="/about">About</v-btn>
-        <v-btn plain class="text-subtitle-1 font-weight-bold">회원가입</v-btn>
-        <v-btn plain class="text-subtitle-1 font-weight-bold">로그인</v-btn>
+        <v-btn plain class="text-subtitle-1 font-weight-bold" @click.stop="SignupForm=true">회원가입</v-btn>
+        <SignupForm v-model="SignupForm"/>
+        <!-- <v-btn plain class="text-subtitle-1 font-weight-bold" @click.stop="Login=true">로그인</v-btn> -->
+        <!-- <Login v-model="Login"/> -->
+        <v-btn plain class="text-subtitle-1 font-weight-bold" to="/signup">signup</v-btn>
+        <v-btn plain class="text-subtitle-1 font-weight-bold" to="/login">login</v-btn>
+        <v-btn plain class="text-subtitle-1 font-weight-bold" to="/profile">profile</v-btn>
       </v-toolbar-items>
     </v-app-bar>
   </div>
 </template>
 
 <script>
+import SignupForm from '@/components/SignupForm'
+// import Login from '@/components/Login'
+
 export default {
   name: "NavBar",
+  components: {
+    SignupForm,
+    // Login,
+  },
+  data () {
+    return {
+      SignupForm: false,
+      // Login: false,
+    }
+  }
 }
 </script>
 
