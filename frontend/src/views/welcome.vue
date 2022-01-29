@@ -4,7 +4,9 @@
       <v-col cols="4">
         <p class="text-h1">Linkshare</p>
         <p class="text-h2">
-          Home
+          Save content<br>
+          from<br>
+          anywhere
         </p>
       </v-col>
       
@@ -16,11 +18,11 @@
 </template>
 
 <script>
-  export default {
-    name: 'Home',
+export default {
 
-    components: {
-      
-    },
-  }
+}
 </script>
+
+<style>
+
+</style>
