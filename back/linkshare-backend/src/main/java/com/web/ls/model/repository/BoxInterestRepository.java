@@ -1,6 +1,7 @@
 package com.web.ls.model.repository;
 
 import com.web.ls.model.entity.BoxInterest;
+import com.web.ls.model.entity.Interest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +12,6 @@ public interface BoxInterestRepository extends JpaRepository<BoxInterest, Intege
 
     void deleteByBoxid(int boxid);
 
-    @Query("select a.name from Interest a where a.id = any (select b.interestId from BoxInterest b where :boxid)")
-    List<String> findInterestNameByBoxid(@Param("boxid") int boxid);
+    @Query(value = "select a.`name` from interest a where a.interest_id = any (select b.interest_id from box_interest b where b.boxid = :boxid)", nativeQuery = true)
+    List<String> findInterestNameByBoxid(@Param("boxid") Integer boxid);
 }
