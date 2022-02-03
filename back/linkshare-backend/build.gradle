@@ -34,6 +34,9 @@ dependencies {
 	// validation
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.6.2'
 	
+	// security
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.5.5'
+	
 }
 
 tasks.named('test') {

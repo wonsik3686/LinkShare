@@ -18,7 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/user")
 @Api("회원관리 컨트롤러")
 public class UserController {
 
