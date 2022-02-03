@@ -118,7 +118,14 @@ export default {
         // 메인화면으로 이동
         this.$router.replace('/')
         this.loading = false
+        this.formReset()
+        this.show=false
       }, 1500)
+    },
+    formReset () {
+      this.$refs.form.reset()
+      this.params = { user: { name: '', email: '', password: ''}}
+      this.v = ''
     },
   },
 }

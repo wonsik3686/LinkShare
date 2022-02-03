@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <NavBar/>
+    <Navbar v-if="loggedIn"/>
+    <welNavbar v-else/>
 
     <v-main>
       <router-view/>
@@ -10,13 +11,15 @@
 </template>
 
 <script>
-import NavBar from '@/components/NavBar'
+import Navbar from '@/components/navigation/Navbar'
+import welNavbar from '@/components/navigation/welNavbar'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
   components: {
-    NavBar,
+    Navbar,
+    welNavbar,
   },
 
   data: () => ({
