@@ -1,16 +1,17 @@
 package com.web.ls.model.service;
 
 import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;
+import com.web.ls.model.dto.linkbox.LinkboxInfoResponse;
 import com.web.ls.model.entity.BoxInterest;
 import com.web.ls.model.entity.Interest;
 import com.web.ls.model.entity.Linkbox;
 import com.web.ls.model.entity.Userbox;
-import com.web.ls.model.repository.BoxInterestRepository;
-import com.web.ls.model.repository.InterestRepository;
-import com.web.ls.model.repository.LinkboxRepository;
-import com.web.ls.model.repository.UserboxRepository;
+import com.web.ls.model.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class LinkboxService {
@@ -26,6 +27,21 @@ public class LinkboxService {
 
     @Autowired
     InterestRepository interestRepository;
+
+    @Autowired
+    BoxCommentRepository boxCommentRepository;
+
+    @Autowired
+    BoxScrapRepository boxScrapRepository;
+
+    @Autowired
+    LikesRepository likesRepository;
+
+    @Autowired
+    LinkDetailRepository linkDetailRepository;
+
+    @Autowired
+    TreeInfoRepository treeInfoRepository;
 
     public void createLinkbox(LinkboxCreateRequest request) {
         Linkbox linkbox = new Linkbox();
@@ -50,6 +66,58 @@ public class LinkboxService {
             boxInterest.setInterestId(interestRepository.findIdByName(interestName));
             boxInterestRepository.save(boxInterest);
         }
+    }
 
+    public void deleteLinkbox(int boxid) {
+
+        userboxRepository.deleteByBoxid(boxid);
+        boxInterestRepository.deleteByBoxid(boxid);
+        likesRepository.deleteByBoxid(boxid);
+        boxCommentRepository.deleteByBoxid(boxid);
+        boxScrapRepository.deleteByBoxid(boxid);
+        linkDetailRepository.deleteByBoxid(boxid);
+        treeInfoRepository.deleteByBoxid(boxid);
+        linkboxRepository.deleteById(boxid);
+    }
+
+    public boolean existsLinkboxById(int boxid) {
+        if(linkboxRepository.existsById(boxid)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void updateLinkboxViewCountById(int boxid) {
+        linkboxRepository.setViewCountPlusOne(boxid);
+    }
+
+    public void updateLinkboxTitle(String title, int boxid) {
+        linkboxRepository.setTitle(title, boxid);
+    }
+
+    public void updateLinkboxDesc(String desc, int boxid) {
+        linkboxRepository.setDesc(desc, boxid);
+    }
+
+    public List<LinkboxInfoResponse> searchAllLinkboxList() {
+        List<LinkboxInfoResponse> list = new ArrayList<>();
+
+        List<Linkbox> linkboxes = linkboxRepository.findAll();
+
+        for (Linkbox linkbox: linkboxes) {
+            LinkboxInfoResponse info = new LinkboxInfoResponse();
+            info.setId(linkbox.getId());
+            info.setDesc(linkbox.getDesc());
+            info.setTitle(linkbox.getTitle());
+            info.setViewCount(linkbox.getViewCount());
+            info.setRegtime(linkbox.getRegtime());
+            info.setInterests(boxInterestRepository.findInterestNameByBoxid(linkbox.getId()));
+            info.setLikeCount(likesRepository.countByBoxid(linkbox.getId()));
+            info.setCommentCount(boxCommentRepository.countByBoxid(linkbox.getId()));
+            info.setScrapCount(boxScrapRepository.countByBoxid(linkbox.getId()));
+
+            list.add(info);
+        }
+        return list;
     }
 }

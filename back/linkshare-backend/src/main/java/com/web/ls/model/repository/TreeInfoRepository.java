@@ -1,8 +1,8 @@
 package com.web.ls.model.repository;
 
-import com.web.ls.model.entity.Userbox;
+import com.web.ls.model.entity.TreeInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserboxRepository extends JpaRepository<Userbox, Integer> {
+public interface TreeInfoRepository extends JpaRepository<TreeInfo, Integer> {
     void deleteByBoxid(int boxid);
 }
