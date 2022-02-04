@@ -16,7 +16,9 @@
 
       <v-list-item-content>
         <v-list-item-title class="text-h5 mb-1">
+          <router-link to="/linkbox" style=text-decoration:none;>
           링크박스 제목
+          </router-link>
         </v-list-item-title>
         <v-list-item-subtitle>링크박스 내용</v-list-item-subtitle>
       </v-list-item-content>

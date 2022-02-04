@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store/index.js'
 import Newsfeed from '../views/Newsfeed.vue'
-import Linkboxdetail from '../views/Linkboxdetail.vue'
+// import Linkboxdetail from '../views/Linkboxdetail.vue'
 import Toplinkbox from '../views/Toplinkbox'
 
 
@@ -14,16 +14,16 @@ const routes = [
     name: 'welcome',
     component: () => import('../views/welcome.vue')
   },
-  {
-    path: '/home',
-    name: 'home',
-    component: () => import('../views/home.vue')
-  },
+  // {
+  //   path: '/home',
+  //   name: 'home',
+  //   component: () => import('../views/home.vue')
+  // },
   {
     path: '/',
     redirect: () => {
       if (store.state.loggedIn) {
-        return '/home';
+        return '/newsfeed';
       } else {
         return '/welcome';
       }
@@ -67,9 +67,19 @@ const routes = [
     component: Newsfeed
   },
   {
-    path: '/linkboxdetail',
-    name: 'Linkboxdetail',
-    component: Linkboxdetail
+    path: '/linkbox',
+    // name: Linkboxdetail,
+    component: () => import('../views/Linkboxdetail.vue'),
+    children: [
+      {
+        path: "linklist",
+        component: () => import('@/components/linkbox/linklist.vue'),
+      },
+      {
+        path: "studyflow",
+        component: () => import('@/components/linkbox/studyflow.vue'),
+      },
+    ]
   },
   {
     path: '/toplinkbox',
