@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@hipsjs/flowy-vue": "^1.0.13",
     "core-js": "^3.6.5",
     "vee-validate": "^3.4.14",
     "vue": "^2.6.11",
