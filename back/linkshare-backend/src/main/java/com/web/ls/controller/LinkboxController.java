@@ -2,15 +2,19 @@ package com.web.ls.controller;
 
 import com.web.ls.model.dto.BasicResponse;
 import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;
+import com.web.ls.model.dto.linkbox.LinkboxInterestRequest;
 import com.web.ls.model.dto.linkbox.LinkboxUpdateRequest;
 import com.web.ls.model.service.LinkboxService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/linkbox")
@@ -88,6 +92,26 @@ public class LinkboxController {
 
         result.msg = "success";
         result.object = linkboxService.searchAllLinkboxList();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/interest")
+    @ApiOperation(value = "링크박스 관심사 추가하기")
+    public Object createLinkboxInterest(@RequestBody @Valid LinkboxInterestRequest request) {
+        final BasicResponse result = new BasicResponse();
+        linkboxService.createLinkboxInterest(request);
+
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/interest")
+    @ApiOperation(value = "링크박스 관심사 삭제하기")
+    public Object deleteLinkboxInterest(@RequestBody @Valid LinkboxInterestRequest request) {
+        final BasicResponse result = new BasicResponse();
+        linkboxService.deleteLinkboxInterest(request);
+
+        result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

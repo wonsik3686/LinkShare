@@ -2,6 +2,7 @@ package com.web.ls.model.service;
 
 import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;
 import com.web.ls.model.dto.linkbox.LinkboxInfoResponse;
+import com.web.ls.model.dto.linkbox.LinkboxInterestRequest;
 import com.web.ls.model.entity.BoxInterest;
 import com.web.ls.model.entity.Interest;
 import com.web.ls.model.entity.Linkbox;
@@ -119,5 +120,23 @@ public class LinkboxService {
             list.add(info);
         }
         return list;
+    }
+
+    public void createLinkboxInterest(LinkboxInterestRequest request) {
+
+        if(!interestRepository.existsByName(request.getInterest())) {
+            Interest interest = new Interest();
+            interest.setName(request.getInterest());
+            interestRepository.save(interest);
+        }
+        BoxInterest boxInterest = new BoxInterest();
+        boxInterest.setBoxid(request.getBoxid());
+        boxInterest.setInterestId(interestRepository.findIdByName(request.getInterest()));
+        boxInterestRepository.save(boxInterest);
+    }
+
+    public void deleteLinkboxInterest(LinkboxInterestRequest request) {
+
+        boxInterestRepository.deleteByBoxidAndInterestId(request.getBoxid(), interestRepository.findIdByName(request.getInterest()));
     }
 }
