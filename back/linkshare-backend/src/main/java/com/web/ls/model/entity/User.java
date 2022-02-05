@@ -20,6 +20,12 @@ public class User {
 
     @Column(name = "admin", nullable = false)
     private Boolean admin;
+    
+    @Column(name = "confirm", nullable = false)
+    private Boolean confirm;
+    
+    @Column(name = "auth_key")
+    private String authKey;
 
     @Column(name = "email", nullable = false)
     private String email;
