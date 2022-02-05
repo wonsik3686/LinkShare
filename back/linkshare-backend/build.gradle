@@ -34,6 +34,15 @@ dependencies {
 	// validation
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.6.2'
 	
+	// security
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.5.5'
+	
+	// mail authentication
+	implementation 'javax.mail:mail:1.5.0-b01'
+	implementation group: 'org.springframework', name: 'spring-context-support', version: '5.3.12'
+	
+
+	
 }
 
 tasks.named('test') {
