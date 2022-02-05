@@ -35,6 +35,7 @@ public class SignupRequest {
     			.password(this.password)
     			.nickname(this.nickname)
     			.admin(false)
+    			.confirm(false)
     			.build();
     }
 }
