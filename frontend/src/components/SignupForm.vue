@@ -93,7 +93,6 @@
       <v-container>
         <snsLogin/>
       </v-container>
-
       <br>
       <v-card-actions class="justify-center">
         <v-btn text @click.stop="show=false">Close</v-btn>
@@ -116,7 +115,7 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
-    snsLogin
+    snsLogin,
   },
   props: {
     value: Boolean
@@ -156,6 +155,7 @@ export default {
       })
         .then((res) => {
           console.log(res.data)
+          this.show = false
         })
         .catch((err) => {
           console.log(err)
@@ -167,7 +167,7 @@ export default {
     },
     formReset () {
       this.$refs.form.reset()
-      this.params = { user: { name: '', email: '', password: ''}}
+      this.params = { user: { nickname: '', email: '', password: ''}}
       this.v = ''
     }
   },
