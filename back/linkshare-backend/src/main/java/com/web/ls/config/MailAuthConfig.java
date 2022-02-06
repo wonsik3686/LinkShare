@@ -26,8 +26,8 @@ public class MailAuthConfig {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
-		mailSender.setUsername("gudejr666");
-		mailSender.setPassword("dua20141091#");
+		mailSender.setUsername("email");
+		mailSender.setPassword("password");
 		mailSender.setDefaultEncoding("utf-8");
 		mailSender.setJavaMailProperties(properties);
 
