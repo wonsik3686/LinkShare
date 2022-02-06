@@ -110,8 +110,7 @@ extend('email', email)
 extend('confirmed', confirmed)
 extend('min', min)
 import snsLogin from "@/components/snsLogin/snsLogin"
-
-
+import axios from 'axios'
 
 export default {
   components: {
@@ -143,7 +142,24 @@ export default {
   },
   methods: {
     signup () {
+      // 전송할 데이터 확인
+      console.log(this.params.user)
       this.loading = true
+
+      axios({
+        method: 'post',
+        // baseURL: process.env.VUE_APP_SERVER_URL,
+        baseURL: 'https://d3b93656-afa7-4d7c-b27f-95e7069e044a.mock.pstmn.io',
+        url: 'user/signup',
+        headers: {'Content-Type': 'application/json' },
+        data: JSON.stringify(this.params.user),
+      })
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
       setTimeout(() => {
         this.formReset()
         this.loading = false

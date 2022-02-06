@@ -82,6 +82,7 @@ extend('required', required)
 extend('email', email)
 extend('min', min)
 import snsLogin from "@/components/snsLogin/snsLogin"
+// import axios from 'axios'
 
 export default {
   components: {
@@ -96,7 +97,7 @@ export default {
     return {
       showPassword: false,
       loading: false,
-      params: {user: { nickname: '', email: '', password: ''} }
+      params: {user: { email: '', password: ''} }
     }
   },
   computed: {
@@ -111,12 +112,33 @@ export default {
   },
   methods: {
     login () {
+      console.log(this.params.user)
       this.loading = true
+
+      // axios({
+      //   method: 'post',
+      //   // baseURL: process.env.VUE_APP_SERVER_URL,
+      //   baseURL: 'https://d3b93656-afa7-4d7c-b27f-95e7069e044a.mock.pstmn.io',
+      //   url: 'user/login',
+      //   headers: {'Content-Type': 'application/json' },
+      //   data: JSON.stringify(this.params.user),
+      // })
+      //   .then((res) => {
+      //     console.log(res.data)
+      //     // index.js의 action 매소드 불러오기
+      //     this.$store.dispatch('login')
+      //     this.$router.replace('/')
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
+
       setTimeout(() => {
-        // index.js의 action 매소드 불러오기
+        // 임시 테스트 코드
         this.$store.dispatch('login')
         // 메인화면으로 이동
         this.$router.replace('/')
+        //
         this.loading = false
       }, 1500)
     },
