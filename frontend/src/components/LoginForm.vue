@@ -114,17 +114,6 @@ export default {
     login () {
       console.log(this.params.user)
       this.loading = true
-<<<<<<< HEAD
-      setTimeout(() => {
-        // index.js의 action 매소드 불러오기
-        this.$store.dispatch('login')
-        // 메인화면으로 이동
-        this.$router.replace('/')
-        this.loading = false
-        this.formReset()
-        this.show=false
-      }, 1500)
-=======
 
       axios({
         method: 'post',
@@ -166,7 +155,6 @@ export default {
       this.$refs.form.reset()
       this.params = { user: { email: '', password: ''}}
       this.v = ''
->>>>>>> feature/로그인
     },
     formReset () {
       this.$refs.form.reset()
