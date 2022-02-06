@@ -44,7 +44,8 @@ public class LinkboxController {
 
     @DeleteMapping("/{boxid}")
     @ApiOperation(value = "링크박스 삭제하기")
-    public Object deleteBox(@PathVariable("boxid") @ApiParam(value = "삭제할 박스의 아이디", required = true) int boxid) {
+    public Object deleteBox(@PathVariable("boxid") @ApiParam(value = "삭제할 박스의 아이디",
+            required = true) int boxid) {
         final BasicResponse result = new BasicResponse();
 
         if(linkboxService.existsLinkboxById(boxid)) {
@@ -58,7 +59,8 @@ public class LinkboxController {
 
     @GetMapping("/viewcount/{boxid}")
     @ApiOperation(value = "링크박스 조회수 증가")
-    public Object updateLinkboxViewcount(@PathVariable("boxid") @ApiParam(value = "조회수 증가시킬 박스의 아이디") int boxid) {
+    public Object updateLinkboxViewcount(@PathVariable("boxid") @ApiParam(value =
+            "조회수 증가시킬 박스의 아이디") int boxid) {
         final BasicResponse result = new BasicResponse();
 
         if(linkboxService.existsLinkboxById(boxid)) {
