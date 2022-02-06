@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ls.model.dto.BasicResponse;
 import com.web.ls.model.dto.SignupRequest;
+import com.web.ls.model.service.SigninService;
 import com.web.ls.model.service.SignupService;
 
 import io.swagger.annotations.Api;
@@ -25,7 +26,10 @@ import io.swagger.annotations.ApiOperation;
 public class UserController {
 
 	@Autowired
-	SignupService signupService;
+	private SignupService signupService;
+
+	@Autowired
+	private SigninService signinService;
 
 	@PostMapping("/signup")
 	@ApiOperation(value = "가입하기")
@@ -45,4 +49,14 @@ public class UserController {
 		result.msg = "success";
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	// 로그인
+    @PostMapping("/signin")
+    @ApiOperation(value = "로그인요청")
+    public Object signin(@RequestParam String email, String password) {
+    	final BasicResponse result = new BasicResponse();
+    	result.msg = "success";
+    	result.object = signinService.signin(email, password);
+    	return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
