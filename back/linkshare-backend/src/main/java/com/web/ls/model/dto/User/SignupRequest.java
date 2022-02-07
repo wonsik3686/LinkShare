@@ -1,4 +1,4 @@
-package com.web.ls.model.dto;
+package com.web.ls.model.dto.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
