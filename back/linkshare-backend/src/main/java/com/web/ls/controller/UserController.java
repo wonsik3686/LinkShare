@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ls.model.dto.BasicResponse;
-import com.web.ls.model.dto.SigninRequest;
-import com.web.ls.model.dto.SignupRequest;
+import com.web.ls.model.dto.User.SigninRequest;
+import com.web.ls.model.dto.User.SignupRequest;
 import com.web.ls.model.service.SigninService;
 import com.web.ls.model.service.SignupService;
 

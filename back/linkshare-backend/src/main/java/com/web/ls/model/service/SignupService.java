@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.web.ls.exception.AlreadyExistEmailException;
 import com.web.ls.exception.AlreadyExistNicknameException;
-import com.web.ls.model.dto.SignupRequest;
+import com.web.ls.model.dto.User.SignupRequest;
 import com.web.ls.model.entity.User;
 import com.web.ls.model.repository.UserRepository;
 import com.web.ls.util.MailUtils;

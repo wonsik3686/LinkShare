@@ -1,4 +1,4 @@
-package com.web.ls.model.dto;
+package com.web.ls.model.dto.User;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
