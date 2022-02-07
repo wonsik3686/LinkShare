@@ -156,11 +156,6 @@ export default {
       this.params = { user: { email: '', password: ''}}
       this.v = ''
     },
-    formReset () {
-      this.$refs.form.reset()
-      this.params = { user: { name: '', email: '', password: ''}}
-      this.v = ''
-    },
   },
 }
 </script>

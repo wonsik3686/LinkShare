@@ -15,15 +15,15 @@ const routes = [
     component: () => import('../views/welcome.vue')
   },
   {
-    path: '/home',
-    name: 'home',
-    component: () => import('../views/home.vue')
+    path: '/newsfeed',
+    name: 'Newsfeed',
+    component: Newsfeed
   },
   {
     path: '/',
     redirect: () => {
       if (store.state.loggedIn) {
-        return '/home';
+        return '/newsfeed';
       } else {
         return '/welcome';
       }
@@ -60,11 +60,6 @@ const routes = [
         component: () => import('@/components/profile/Follower.vue'),
       },
     ]
-  },
-  {
-    path: '/newsfeed',
-    name: 'Newsfeed',
-    component: Newsfeed
   },
   {
     path: '/linkboxdetail',
