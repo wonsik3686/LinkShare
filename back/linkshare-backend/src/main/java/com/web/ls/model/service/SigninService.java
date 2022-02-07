@@ -31,5 +31,5 @@ public class SigninService {
         if(!member.getConfirm()) throw new AuthenticationServiceException("이메일 인증을 하지 않은 사용자 입니다.");
         return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
-	}
+}
 
