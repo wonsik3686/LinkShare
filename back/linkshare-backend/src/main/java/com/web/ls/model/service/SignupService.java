@@ -77,13 +77,13 @@ public class SignupService {
             sendMail.setSubject("LinkShare 회원가입 이메일 인증");
             sendMail.setText(new StringBuffer().append("<h1>LinkShare</h1><br>")
             .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-            .append("<a href='http://localhost:8080/user/signupConfirm?email=")
+            .append("<a href='http://3.38.246.117/user/signupConfirm?email=")
             .append(email)
             .append("&authKey=")
             .append(authKey)
             .append("' target='_blenk'>이메일 인증 확인</a>")
             .toString());
-            sendMail.setFrom("gudejr666@gmail.com", "LinkShare");
+            sendMail.setFrom("ssafyLS22@gmail.com", "LinkShare");
             sendMail.setTo(email);
             sendMail.send();
         } catch (MessagingException e) {
