@@ -85,7 +85,7 @@ public class SignupService {
             .toString());
             sendMail.setFrom("ssafyLS22@gmail.com", "LinkShare");
             sendMail.setTo(email);
-            sendMail.send();
+            //sendMail.send();
         } catch (MessagingException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
