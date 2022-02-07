@@ -22,4 +22,12 @@ public class FollowService {
 		Follow follow = followRepository.findByUidAndFolloweeId(request.getUid(), request.getFolloweeId());
 		if(follow != null) followRepository.delete(follow);
 	}
+	
+	public int following(int id) {
+		return followRepository.countByUid(id);
+	}
+	
+	public int follower(int id) {
+		return followRepository.countByFolloweeId(id);
+	}
 }
