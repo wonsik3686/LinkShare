@@ -4,12 +4,30 @@
     <br>
 
     <h1>링크박스 제목</h1>
-    <v-btn class="primary mt-3 mb-5">태그</v-btn>
-    <v-btn class="warning mt-3 mb-5 mx-2">태그</v-btn>
+    <v-chip
+      class="ma-1 px-4"
+      v-for="interest in interests"
+      :key="interest.title"
+      color="blue"
+      text-color="white"
+    >
+      <strong>{{ interest.title }}</strong>
+    </v-chip>
     <h5>링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.링크박스 내용입니다.</h5>
 
     <br>
     <br>
+
+    <v-container>
+      <v-tabs fixed-tabs>
+        <v-tab to="/profile/interest">링크목록</v-tab>
+        <v-tab to="/profile/linkbox">링크트리</v-tab>
+      </v-tabs>
+
+      <v-container>
+        <router-view></router-view>
+      </v-container>
+    </v-container>
 
     <v-container>
       <v-row justify="center">
@@ -36,6 +54,13 @@
 
 <script>
 export default {
+  data: () => ({
+    interests: [
+      { title: "python" },
+      { title: "vue.js" },
+      { title: "springboot" },
+    ]
+  }),
 }
 </script>
 

@@ -118,7 +118,7 @@ export default {
       axios({
         method: 'post',
         // baseURL: process.env.VUE_APP_SERVER_URL,
-        baseURL: 'https://d3b93656-afa7-4d7c-b27f-95e7069e044a.mock.pstmn.io',
+        baseURL: 'http://3.38.246.117',
         url: 'user/login',
         headers: {'Content-Type': 'application/json' },
         data: JSON.stringify(this.params.user),
