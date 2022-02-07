@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     detail() {
-      this.$router.replace('linkboxdetail')
+      this.$router.replace('linkbox')
     }
   }
 }
