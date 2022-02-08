@@ -56,7 +56,7 @@
             block
             color="blue"
             class="white--text"
-            @click="login"
+            @click="onSubmit"
           >
             로그인
           </v-btn>
@@ -82,7 +82,9 @@ extend('required', required)
 extend('email', email)
 extend('min', min)
 import snsLogin from "@/components/snsLogin/snsLogin"
-import axios from 'axios'
+import { mapActions, mapState } from 'vuex'
+
+const memberStore = "memberStore"
 
 export default {
   components: {
@@ -111,45 +113,35 @@ export default {
     }
   },
   methods: {
-    login () {
+    ...mapState(memberStore, ['loggedIn']),
+    ...mapActions(memberStore, ['userSignin', 'getUserProfile']),
+    // vuex에서 action 실행, action에서 api 통신
+    onSubmit () {
       console.log(this.params.user)
       this.loading = true
+      this.userSignin(this.params.user)
+      // let token = localStorage.getItem('token')
+      // console.log(token)
+      
+      if (this.loggedIn) {
+        this.getUserProfile()
+        console.log(this.loggedIn)
+        this.$router.replace('/').catch(()=>{})
+        // replace : URL 방문기록을 리셋
+        // push : URL 방문기록에 추가
+        alert('로그인 성공')
+        this.show = false
+        this.loading = false
+        this.formReset()
+      } else {
+        console.log('로그인 실패')
+        this.loading = false
+      }
 
-      axios({
-        method: 'post',
-        // baseURL: process.env.VUE_APP_SERVER_URL,
-        baseURL: 'http://3.38.246.117',
-        url: 'user/login',
-        headers: {'Content-Type': 'application/json' },
-        data: JSON.stringify(this.params.user),
-      })
-        .then((res) => {
-          console.log(res.data)
-          // 토큰값을 localStorage에 저장
-          localStorage.setItem('jwt', res.data.token)
-          // index.js의 action 매소드 불러오기
-          this.$store.dispatch('login')
-          this.$router.replace('/')
-          // replace : URL 방문기록을 리셋
-          // push : URL 방문기록에 추가
-          this.show = false
-          this.loading = false
-          this.formReset()
-          
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-      // setTimeout(() => {
-      //   // 임시 테스트 코드
-      //   this.$store.dispatch('login')
-      //   // 메인화면으로 이동
-      //   this.$router.replace('/')
-      //   this.show = false
-      //   //
-      //   this.loading = false
-      // }, 1500)
+      setTimeout(() => {
+        alert('로그인에 실패했습니다.')
+        this.loading = false
+      }, 1500)
     },
     formReset () {
       this.$refs.form.reset()

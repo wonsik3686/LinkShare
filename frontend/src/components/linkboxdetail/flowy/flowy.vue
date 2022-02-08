@@ -1,5 +1,7 @@
 <template>
   <v-container>
+    <h1>링크트리</h1>
+
     <div>
       <div class="row my-3">
         <flowy-new-block
@@ -48,8 +50,8 @@
 
 <script>
 import Vue from 'vue'
-import Block from '@/components/flowy/block'
-import Node from '@/components/flowy/node'
+import Block from './block'
+import Node from './node'
 import _ from 'lodash'
 
 Vue.component('Node', Node)

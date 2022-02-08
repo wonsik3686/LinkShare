@@ -147,17 +147,19 @@ export default {
 
       axios({
         method: 'post',
-        // baseURL: process.env.VUE_APP_SERVER_URL,
-        baseURL: 'http://3.38.246.117',
+        baseURL: process.env.VUE_APP_SERVER_URL,
+        // baseURL: 'http://3.38.246.117',
         url: 'user/signup',
         headers: {'Content-Type': 'application/json' },
         data: JSON.stringify(this.params.user),
       })
         .then((res) => {
           console.log(res.data)
+          alert('회원가입성공')
           this.show = false
         })
         .catch((err) => {
+          alert('회원가입실패')
           console.log(err)
         })
       setTimeout(() => {
