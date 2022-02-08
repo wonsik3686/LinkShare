@@ -6,15 +6,20 @@
       <h1>📦 LinkShare 인기 박스</h1>
       <!-- https://iancoding.tistory.com/214 -->
       <button class="font-weight-bold" v-on:click="toplinkbox" >더보기 +</button>  
-    <Linkbox />
-    <Linkbox />
-    <Linkbox />
-    <Linkbox />
+    
+    <br>
+    <br>
+    <v-row>
+      <Linkbox />
+      <Linkbox />
+      <Linkbox />
+      <Linkbox />
+    </v-row>
 
     <br>
     <br>
 
-    <h1>💡 {{username}}님을 위한 추천 박스</h1>
+    <h1>💡 님을 위한 추천 박스</h1>
         <p class="mt-3 text-center">관심사를 선택해주세요</p>
         <v-row justify="center">
           <button class="font-weight-bold" @click="Interest=true">관심사 선택하기 ></button>
