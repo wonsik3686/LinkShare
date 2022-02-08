@@ -4,6 +4,12 @@ import com.web.ls.model.dto.BasicResponse;
 import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;
 import com.web.ls.model.dto.linkbox.LinkboxInterestRequest;
 import com.web.ls.model.dto.linkbox.LinkboxUpdateRequest;
+import com.web.ls.model.dto.linkbox.comment.BoxCommentRequest;
+import com.web.ls.model.dto.linkbox.comment.BoxCommentUpdateRequest;
+import com.web.ls.model.dto.linkbox.like.LikesCreateRequest;
+import com.web.ls.model.entity.BoxComment;
+import com.web.ls.model.service.BoxCommentService;
+import com.web.ls.model.service.BoxLikeService;
 import com.web.ls.model.service.LinkboxService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
@@ -24,6 +31,12 @@ public class LinkboxController {
 
     @Autowired
     LinkboxService linkboxService;
+
+    @Autowired
+    BoxCommentService boxCommentService;
+
+    @Autowired
+    BoxLikeService boxLikeService;
 
     @PostMapping("/create")
     @ApiOperation(value = "링크박스 생성하기")
@@ -98,6 +111,8 @@ public class LinkboxController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    // 링크 박스 관심사
+    
     @PostMapping("/interest")
     @ApiOperation(value = "링크박스 관심사 추가하기")
     public Object createLinkboxInterest(@RequestBody @Valid LinkboxInterestRequest request) {
@@ -114,6 +129,66 @@ public class LinkboxController {
         final BasicResponse result = new BasicResponse();
         linkboxService.deleteLinkboxInterest(request);
 
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 링크 박스 댓글
+    
+    @PostMapping("/comment")
+    @ApiOperation(value = "링크박스 댓글 생성하기")
+    public Object createLinkboxComment(@RequestBody @Valid BoxCommentRequest request) {
+        final BasicResponse result = new BasicResponse();
+        boxCommentService.createBoxComment(request);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/comment/{commentid}")
+    @ApiOperation(value = "링크박스 댓글 삭제하기")
+    public Object deleteLinkboxComment(@PathVariable("commentid") @ApiParam(value =
+            "삭제할 댓글의 ID") Integer commentid) {
+        final BasicResponse result = new BasicResponse();
+        boxCommentService.deleteBoxComment(commentid);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PutMapping("/comment")
+    @ApiOperation(value = "링크박스 댓글 수정하기")
+    public Object updateLinkboxComment(@RequestBody @Valid BoxCommentUpdateRequest request) {
+        final BasicResponse result = new BasicResponse();
+        boxCommentService.updateBoxComment(request);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/comment/{boxid}")
+    @ApiOperation(value = "링크박스 댓글 리스트 조회하기 by 박스 ID")
+    public Object searchLinkBoxCommentByBoxId(@PathVariable("boxid") @ApiParam(value =
+            "조회할 댓글 리스트의 박스 ID") Integer boxid) {
+        final BasicResponse result = new BasicResponse();
+        result.msg = "success";
+        result.object = boxCommentService.searchBoxCommentByBoxid(boxid);;
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 링크 박스 좋아요
+    @PostMapping("/like")
+    @ApiOperation(value = "링크 박스 좋아요 생성하기")
+    public Object createLinkboxLike(@RequestBody @Valid LikesCreateRequest request) {
+        final BasicResponse result = new BasicResponse();
+        boxLikeService.createLinkboxLike(request);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/like/{likeid}")
+    @ApiOperation(value = "링크 박스 좋아요 삭제하기")
+    public Object deleteLikeboxLike(@PathVariable("linkid") @ApiParam(value =
+            "삭제할 좋아요 ID") Integer linkid) {
+        final BasicResponse result = new BasicResponse();
+        boxLikeService.deleteLinkboxLike(linkid);
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
