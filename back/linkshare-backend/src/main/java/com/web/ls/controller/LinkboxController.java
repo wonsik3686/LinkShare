@@ -111,6 +111,17 @@ public class LinkboxController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/list/{userid}")
+    @ApiOperation(value = "유저 ID로 링크박스 리스트 조회하기")
+    public Object searchLinkboxListByUid(@PathVariable("userid") @ApiParam(value =
+            "조회할 박스 리스트의 유저 ID") Integer userid) {
+        final BasicResponse result = new BasicResponse();
+
+        result.msg = "success";
+        result.object = linkboxService.searchLinkboxListByUserId(userid);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     // 링크 박스 관심사
     
     @PostMapping("/interest")

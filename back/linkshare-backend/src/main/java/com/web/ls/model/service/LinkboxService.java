@@ -122,6 +122,30 @@ public class LinkboxService {
         return list;
     }
 
+    public List<LinkboxInfoResponse> searchLinkboxListByUserId(Integer userId) {
+        List<LinkboxInfoResponse> responseList = new ArrayList<>();
+
+        List<Integer> boxList = userboxRepository.findAllByUid(userId);
+
+        for (Integer boxId: boxList) {
+            LinkboxInfoResponse info = new LinkboxInfoResponse();
+
+            Linkbox box = linkboxRepository.getById(boxId);
+            info.setId(box.getId());
+            info.setDesc(box.getDesc());
+            info.setTitle(box.getTitle());
+            info.setViewCount(box.getViewCount());
+            info.setRegtime(box.getRegtime());
+            info.setInterests(boxInterestRepository.findInterestNameByBoxid(box.getId()));
+            info.setLikeCount(likesRepository.countByBoxid(box.getId()));
+            info.setCommentCount(boxCommentRepository.countByBoxid(box.getId()));
+            info.setScrapCount(boxScrapRepository.countByBoxid(box.getId()));
+
+            responseList.add(info);
+        }
+        return responseList;
+    }
+
     public void createLinkboxInterest(LinkboxInterestRequest request) {
 
         if(!interestRepository.existsByName(request.getInterest())) {
