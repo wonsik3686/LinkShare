@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -12,7 +13,7 @@ import java.io.Serializable;
 public class LinkDetailUpdateRequest implements Serializable {
 
     @ApiModelProperty(value = "link id", position = 1, required = true)
-    @NotBlank
+    @NotNull
     private final Integer id;
 
     @ApiModelProperty(value = "link title", position = 2)

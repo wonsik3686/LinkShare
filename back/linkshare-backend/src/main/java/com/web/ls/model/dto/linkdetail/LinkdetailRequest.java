@@ -6,25 +6,26 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
 public class LinkdetailRequest implements Serializable {
 
     @ApiModelProperty(value = "link box id", position = 1, required = true)
-    @NotBlank
-    private final Integer boxid;
+    @NotNull
+    private Integer boxid;
 
     @ApiModelProperty(value = "link title", position = 2, required = true)
     @NotBlank
-    private final String title;
+    private String title;
 
     @ApiModelProperty(value = "link description", position = 3, required = false)
-    private final String desc;
+    private String desc;
 
     @ApiModelProperty(value = "link url", position = 4, required = true)
     @NotBlank
-    private final String url;
+    private String url;
 
     public LinkDetail toEntity() {
         return LinkDetail.builder()
