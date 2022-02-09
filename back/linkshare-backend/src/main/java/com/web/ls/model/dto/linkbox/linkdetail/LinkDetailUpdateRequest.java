@@ -1,4 +1,4 @@
-package com.web.ls.model.dto.linkdetail;
+package com.web.ls.model.dto.linkbox.linkdetail;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;

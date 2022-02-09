@@ -1,8 +1,8 @@
 package com.web.ls.model.service;
 
-import com.web.ls.model.dto.linkdetail.LinkDetailUpdateRequest;
-import com.web.ls.model.dto.linkdetail.LinkdetailRequest;
-import com.web.ls.model.dto.linkdetail.LinkdetailResponse;
+import com.web.ls.model.dto.linkbox.linkdetail.LinkDetailUpdateRequest;
+import com.web.ls.model.dto.linkbox.linkdetail.LinkdetailRequest;
+import com.web.ls.model.dto.linkbox.linkdetail.LinkdetailResponse;
 import com.web.ls.model.entity.*;
 import com.web.ls.model.repository.LinkDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
