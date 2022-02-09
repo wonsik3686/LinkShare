@@ -146,6 +146,22 @@ public class LinkboxService {
         return responseList;
     }
 
+    public LinkboxInfoResponse searchLinkboxByBoxid(Integer boxId) {
+        LinkboxInfoResponse info = new LinkboxInfoResponse();
+        Linkbox box = linkboxRepository.getById(boxId);
+        info.setId(box.getId());
+        info.setDesc(box.getDesc());
+        info.setTitle(box.getTitle());
+        info.setViewCount(box.getViewCount());
+        info.setRegtime(box.getRegtime());
+        info.setInterests(boxInterestRepository.findInterestNameByBoxid(box.getId()));
+        info.setLikeCount(likesRepository.countByBoxid(box.getId()));
+        info.setCommentCount(boxCommentRepository.countByBoxid(box.getId()));
+        info.setScrapCount(boxScrapRepository.countByBoxid(box.getId()));
+
+        return info;
+    }
+
     public void createLinkboxInterest(LinkboxInterestRequest request) {
 
         if(!interestRepository.existsByName(request.getInterest())) {
@@ -162,5 +178,9 @@ public class LinkboxService {
     public void deleteLinkboxInterest(LinkboxInterestRequest request) {
 
         boxInterestRepository.deleteByBoxidAndInterestId(request.getBoxid(), interestRepository.findIdByName(request.getInterest()));
+    }
+
+    public List<String> searchInterestsByBoxid(Integer boxId) {
+        return boxInterestRepository.findInterestNameByBoxid(boxId);
     }
 }

@@ -122,6 +122,16 @@ public class LinkboxController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/one/{boxid}")
+    @ApiOperation(value = "박스 ID로 링크박스 정보 조회하기")
+    public Object searchLinkboxByBoxid(@PathVariable("boxid") @ApiParam(value =
+            "조회할 박스의 박스ID") Integer boxid) {
+        final BasicResponse result = new BasicResponse();
+        result.object = linkboxService.searchLinkboxByBoxid(boxid);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     // 링크 박스 관심사
     
     @PostMapping("/interest")
@@ -129,7 +139,6 @@ public class LinkboxController {
     public Object createLinkboxInterest(@RequestBody @Valid LinkboxInterestRequest request) {
         final BasicResponse result = new BasicResponse();
         linkboxService.createLinkboxInterest(request);
-
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -139,7 +148,16 @@ public class LinkboxController {
     public Object deleteLinkboxInterest(@RequestBody @Valid LinkboxInterestRequest request) {
         final BasicResponse result = new BasicResponse();
         linkboxService.deleteLinkboxInterest(request);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
+    @GetMapping("/interest/{boxid}")
+    @ApiOperation(value = "링크박스 관심사 조회하기")
+    public Object searchLinkboxInterest(@PathVariable("boxid") @ApiParam(value =
+            "조회할 관심사의 링크박스 ID") Integer boxid) {
+        final BasicResponse result = new BasicResponse();
+        result.object = linkboxService.searchInterestsByBoxid(boxid);
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
