@@ -33,7 +33,7 @@ public class LinkdetailController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/linkid")
     @ApiOperation(value = "링크 삭제하기")
     public Object deleteLink(@PathVariable("linkid") @ApiParam(value = "삭제할 링크의 아이디",
             required = true) Integer linkid) {
@@ -43,7 +43,7 @@ public class LinkdetailController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/{boxid}")
     @ApiOperation(value = "링크 정보 전체 조회하기")
     public Object searchAllLinks(@PathVariable("boxid") @ApiParam(value = "링크 정보 조회할 박스 아이디",
         required = true) Integer boxid) {
