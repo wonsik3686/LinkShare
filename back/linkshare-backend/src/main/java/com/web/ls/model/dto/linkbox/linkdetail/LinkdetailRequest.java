@@ -1,4 +1,4 @@
-package com.web.ls.model.dto.linkdetail;
+package com.web.ls.model.dto.linkbox.linkdetail;
 
 import com.web.ls.model.entity.LinkDetail;
 import com.web.ls.model.entity.User;

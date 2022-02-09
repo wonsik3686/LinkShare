@@ -1,4 +1,4 @@
-package com.web.ls.controller;
+package com.web.ls.controller.linkbox;
 
 import com.web.ls.model.dto.BasicResponse;
 import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;

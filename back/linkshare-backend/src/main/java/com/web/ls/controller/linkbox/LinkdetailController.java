@@ -1,9 +1,8 @@
-package com.web.ls.controller;
+package com.web.ls.controller.linkbox;
 
 import com.web.ls.model.dto.BasicResponse;
-import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;
-import com.web.ls.model.dto.linkdetail.LinkDetailUpdateRequest;
-import com.web.ls.model.dto.linkdetail.LinkdetailRequest;
+import com.web.ls.model.dto.linkbox.linkdetail.LinkDetailUpdateRequest;
+import com.web.ls.model.dto.linkbox.linkdetail.LinkdetailRequest;
 import com.web.ls.model.service.LinkdetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
