@@ -19,7 +19,7 @@
       <v-toolbar-items>
         <v-btn plain class="text-subtitle-1 font-weight-bold" to="#">Logout</v-btn>
 
-        <v-btn plain class="text-subtitle-1 font-weight-bold" :to="`/profile/${userInfo.nickname}`">{{userInfo.nickname}}</v-btn>
+        <v-btn plain class="text-subtitle-1 font-weight-bold" :to="`/profile/${userInfo.email}`">{{userInfo.nickname}}</v-btn>
       </v-toolbar-items>
       
       <!-- 프로필 이미지 -->

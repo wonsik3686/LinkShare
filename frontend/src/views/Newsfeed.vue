@@ -9,11 +9,11 @@
     
     <br>
     <br>
+
     <v-row>
-      <Linkbox />
-      <Linkbox />
-      <Linkbox />
-      <Linkbox />
+      <v-col v-for="box in boxlist" v-bind:key="box.id" cols='6'>
+      <Linkbox :title="box.title" :desc="box.desc" />
+      </v-col>
     </v-row>
 
     <br>
@@ -40,6 +40,7 @@
 <script>
 import Interest from '../components/Interest.vue'
 import Linkbox from '../components/Linkbox.vue'
+import {listLinkbox} from '../api/linkbox.js'
 
 export default {
   name: "Newsfeed",
@@ -50,12 +51,26 @@ export default {
   data () {
     return {
       Interest: false,
+      boxlist: null,
     }
   },
   methods: {
     toplinkbox() {
       this.$router.replace('toplinkbox')
     }
+  },
+  created() {
+    listLinkbox(
+      (response) => {
+        if (response.data.msg === "success") {
+          console.log(response.data)
+          this.boxlist = response.data.object
+        } else {
+          console.log(response.data.msg)
+        }
+      }, (err) => console.log(err)
+    )
   }
 }
+
 </script>
