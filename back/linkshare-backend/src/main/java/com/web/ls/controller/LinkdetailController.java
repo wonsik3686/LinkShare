@@ -33,7 +33,7 @@ public class LinkdetailController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping("/linkid")
+    @DeleteMapping("/{linkid}")
     @ApiOperation(value = "링크 삭제하기")
     public Object deleteLink(@PathVariable("linkid") @ApiParam(value = "삭제할 링크의 아이디",
             required = true) Integer linkid) {
