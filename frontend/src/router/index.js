@@ -22,7 +22,7 @@ const routes = [
   {
     path: '/',
     redirect: () => {
-      if (store.state.loggedIn) {
+      if (store.getters['memberStore/loggedIn']) {
         return '/newsfeed';
       } else {
         return '/welcome';
@@ -30,12 +30,7 @@ const routes = [
     }
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/About.vue')
-  },
-  {
-    path: '/profile',
+    path: '/profile/:email',
     component: () => import('../views/profile.vue'),
     children: [
       {
@@ -63,16 +58,15 @@ const routes = [
   },
   {
     path: '/linkbox',
-    // name: Linkboxdetail,
     component: () => import('../views/Linkboxdetail.vue'),
     children: [
       {
         path: "linklist",
-        component: () => import('@/components/linkbox/linklist.vue'),
+        component: () => import('@/components/linkboxdetail/linklist.vue'),
       },
       {
-        path: "studyflow",
-        component: () => import('@/components/linkbox/studyflow.vue'),
+        path: "linktree",
+        component: () => import('@/components/linkboxdetail/flowy/flowy.vue'),
       },
     ]
   },
