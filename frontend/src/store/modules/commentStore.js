@@ -1,4 +1,4 @@
-const linkboxStore = {
+const commentStore = {
   namespaced: true,
   state: {},
   mutations: {},
@@ -7,4 +7,4 @@ const linkboxStore = {
   getters: {}
 }
 
-export default linkboxStore
+export default commentStore

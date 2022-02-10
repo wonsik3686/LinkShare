@@ -3,6 +3,8 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import memberStore from "./modules/memberStore.js";
 import linkboxStore from "./modules/linkboxStore.js";
+import commentStore from "./modules/commentStore";
+
 
 Vue.use(Vuex);
 
@@ -10,7 +12,8 @@ const store = new Vuex.Store({
   strict: true,
   modules: {
     memberStore,
-    linkboxStore
+    linkboxStore,
+    commentStore
   },
   plugins: [
     createPersistedState({

@@ -40,7 +40,7 @@
 <script>
 import Interest from '../components/Interest.vue'
 import Linkbox from '../components/Linkbox.vue'
-import {listLinkbox} from '../api/linkbox.js'
+import {listLinkbox, searchLinkBoxCommentByBoxId} from '../api/linkbox.js'
 
 export default {
   name: "Newsfeed",
@@ -69,6 +69,9 @@ export default {
           console.log(response.data.msg)
         }
       }, (err) => console.log(err)
+    ),
+    searchLinkBoxCommentByBoxId(
+
     )
   }
 }
