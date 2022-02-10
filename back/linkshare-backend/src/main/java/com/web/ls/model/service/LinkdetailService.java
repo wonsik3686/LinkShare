@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,23 +32,6 @@ public class LinkdetailService {
     }
 
     public void updateLink(LinkDetailUpdateRequest request) {
-//        Optional<LinkDetail> link = linkDetailRepository.findById(request.getId());
-//
-//        link.ifPresent(l -> {
-//            if(request.getTitle() != null && request.getTitle().equals("")) {
-//                l.setTitle(request.getTitle());
-//            }
-//
-//            if(request.getDesc() != null && request.getDesc().equals("")) {
-//                l.setDesc(request.getDesc());
-//            }
-//
-//            if(request.getUrl() != null && request.getUrl().equals("")) {
-//                l.setUrl(request.getUrl());
-//            }
-//
-//            linkDetailRepository.save(l);
-//        });
 
         LinkDetail detail = linkDetailRepository.getById(request.getId());
         detail.setTitle(request.getTitle());
@@ -57,4 +39,5 @@ public class LinkdetailService {
         detail.setUrl(request.getUrl());
         linkDetailRepository.save(detail);
     }
+
 }

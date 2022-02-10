@@ -125,12 +125,12 @@ public class LinkboxService {
     public List<LinkboxInfoResponse> searchLinkboxListByUserId(Integer userId) {
         List<LinkboxInfoResponse> responseList = new ArrayList<>();
 
-        List<Integer> boxList = userboxRepository.findAllByUid(userId);
+        List<Userbox> userBoxList = userboxRepository.findAllByUid(userId);
 
-        for (Integer boxId: boxList) {
+        for (Userbox userBox: userBoxList) {
             LinkboxInfoResponse info = new LinkboxInfoResponse();
 
-            Linkbox box = linkboxRepository.getById(boxId);
+            Linkbox box = linkboxRepository.getById(userBox.getBoxid());
             info.setId(box.getId());
             info.setDesc(box.getDesc());
             info.setTitle(box.getTitle());
