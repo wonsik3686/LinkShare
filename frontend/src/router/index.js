@@ -57,16 +57,18 @@ const routes = [
     ]
   },
   {
-    path: '/linkbox',
+    path: '/linkbox/:boxid',
     component: () => import('../views/Linkboxdetail.vue'),
     children: [
       {
         path: "linklist",
         component: () => import('@/components/linkboxdetail/linklist.vue'),
+        props: true,
       },
       {
         path: "linktree",
         component: () => import('@/components/linkboxdetail/flowy/flowy.vue'),
+        props: true,
       },
     ]
   },

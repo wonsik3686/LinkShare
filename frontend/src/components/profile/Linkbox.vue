@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { createLinkbox } from '@/api/linkbox'
+import { mapState, mapActions } from 'vuex'
+import { createLinkbox, listUserLinkbox } from '@/api/linkbox'
 
 export default {
   data: () => ({
@@ -53,15 +53,29 @@ export default {
       interest: [],
     }
   }),
+  created() {
+    const userItem = this.$route.params.email;
+    this.fetchUserInfo(userItem)
+  },
+  mounted () {
+    console.log(this.userItem)
+    listUserLinkbox(this.userItem.id,
+    (response) => {
+      if (response.data.msg === "success") {
+        console.log('success listUserLinkbox')
+      }
+    })
+  },
   // 분리한 store에서 state 불러오기
   // mapState의 경우 computed에서 불러오지 않으면 error
   computed: {
-    ...mapState('memberStore', ['userInfo']),
+    ...mapState('memberStore', ['userItem']),
   },
   methods: {
+    ...mapActions('memberStore', ['fetchUserInfo']),
     createNewLinkbox() {
       // object 데이터에 uid객체 추가
-      this.newLinkbox.uid = this.userInfo.id
+      this.newLinkbox.uid = this.userItem.id
       console.log(this.newLinkbox)
 
       // api 통신

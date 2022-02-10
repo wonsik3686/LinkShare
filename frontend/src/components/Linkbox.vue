@@ -16,8 +16,8 @@
 
       <v-list-item-content>
         <v-list-item-title class="text-h5 mb-1">
-          <router-link to="/linkbox" style=text-decoration:none;>
-          {{ title }}
+          <router-link :to="`/linkbox/${boxid}`" style=text-decoration:none;>
+            {{ title }}
           </router-link>
         </v-list-item-title>
         <v-list-item-subtitle>{{ desc }}</v-list-item-subtitle>
@@ -45,7 +45,7 @@ import Complete from '../components/Complete.vue'
       Commentmodal,
       Complete,
     },
-    props: ['title', 'desc'],
+    props: ['title', 'desc', 'boxid'],
     data () {
       return {
         Commentmodal: false,

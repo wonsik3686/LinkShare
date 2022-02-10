@@ -11,6 +11,10 @@ function listLinkbox (res, err) {
   api.get('linkbox/list').then(res).catch(err)
 }
 
+function listUserLinkbox (userid, res, err) {
+  api.get(`linkbox/list/${userid}`).then(res).catch(err)
+}
+
 function viewLinkbox (boxdata, res, err) {
   api.get(`linkbox/viewcount/${boxdata.boxid}`).then(res).catch(err)
 }
@@ -31,6 +35,14 @@ function deleteLinkboxInterest (boxdata, res, err) {
   api.delete('linkbox/interest', JSON.stringify(boxdata)).then(res).catch(err)
 }
 
+// 링크박스 정보 불러오기
+function getLinkboxInfo (boxid,  res, err) {
+  api.get(`linkbox/one/${boxid}`).then(res).catch(err)
+}
+
+function getLinkboxInterest (boxid,  res, err) {
+  api.get(`linkbox/interest/${boxid}`).then(res).catch(err)
+}
 
 // 링크박스 내 링크 관련 코드
 function createLink (linkdata, res, err) {
@@ -50,7 +62,9 @@ function deleteLink (linkid, res, err) {
 }
 
 export {
-  createLinkbox, listLinkbox, viewLinkbox, updateLinkbox, deleteLinkbox,
+  createLinkbox, listLinkbox, listUserLinkbox, viewLinkbox,
+  updateLinkbox, deleteLinkbox,
   addLinkboxInterest, deleteLinkboxInterest,
+  getLinkboxInfo, getLinkboxInterest,
   createLink, listLink, updateLink, deleteLink
 }

@@ -2,6 +2,8 @@
   <v-container>
     <h1>링크트리</h1>
 
+    {{ links }}
+
     <div>
       <div class="row my-3">
         <flowy-new-block
@@ -64,10 +66,48 @@ export default {
   },
   data: () => ({
     links: null,
-    test: [],
     holder: [],
     dragging: false,
-    blocks: [],
+    blocks: [
+      {
+        preview: {
+          title: 'New visitor',
+        },
+        node: {
+          title: 'New visitor',
+          description: '<span>When a <b>new visitor</b> goes to <b>Site 1</span></span>',
+        },
+      },
+      {
+        preview: {
+          title: 'Update database',
+          icon: 'error',
+        },
+        node: {
+          title: 'Update database',
+          description: '<span>Triggers when somebody performs a <b>specified action</b></span>',
+        },
+      },
+      {
+        preview: {
+          title: 'Time has passed, very very very fast',
+        },
+        node: {
+          title: 'Time has passed',
+          description: 'Triggers after a specified <b>amount</b> of time',
+        },
+      },
+      {
+        preview: {
+          title: 'Cannot be added',
+        },
+        node: {
+          title: 'Time has passed',
+          description: 'Triggers after a specified <b>amount</b> of time',
+          canBeAdded: false,
+        },
+      },
+    ],
     nodes: [
       {
         id: '1',
@@ -80,6 +120,26 @@ export default {
           isroot: true,
         },
       },
+      {
+        id: '2',
+        parentId: '1',
+        nodeComponent: Node,
+        data: {
+          text: 'Parent block',
+          title: 'New Visitor',
+          description: '<span>When a <b>new visitor</b> goes to <i>Site 1</i></span>',
+        },
+      },
+      {
+        id: '3',
+        parentId: '1',
+        nodeComponent: Node,
+        data: {
+          text: 'Parent block',
+          title: 'New Visitor',
+          description: '<span>When a <b>new visitor</b> goes to <i>Site 1</i></span>',
+        },
+      },
     ],
   }),
   created() {
@@ -90,23 +150,7 @@ export default {
       (response) => {
         if (response.data.msg === "success") {
           this.links = response.data.object
-          const links = response.data.object
-          // console.log(links)
-          
-          // test용 array
-          
-
-          links.forEach((value) => {
-            // block, node array에 값 추가
-            var testblock = {preview: { title: '', description: '' }, node: {title:'', description:''}}
-            testblock.preview.title = testblock.node.title = value.title
-            testblock.preview.description = testblock.node.description = value.desc
-
-            console.log(testblock)
-
-            this.blocks.push(testblock)
-          })
-
+          console.log(this.links)
         } else { console.log(response.data.msg) }
       }, (err) => console.log(err))
     },
