@@ -21,11 +21,11 @@
       <v-chip
         class="ma-1 px-4"
         v-for="interest in linkbox.interests"
-        :key="interest.title"
+        :key="interest"
         color="blue"
         text-color="white"
       >
-        <strong>{{ interest.title }}</strong>
+        <strong>{{ interest }}</strong>
       </v-chip>
 
     </v-row>
@@ -41,9 +41,10 @@
     <br>
 
     <v-container>
+
       <v-tabs fixed-tabs>
-        <v-tab to="/linkbox/linklist" :linksdata="links" v-if="links">링크목록</v-tab>
-        <v-tab to="/linkbox/linktree" :linksdata="links">링크트리</v-tab>
+        <v-tab :to="`/linkbox/${boxid}/linklist`">링크목록</v-tab>
+        <v-tab :to="`/linkbox/${boxid}/linktree`">링크트리</v-tab>
       </v-tabs>
 
       <v-container>
@@ -56,29 +57,17 @@
 
 <script>
 import linkboxSetting from '@/components/linkboxdetail/linkboxSetting'
-import { deleteLinkbox } from "@/api/linkbox";
+import { getLinkboxInfo, deleteLinkbox } from "@/api/linkbox";
 
 export default {
-    components: {
+  components: {
     linkboxSetting,
   },
   data: () => ({
+    tab: null,
     linkboxSetting: false,
-    linkbox: {
-      boxid: '000',
-      title: '링크박스 제목',
-      desc: '링크박스 설명 및 개요',
-      interests: [
-        { title: "python" },
-        { title: "vue.js" },
-        { title: "springboot" },
-      ]
-    },
-    links: [
-      {id: '1', title: '샘플 링크1', desc: '샘플 링크 개요', url: 'https://github.com/nivaldomartinez/link-prevue?ref=kabanoki.net#custom-card'},
-      {id: '2', title: '샘플 링크2', desc: '샘플 링크 개요', url: 'https://github.com/dw3624'},
-      {id: '3', title: '샘플 링크3', desc: '샘플 링크 개요', url: 'https://www.youtube.com/'},
-    ]
+    linkbox: {},
+    links: null,
   }),
   methods: {
     deleteLinkbox,
@@ -87,7 +76,18 @@ export default {
     }
   },
   created() {
-    console.log(this.links)
+    const boxid = this.$route.params.boxid
+    this.boxid = boxid
+    console.log(boxid)
+
+    getLinkboxInfo(boxid,
+      (response) => {
+        if (response.data.msg === "success") {
+          console.log(response.data.object)
+          this.linkbox = response.data.object
+        } else {console.log(response.data.msg)}
+      },
+      (err) => console.log(err))
   }
 }
 </script>

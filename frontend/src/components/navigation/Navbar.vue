@@ -7,7 +7,7 @@
       <v-toolbar-title
         class="text-h5 blue--text"
         style="cursor: pointer"
-        @click="$router.push('/')"
+        @click="$router.push('/').catch(()=>{})"
       >
       LinkShare
       </v-toolbar-title>

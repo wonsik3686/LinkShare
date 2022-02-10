@@ -12,7 +12,7 @@
 
     <v-row>
       <v-col v-for="box in boxlist" v-bind:key="box.id" cols='6'>
-      <Linkbox :title="box.title" :desc="box.desc" />
+        <Linkbox :title="box.title" :desc="box.desc" :boxid="box.id"/>
       </v-col>
     </v-row>
 
