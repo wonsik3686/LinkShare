@@ -1,5 +1,6 @@
 package com.web.ls.model.dto.linkbox.linkdetail;
 
+import com.web.ls.model.entity.LinkDetail;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -24,4 +25,12 @@ public class LinkDetailUpdateRequest implements Serializable {
 
     @ApiModelProperty(value = "link url", position = 4)
     private final String url;
+
+    public LinkDetail toEntity() {
+        return LinkDetail.builder()
+                .title(this.title)
+                .desc(this.desc)
+                .url(this.url)
+                .build();
+    }
 }
