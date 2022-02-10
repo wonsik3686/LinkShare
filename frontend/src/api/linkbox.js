@@ -32,6 +32,24 @@ function deleteLinkboxInterest (boxdata, res, err) {
 }
 
 
+// 댓글 관련 코드
+function createLinkboxComment (boxdata, res, err) {
+  api.post('linkbox/comment', JSON.stringify(boxdata)).then(res).catch(err)
+}
+
+function deleteLinkboxComment (commentid, res, err) {
+  api.delete(`linkbox/comment/${commentid}`).then(res).catch(err)
+}
+
+function updateLinkboxComment (boxdata, res, err) {
+  api.put('linkbox/comment', JSON.stringify(boxdata)).then(res).catch(err)
+}
+
+function searchLinkBoxCommentByBoxId (boxid, res, err) {
+  api.get(`linkbox/comment/${boxid}`).then(res).catch(err)
+}
+
+
 // 링크박스 내 링크 관련 코드
 function createLink (linkdata, res, err) {
   api.post('linkdetail', JSON.stringify(linkdata)).then(res).catch(err)
@@ -52,5 +70,6 @@ function deleteLink (linkid, res, err) {
 export {
   createLinkbox, listLinkbox, viewLinkbox, updateLinkbox, deleteLinkbox,
   addLinkboxInterest, deleteLinkboxInterest,
+  createLinkboxComment, deleteLinkboxComment, updateLinkboxComment, searchLinkBoxCommentByBoxId,
   createLink, listLink, updateLink, deleteLink
 }
