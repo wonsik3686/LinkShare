@@ -32,25 +32,29 @@ public class LinkdetailService {
                 .map(LinkdetailResponse::fromEntity).collect(Collectors.toList());
     }
 
-    public Optional<LinkDetail> updateLink(LinkDetailUpdateRequest request) {
-        Optional<LinkDetail> link = linkDetailRepository.findById(request.getId());
+    public void updateLink(LinkDetailUpdateRequest request) {
+//        Optional<LinkDetail> link = linkDetailRepository.findById(request.getId());
+//
+//        link.ifPresent(l -> {
+//            if(request.getTitle() != null && request.getTitle().equals("")) {
+//                l.setTitle(request.getTitle());
+//            }
+//
+//            if(request.getDesc() != null && request.getDesc().equals("")) {
+//                l.setDesc(request.getDesc());
+//            }
+//
+//            if(request.getUrl() != null && request.getUrl().equals("")) {
+//                l.setUrl(request.getUrl());
+//            }
+//
+//            linkDetailRepository.save(l);
+//        });
 
-        link.ifPresent(l -> {
-            if(request.getTitle() != null && request.getTitle().equals("")) {
-                l.setTitle(request.getTitle());
-            }
-
-            if(request.getDesc() != null && request.getDesc().equals("")) {
-                l.setDesc(request.getDesc());
-            }
-
-            if(request.getUrl() != null && request.getUrl().equals("")) {
-                l.setUrl(request.getUrl());
-            }
-
-            linkDetailRepository.save(l);
-        });
-
-        return link;
+        LinkDetail detail = linkDetailRepository.getById(request.getId());
+        detail.setTitle(request.getTitle());
+        detail.setDesc(request.getDesc());
+        detail.setUrl(request.getUrl());
+        linkDetailRepository.save(detail);
     }
 }
