@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface UserboxRepository extends JpaRepository<Userbox, Integer> {
     void deleteByBoxid(int boxid);
-    List<Integer> findAllByUid(Integer uid);
+    List<Userbox> findAllByUid(Integer uid);
 }

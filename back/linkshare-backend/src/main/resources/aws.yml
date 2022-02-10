@@ -1,0 +1,11 @@
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIA5OF36AUOQYWGEUHY
+      secretKey: 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
+    s3:
+      bucket: linkshare-01-s3
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
