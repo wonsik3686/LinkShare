@@ -103,6 +103,27 @@ public class UserController {
     	result.object = returnMap;
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+
+    @ApiOperation(value = "회원 정보보기")
+	@GetMapping
+	public Object userInfoById(@RequestParam("uid") @ApiParam(value = "유저의 id.", required = true) int uid) {
+    	Map<String, Object> resultMap = new HashMap<>();
+    	Map<String, Object> returnMap = new HashMap<>();
+    	User user = profileService.userInfo(uid);
+    	final BasicResponse result = new BasicResponse();
+    	
+    	resultMap.put("id", user.getId());
+    	resultMap.put("email", user.getEmail());
+    	resultMap.put("nickname", user.getNickname());
+    	resultMap.put("introduce", user.getIntroduce());
+    	resultMap.put("imagePath", user.getImagePath());
+    	resultMap.put("follower", followService.follower(user.getId()));
+    	resultMap.put("following", followService.following(user.getId()));
+    	returnMap.put("userInfo", resultMap);
+    	result.msg = "success";
+    	result.object = returnMap;
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
     
     @DeleteMapping("/{email}")
     @ApiOperation(value = "회원탈퇴 요청")
