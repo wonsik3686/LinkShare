@@ -7,6 +7,7 @@ import com.web.ls.model.dto.linkbox.linktree.TreeInfoResponse;
 import com.web.ls.model.dto.linkbox.linktree.TreeInfoUpdateRequest;
 import com.web.ls.model.entity.TreeInfo;
 import com.web.ls.model.repository.TreeInfoRepository;
+import com.web.ls.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
