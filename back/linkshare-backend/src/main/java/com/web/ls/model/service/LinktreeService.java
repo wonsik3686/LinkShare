@@ -1,6 +1,7 @@
 package com.web.ls.model.service;
 
 import com.sun.source.tree.Tree;
+import com.web.ls.exception.AlreadyExistTreeInfoException;
 import com.web.ls.model.dto.linkbox.linktree.TreeInfoCreateRequest;
 import com.web.ls.model.dto.linkbox.linktree.TreeInfoResponse;
 import com.web.ls.model.dto.linkbox.linktree.TreeInfoUpdateRequest;
@@ -19,8 +20,12 @@ public class LinktreeService {
     TreeInfoRepository treeInfoRepository;
 
     public void createLinktree(TreeInfoCreateRequest request) {
-        TreeInfo info = request.toEntity();
-        treeInfoRepository.save(info);
+        if(!treeInfoRepository.existsByBoxid(request.getBoxid())) {
+            TreeInfo info = request.toEntity();
+            treeInfoRepository.save(info);
+        } else {
+            throw new AlreadyExistTreeInfoException();
+        }
     }
 
     public void deleteLinktree(Integer treeid) {
