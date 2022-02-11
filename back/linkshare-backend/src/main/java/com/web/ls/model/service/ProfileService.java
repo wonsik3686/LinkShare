@@ -17,6 +17,10 @@ public class ProfileService {
 		return userRepository.findByEmail(email);
     }
 	
+	public User userInfo(int id){
+		return userRepository.findById(id).get();
+    }
+	
 	public void deleteUser(String email) {
 		User user = userRepository.findByEmail(email);
 		userRepository.delete(user);
