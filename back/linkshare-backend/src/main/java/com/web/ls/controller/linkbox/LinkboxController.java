@@ -1,27 +1,40 @@
 package com.web.ls.controller.linkbox;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.web.ls.model.dto.BasicResponse;
 import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;
 import com.web.ls.model.dto.linkbox.LinkboxInterestRequest;
 import com.web.ls.model.dto.linkbox.LinkboxUpdateRequest;
 import com.web.ls.model.dto.linkbox.comment.BoxCommentRequest;
 import com.web.ls.model.dto.linkbox.comment.BoxCommentUpdateRequest;
+import com.web.ls.model.dto.linkbox.like.LikeUserResponse;
 import com.web.ls.model.dto.linkbox.like.LikesCreateRequest;
-import com.web.ls.model.entity.BoxComment;
 import com.web.ls.model.service.BoxCommentService;
 import com.web.ls.model.service.BoxLikeService;
 import com.web.ls.model.service.LinkboxService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
@@ -218,6 +231,32 @@ public class LinkboxController {
             "삭제할 좋아요 ID") Integer linkid) {
         final BasicResponse result = new BasicResponse();
         boxLikeService.deleteLinkboxLike(linkid);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @GetMapping("/like/{boxid}")
+    @ApiOperation(value = "박스 ID로 좋아요 정보 조회하기")
+    public Object searchLikeByBoxid(@PathVariable("boxid") @ApiParam(value =
+            "조회할 박스의 박스ID") Integer boxid) {
+        final BasicResponse result = new BasicResponse();
+        List<LikeUserResponse> list = new LinkedList<>();
+        boxLikeService.searchLikeByBoxid(boxid).forEach(i -> {
+        	list.add(i.toResponse());
+        });
+        result.object = list;
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @GetMapping("/like")
+    @ApiOperation(value = "박스 ID로 링크박스 정보 조회하기")
+    public Object checkUserLike(@RequestParam("boxid") @ApiParam(value =
+            "조회할 박스의 박스ID") Integer boxid, @RequestParam("uid") @ApiParam(value =
+                    "검사할 유저의 ID") Integer uid) {
+        final BasicResponse result = new BasicResponse();
+        
+        result.object = boxLikeService.checkLikeUser(boxid, uid);
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

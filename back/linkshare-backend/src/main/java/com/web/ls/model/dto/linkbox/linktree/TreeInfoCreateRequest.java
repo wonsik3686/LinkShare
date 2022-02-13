@@ -18,12 +18,12 @@ public class TreeInfoCreateRequest implements Serializable {
     private Integer boxid;
 
     @ApiModelProperty(value = "링크트리 json", required = true)
-    private Object treeContents;
+    private String treeContents;
 
     public TreeInfo toEntity() {
         return TreeInfo.builder()
                 .boxid(this.boxid)
-                .json(this.treeContents.toString())
+                .json(this.treeContents)
                 .build();
     }
 }

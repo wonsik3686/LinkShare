@@ -1,15 +1,14 @@
 package com.web.ls.model.service;
 
-import com.sun.source.tree.Tree;
 import com.web.ls.exception.AlreadyExistTreeInfoException;
 import com.web.ls.model.dto.linkbox.linktree.TreeInfoCreateRequest;
 import com.web.ls.model.dto.linkbox.linktree.TreeInfoResponse;
 import com.web.ls.model.dto.linkbox.linktree.TreeInfoUpdateRequest;
 import com.web.ls.model.entity.TreeInfo;
 import com.web.ls.model.repository.TreeInfoRepository;
-import com.web.ls.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import springfox.documentation.spring.web.json.Json;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ public class LinktreeService {
 
     public void updateLinktree(TreeInfoUpdateRequest request) {
         TreeInfo tree = treeInfoRepository.getById(request.getId());
-        tree.setJson(request.getJson().toString());
+        tree.setJson(request.getJson());
         treeInfoRepository.save(tree);
     }
 

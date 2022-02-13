@@ -4,7 +4,6 @@ import com.web.ls.model.entity.TreeInfo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
-import springfox.documentation.spring.web.json.Json;
 
 import java.io.Serializable;
 
@@ -19,7 +18,7 @@ public class TreeInfoResponse implements Serializable {
     private final Integer boxid;
 
     @ApiModelProperty(value = "링크트리 Json", required = true)
-    private final Object treeContents;
+    private final String treeContents;
 
     public static TreeInfoResponse fromEntity(TreeInfo treeInfo) {
         return TreeInfoResponse.builder()

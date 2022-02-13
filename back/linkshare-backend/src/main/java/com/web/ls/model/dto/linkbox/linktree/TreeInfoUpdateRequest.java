@@ -18,11 +18,11 @@ public class TreeInfoUpdateRequest implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "링크트리 json", required = true)
-    private Object json;
+    private String json;
 
     public TreeInfo toEntity() {
         return TreeInfo.builder()
-                .json(this.json.toString())
+                .json(this.json)
                 .build();
     }
 }
