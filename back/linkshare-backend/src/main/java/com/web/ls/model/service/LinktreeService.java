@@ -28,8 +28,8 @@ public class LinktreeService {
         }
     }
 
-    public void deleteLinktree(Integer treeid) {
-        treeInfoRepository.deleteById(treeid);
+    public void deleteLinktree(Integer boxid) {
+        treeInfoRepository.deleteByBoxid(boxid);
     }
 
     public void updateLinktree(TreeInfoUpdateRequest request) {
