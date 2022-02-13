@@ -1,7 +1,12 @@
 package com.web.ls.model.entity;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.mysql.cj.xdevapi.JsonArray;
 import lombok.*;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.persistence.*;
 
@@ -26,5 +31,4 @@ public class TreeInfo {
     @Lob
     @Column(name = "json")
     private String json;
-
 }
