@@ -30,12 +30,12 @@ public class LinktreeController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{treeid}")
+    @DeleteMapping("/{boxid}")
     @ApiOperation(value = "링크트리 삭제하기")
-    public Object deleteLinktree(@PathVariable("treeid") @ApiParam(
-            "삭제할 링크트리의 ID") Integer treeid) {
+    public Object deleteLinktree(@PathVariable("boxid") @ApiParam(
+            "삭제할 링크트리의 ID") Integer boxid) {
         final BasicResponse result = new BasicResponse();
-        linktreeService.deleteLinktree(treeid);
+        linktreeService.deleteLinktree(boxid);
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -58,4 +58,6 @@ public class LinktreeController {
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
 }

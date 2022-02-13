@@ -81,7 +81,7 @@ public class LinkboxService {
         linkboxRepository.deleteById(boxid);
     }
 
-    public boolean existsLinkboxById(int boxid) {
+    public boolean existsLinkboxById(Integer boxid) {
         if(linkboxRepository.existsById(boxid)) {
             return true;
         }
