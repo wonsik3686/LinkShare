@@ -1,4 +1,4 @@
-package com.web.ls.model.dto.linkbox.like;
+package com.web.ls.model.dto.User;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LikeUserResponse {
+public class UserResponse {
 
     @ApiModelProperty(value = "user id", position = 1, required = true)
     private Integer uid;

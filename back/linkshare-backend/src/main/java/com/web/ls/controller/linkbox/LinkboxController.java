@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ls.model.dto.BasicResponse;
+import com.web.ls.model.dto.User.UserResponse;
 import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;
 import com.web.ls.model.dto.linkbox.LinkboxInterestRequest;
 import com.web.ls.model.dto.linkbox.LinkboxUpdateRequest;
 import com.web.ls.model.dto.linkbox.comment.BoxCommentRequest;
 import com.web.ls.model.dto.linkbox.comment.BoxCommentUpdateRequest;
-import com.web.ls.model.dto.linkbox.like.LikeUserResponse;
 import com.web.ls.model.dto.linkbox.like.LikesCreateRequest;
 import com.web.ls.model.service.BoxCommentService;
 import com.web.ls.model.service.BoxLikeService;
@@ -239,7 +239,7 @@ public class LinkboxController {
     public Object searchLikeByBoxid(@PathVariable("boxid") @ApiParam(value =
             "조회할 박스의 박스ID") Integer boxid) {
         final BasicResponse result = new BasicResponse();
-        List<LikeUserResponse> list = new LinkedList<>();
+        List<UserResponse> list = new LinkedList<>();
         boxLikeService.searchLikeByBoxid(boxid).forEach(i -> {
         	list.add(i.toResponse());
         });
