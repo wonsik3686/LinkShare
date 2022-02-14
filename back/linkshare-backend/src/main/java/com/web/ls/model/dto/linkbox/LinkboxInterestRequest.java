@@ -8,13 +8,13 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
-public class LinkboxInterestRequest implements Serializable {
+public class LinkboxInterestRequest {
 
     @ApiModelProperty(value = "linkbox boxid", position = 1, required = true)
     @NotNull
-    private final Integer boxid;
+    private Integer boxid;
 
     @ApiModelProperty(value = "linkbox interest name", position = 2, required = true)
     @NotBlank
-    private final String interest;
+    private String interest;
 }

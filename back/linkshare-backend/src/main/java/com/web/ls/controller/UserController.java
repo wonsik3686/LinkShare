@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import com.web.ls.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +19,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.web.ls.model.dto.BasicResponse;
 import com.web.ls.model.dto.User.ProfileEditRequest;
 import com.web.ls.model.dto.User.SigninRequest;
 import com.web.ls.model.dto.User.SignupRequest;
+import com.web.ls.model.dto.User.UserInterestRequest;
 import com.web.ls.model.entity.User;
+import com.web.ls.model.service.FollowService;
+import com.web.ls.model.service.ProfileService;
+import com.web.ls.model.service.S3Service;
+import com.web.ls.model.service.SigninService;
+import com.web.ls.model.service.SignupService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
@@ -207,4 +212,34 @@ public class UserController {
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	
+    @PostMapping("/interest")
+    @ApiOperation(value = "유저 관심사 추가하기")
+    public Object createUserInterest(@RequestBody @Valid UserInterestRequest request) {
+        final BasicResponse result = new BasicResponse();
+        profileService.createUserInterest(request);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/interest")
+    @ApiOperation(value = "유저 관심사 삭제하기")
+    public Object deleteLinkboxInterest(@RequestBody @Valid UserInterestRequest request) {
+        final BasicResponse result = new BasicResponse();
+        profileService.deleteUserInterest(request);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    
+    @GetMapping("/interest/{uid}")
+    @ApiOperation(value = "유저 관심사 조회하기")
+    public Object searchUserInterest(@PathVariable("uid") @ApiParam(value =
+            "조회할 관심사의 유저 ID") Integer uid) {
+        final BasicResponse result = new BasicResponse();
+        result.object = profileService.searchInterestsByUid(uid);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

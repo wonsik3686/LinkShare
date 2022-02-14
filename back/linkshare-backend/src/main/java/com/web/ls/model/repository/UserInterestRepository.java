@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface UserInterestRepository extends JpaRepository<UserInterest, Integer> {
 
+	UserInterest findByUidAndInterestId(Integer uid, Integer InterestId);
     List<UserInterest> findAllByUid(Integer uid);
 }

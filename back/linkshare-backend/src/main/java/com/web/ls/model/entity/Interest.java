@@ -24,9 +24,4 @@ public class Interest {
 
     @Column(name = "name", nullable = false, length = 45)
     private String name;
-
-    @CreationTimestamp
-    @Column(name = "regtime", nullable = false, updatable = false)
-    private Instant regtime;
-
 }
