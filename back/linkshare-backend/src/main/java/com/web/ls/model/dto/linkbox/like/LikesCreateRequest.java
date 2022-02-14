@@ -9,16 +9,16 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Builder
+
 @Data
-public class LikesCreateRequest implements Serializable {
+public class LikesCreateRequest {
 
     @ApiModelProperty(value = "user id", position = 1, required = true)
     @NotNull
-    private final Integer uid;
+    private Integer uid;
     @ApiModelProperty(value = "link box id", position = 2, required = true)
     @NotNull
-    private final Integer boxid;
+    private Integer boxid;
 
     public Likes toEntity() {
         return Likes.builder()
