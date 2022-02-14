@@ -225,12 +225,11 @@ public class LinkboxController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping("/like/{likeid}")
+    @DeleteMapping("/like")
     @ApiOperation(value = "링크 박스 좋아요 삭제하기")
-    public Object deleteLikeboxLike(@PathVariable("linkid") @ApiParam(value =
-            "삭제할 좋아요 ID") Integer linkid) {
+    public Object deleteLikeboxLike(@RequestBody @Valid LikesCreateRequest request) {
         final BasicResponse result = new BasicResponse();
-        boxLikeService.deleteLinkboxLike(linkid);
+        boxLikeService.deleteLinkboxLike(request);
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

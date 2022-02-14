@@ -22,11 +22,16 @@ public class BoxLikeService {
 
     public void createLinkboxLike(LikesCreateRequest request) {
         Likes like = request.toEntity();
-        likesRepository.save(like);
+        if(!likesRepository.existsByBoxidAndUid(request.getBoxid(), request.getUid())) {
+        	likesRepository.save(like);
+        }
     }
 
-    public void deleteLinkboxLike(Integer likeid) {
-        likesRepository.deleteById(likeid);
+    public void deleteLinkboxLike(LikesCreateRequest request) {
+    	Likes like = likesRepository.findByBoxidAndUid(request.getBoxid(),request.getUid());
+    	if(like != null) {
+    		likesRepository.delete(like);
+    	}
     }
 
     public List<User> searchLikeByBoxid(Integer boxid) {

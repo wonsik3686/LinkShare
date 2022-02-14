@@ -11,4 +11,6 @@ public interface LikesRepository extends JpaRepository<Likes, Integer> {
     int countByBoxid(Integer boxid);
     
     boolean existsByBoxidAndUid(Integer boxid, Integer uid);
+
+    Likes findByBoxidAndUid(Integer boxid, Integer uid);
 }
