@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.UUID;
 
@@ -28,11 +29,26 @@ public class S3Service {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;  // S3 버킷 이름
 
+    @Value("${cloud.aws.s3.hosting}")
+    public String hosting;  // S3 정적 호스팅 이름
+
     @Value("${cloud.aws.s3.dirLinkdetail}")
     public String dirLinkdetail;  // S3  dir 이름
 
+    @Value("${cloud.aws.s3.dirUser}")
+    public String dirUser;  // S3  dir 이름
+
     public String uploadToLinkdetailDir(MultipartFile file) {
 
+        return uploadFileToS3(file, dirLinkdetail);
+    }
+
+    public String uploadToUserDir(MultipartFile file) {
+
+        return uploadFileToS3(file, dirUser);
+    }
+
+    private String uploadFileToS3(MultipartFile file, String dir) {
         String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
         ObjectMetadata objMeta = new ObjectMetadata();
         try {
@@ -40,12 +56,13 @@ public class S3Service {
             objMeta.setContentLength(bytes.length);
             ByteArrayInputStream byteArrayIs = new ByteArrayInputStream(bytes);
 
-            amazonS3Client.putObject(new PutObjectRequest(bucket, dirLinkdetail + "/" + fileName, byteArrayIs, objMeta));
+            amazonS3Client.putObject(new PutObjectRequest(bucket, dir + "/" + fileName, byteArrayIs, objMeta));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return amazonS3Client.getUrl(bucket, dirLinkdetail + fileName).toString();
+        String path = amazonS3Client.getUrl(bucket, dir + "/" + fileName).getPath();
+        path = hosting + path;
+        return path;
     }
 
     public ResponseEntity<byte[]> downloadFromLinkdetailDir(String filename) throws IOException {

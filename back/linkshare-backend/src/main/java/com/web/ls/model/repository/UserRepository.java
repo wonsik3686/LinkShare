@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     boolean existsByNickname(String nickname);
 	
     User findByEmail(String email);
+    User findByNickname(String nickname);
     
     @Query(value = "select * from user u join likes l on u.uid = l.uid where l.boxid = :boxid", nativeQuery = true)
     List<User> findAllByBoxid(@Param("boxid") Integer boxid);
