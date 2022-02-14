@@ -28,7 +28,7 @@ public class SigninService {
         if (!passwordEncoder.matches(password, member.getPassword())) throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         
         //db에가서 auth가 true인지 체크
-        if(!member.getConfirm()) throw new AuthenticationServiceException("이메일 인증을 하지 않은 사용자 입니다.");
+//        if(!member.getConfirm()) throw new AuthenticationServiceException("이메일 인증을 하지 않은 사용자 입니다.");
         return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
 }
