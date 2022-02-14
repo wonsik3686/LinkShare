@@ -24,7 +24,4 @@ public class UserInterest {
 
     @Column(name = "interest_id", nullable = false)
     private Integer interestId;
-
-    @Column(name = "regtime", nullable = false)
-    private Instant regtime;
 }
