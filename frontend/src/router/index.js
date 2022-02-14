@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store/index.js'
 import Newsfeed from '../views/Newsfeed.vue'
-// import Linkboxdetail from '../views/Linkboxdetail.vue'
 import Toplinkbox from '../views/Toplinkbox'
 
 
@@ -40,7 +39,7 @@ const routes = [
       },
       {
         path: "linkbox",
-        component: () => import('@/components/profile/Linkbox.vue'),
+        component: () => import('@/components/profile/LinkboxList.vue'),
       },
       {
         path: "scrap",
