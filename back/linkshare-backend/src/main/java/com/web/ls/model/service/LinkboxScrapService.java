@@ -15,12 +15,17 @@ public class LinkboxScrapService {
     BoxScrapRepository boxScrapRepository;
 
     public void createBoxScrap(BoxScrapCreateRequest request) {
-        BoxScrap boxScrap = request.toEntity();
-        boxScrapRepository.save(boxScrap);
+    	if(!boxScrapRepository.existsByBoxidAndUid(request.getBoxid(), request.getUid())) {
+    		BoxScrap boxScrap = request.toEntity();
+    		boxScrapRepository.save(boxScrap);
+    	}
     }
 
-    public void deleteBoxScrap(Integer scrapId) {
-        boxScrapRepository.deleteById(scrapId);
+    public void deleteBoxScrap(BoxScrapCreateRequest request) {
+    	BoxScrap boxScrap = boxScrapRepository.findByBoxidAndUid(request.getBoxid(), request.getUid());
+    	if(boxScrap != null) {
+    		boxScrapRepository.delete(boxScrap);
+    	}
     }
 
     public List<BoxScrap> searchBoxScrapListByBoxid(Integer boxId) {

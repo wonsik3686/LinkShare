@@ -8,9 +8,8 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Builder
 @Data
-public class BoxScrapCreateRequest implements Serializable {
+public class BoxScrapCreateRequest {
 
     @ApiModelProperty(value = "user id", position = 1, required = true)
     @NotNull

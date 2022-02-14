@@ -21,7 +21,7 @@ public class LinkboxScrapController {
     @Autowired
     LinkboxScrapService linkboxScrapService;
 
-    @PostMapping()
+    @PostMapping
     @ApiOperation(value = "링크박스 스크랩 생성하기")
     public Object createLinkBox(@RequestBody BoxScrapCreateRequest request) {
         final BasicResponse result = new BasicResponse();
@@ -30,12 +30,11 @@ public class LinkboxScrapController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{scrapid}")
+    @DeleteMapping
     @ApiOperation(value = "링크박스 스크랩 삭제")
-    public Object deleteLinkboxScrap(@PathVariable("scrapid") @ApiParam(value =
-            "삭제할 링크박스 스크랩 ID") Integer scrapid) {
+    public Object deleteLinkboxScrap(@RequestBody BoxScrapCreateRequest request) {
         final BasicResponse result = new BasicResponse();
-        linkboxScrapService.deleteBoxScrap(scrapid);
+        linkboxScrapService.deleteBoxScrap(request);
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
