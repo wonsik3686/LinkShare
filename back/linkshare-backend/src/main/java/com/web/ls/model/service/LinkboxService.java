@@ -43,6 +43,9 @@ public class LinkboxService {
     @Autowired
     UserInterestRepository userInterestRepository;
 
+    @Autowired
+    FollowRepository followRepository;
+
     public void createLinkbox(LinkboxCreateRequest request) {
         Linkbox linkbox = new Linkbox();
         linkbox.setTitle(request.getTitle());
@@ -207,6 +210,23 @@ public class LinkboxService {
             }
         }
 
+        return new ArrayList<>(linkboxInfoMap.values());
+    }
+
+    public List<LinkboxInfoResponse> searchLinkboxListByFollow(Integer uid) {
+
+        List<Follow> followList = followRepository.findAllByUid(uid);
+
+        Map<Integer, LinkboxInfoResponse> linkboxInfoMap = new HashMap<Integer, LinkboxInfoResponse>();
+
+        for (Follow follow :
+                followList) {
+            List<Userbox> userboxList = userboxRepository.findAllByUid(follow.getFolloweeId());
+            for (Userbox userbox:
+                 userboxList) {
+                linkboxInfoMap.put(userbox.getBoxid(), prepareLinkboxInfoResponse(linkboxRepository.getById(userbox.getBoxid())));
+            }
+        }
         return new ArrayList<>(linkboxInfoMap.values());
     }
 
