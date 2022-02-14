@@ -15,4 +15,6 @@ public interface BoxInterestRepository extends JpaRepository<BoxInterest, Intege
 
     @Query(value = "select a.`name` from interest a where a.interest_id = any (select b.interest_id from box_interest b where b.boxid = :boxid)", nativeQuery = true)
     List<String> findInterestNameByBoxid(@Param("boxid") Integer boxid);
+
+    List<BoxInterest> findAllByInterestId(Integer interestId);
 }

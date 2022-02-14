@@ -3,16 +3,12 @@ package com.web.ls.model.service;
 import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;
 import com.web.ls.model.dto.linkbox.LinkboxInfoResponse;
 import com.web.ls.model.dto.linkbox.LinkboxInterestRequest;
-import com.web.ls.model.entity.BoxInterest;
-import com.web.ls.model.entity.Interest;
-import com.web.ls.model.entity.Linkbox;
-import com.web.ls.model.entity.Userbox;
+import com.web.ls.model.entity.*;
 import com.web.ls.model.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class LinkboxService {
@@ -43,6 +39,12 @@ public class LinkboxService {
 
     @Autowired
     TreeInfoRepository treeInfoRepository;
+
+    @Autowired
+    UserInterestRepository userInterestRepository;
+
+    @Autowired
+    FollowRepository followRepository;
 
     public void createLinkbox(LinkboxCreateRequest request) {
         Linkbox linkbox = new Linkbox();
@@ -106,24 +108,27 @@ public class LinkboxService {
         List<Linkbox> linkboxes = linkboxRepository.findAll();
 
         for (Linkbox linkbox: linkboxes) {
-            LinkboxInfoResponse info = new LinkboxInfoResponse();
-            info.setId(linkbox.getId());
-            info.setDesc(linkbox.getDesc());
-            info.setTitle(linkbox.getTitle());
-            info.setViewCount(linkbox.getViewCount());
-            info.setRegtime(linkbox.getRegtime());
-            info.setInterests(boxInterestRepository.findInterestNameByBoxid(linkbox.getId()));
-            info.setLikeCount(likesRepository.countByBoxid(linkbox.getId()));
-            info.setCommentCount(boxCommentRepository.countByBoxid(linkbox.getId()));
-            info.setScrapCount(boxScrapRepository.countByBoxid(linkbox.getId()));
 
-            Userbox userbox = userboxRepository.findByBoxidOrderById(linkbox.getId());
-            info.setUid(userbox.getUid());
+//            LinkboxInfoResponse info = new LinkboxInfoResponse();
+//            info.setId(linkbox.getId());
+//            info.setDesc(linkbox.getDesc());
+//            info.setTitle(linkbox.getTitle());
+//            info.setViewCount(linkbox.getViewCount());
+//            info.setRegtime(linkbox.getRegtime());
+//            info.setInterests(boxInterestRepository.findInterestNameByBoxid(linkbox.getId()));
+//            info.setLikeCount(likesRepository.countByBoxid(linkbox.getId()));
+//            info.setCommentCount(boxCommentRepository.countByBoxid(linkbox.getId()));
+//            info.setScrapCount(boxScrapRepository.countByBoxid(linkbox.getId()));
+//
+//            Userbox userbox = userboxRepository.findByBoxidOrderById(linkbox.getId());
+//            info.setUid(userbox.getUid());
 
-            list.add(info);
+            list.add(prepareLinkboxInfoResponse(linkbox));
         }
         return list;
     }
+
+
 
     public List<LinkboxInfoResponse> searchLinkboxListByUserId(Integer userId) {
         List<LinkboxInfoResponse> responseList = new ArrayList<>();
@@ -134,36 +139,110 @@ public class LinkboxService {
             LinkboxInfoResponse info = new LinkboxInfoResponse();
 
             Linkbox box = linkboxRepository.getById(userBox.getBoxid());
-            info.setId(box.getId());
-            info.setDesc(box.getDesc());
-            info.setTitle(box.getTitle());
-            info.setViewCount(box.getViewCount());
-            info.setRegtime(box.getRegtime());
-            info.setInterests(boxInterestRepository.findInterestNameByBoxid(box.getId()));
-            info.setLikeCount(likesRepository.countByBoxid(box.getId()));
-            info.setCommentCount(boxCommentRepository.countByBoxid(box.getId()));
-            info.setScrapCount(boxScrapRepository.countByBoxid(box.getId()));
-            info.setUid(userId);
 
-            responseList.add(info);
+//            info.setId(box.getId());
+//            info.setDesc(box.getDesc());
+//            info.setTitle(box.getTitle());
+//            info.setViewCount(box.getViewCount());
+//            info.setRegtime(box.getRegtime());
+//            info.setInterests(boxInterestRepository.findInterestNameByBoxid(box.getId()));
+//            info.setLikeCount(likesRepository.countByBoxid(box.getId()));
+//            info.setCommentCount(boxCommentRepository.countByBoxid(box.getId()));
+//            info.setScrapCount(boxScrapRepository.countByBoxid(box.getId()));
+//            info.setUid(userId);
+
+            responseList.add(prepareLinkboxInfoResponse(box));
         }
         return responseList;
     }
 
     public LinkboxInfoResponse searchLinkboxByBoxid(Integer boxId) {
         LinkboxInfoResponse info = new LinkboxInfoResponse();
-        Linkbox box = linkboxRepository.getById(boxId);
-        info.setId(box.getId());
-        info.setDesc(box.getDesc());
-        info.setTitle(box.getTitle());
-        info.setViewCount(box.getViewCount());
-        info.setRegtime(box.getRegtime());
-        info.setInterests(boxInterestRepository.findInterestNameByBoxid(box.getId()));
-        info.setLikeCount(likesRepository.countByBoxid(box.getId()));
-        info.setCommentCount(boxCommentRepository.countByBoxid(box.getId()));
-        info.setScrapCount(boxScrapRepository.countByBoxid(box.getId()));
 
-        Userbox userbox = userboxRepository.findByBoxidOrderById(boxId);
+
+        Linkbox box = linkboxRepository.getById(boxId);
+        return prepareLinkboxInfoResponse(box);
+//        info.setId(box.getId());
+//        info.setDesc(box.getDesc());
+//        info.setTitle(box.getTitle());
+//        info.setViewCount(box.getViewCount());
+//        info.setRegtime(box.getRegtime());
+//        info.setInterests(boxInterestRepository.findInterestNameByBoxid(box.getId()));
+//        info.setLikeCount(likesRepository.countByBoxid(box.getId()));
+//        info.setCommentCount(boxCommentRepository.countByBoxid(box.getId()));
+//        info.setScrapCount(boxScrapRepository.countByBoxid(box.getId()));
+//
+//        Userbox userbox = userboxRepository.findByBoxidOrderById(boxId);
+//        info.setUid(userbox.getUid());
+//
+//        return info;
+    }
+
+    public List<LinkboxInfoResponse> searchLinkboxListByLikes() {
+
+        List<Integer> boxIdList = linkboxRepository.findTopBoxIdOrderByCountLimit6();
+        List<LinkboxInfoResponse> resList = new ArrayList<>();
+
+
+        for (Integer boxid: boxIdList) {
+            Optional<Linkbox> box = linkboxRepository.findById(boxid);
+            if(box.isPresent()) {
+                resList.add(prepareLinkboxInfoResponse(box.get()));
+            }
+        }
+        return resList;
+    }
+
+    public List<LinkboxInfoResponse> searchLinkboxListByUserInterests(Integer uid) {
+
+        List<UserInterest> userInterestList = userInterestRepository.findAllByUid(uid);
+
+        Map<Integer, LinkboxInfoResponse> linkboxInfoMap = new HashMap<Integer, LinkboxInfoResponse>();
+
+        for (UserInterest userInterest: userInterestList) {
+
+            Integer interestId = userInterest.getInterestId();
+            for (BoxInterest boxInterest: boxInterestRepository.findAllByInterestId(interestId)) {
+                Optional<Linkbox> linkbox = linkboxRepository.findById(boxInterest.getBoxid());
+                if(linkbox.isPresent()) {
+                    linkboxInfoMap.put(linkbox.get().getId(), prepareLinkboxInfoResponse(linkbox.get()));
+                }
+            }
+        }
+
+        return new ArrayList<>(linkboxInfoMap.values());
+    }
+
+    public List<LinkboxInfoResponse> searchLinkboxListByFollow(Integer uid) {
+
+        List<Follow> followList = followRepository.findAllByUid(uid);
+
+        Map<Integer, LinkboxInfoResponse> linkboxInfoMap = new HashMap<Integer, LinkboxInfoResponse>();
+
+        for (Follow follow :
+                followList) {
+            List<Userbox> userboxList = userboxRepository.findAllByUid(follow.getFolloweeId());
+            for (Userbox userbox:
+                 userboxList) {
+                linkboxInfoMap.put(userbox.getBoxid(), prepareLinkboxInfoResponse(linkboxRepository.getById(userbox.getBoxid())));
+            }
+        }
+        return new ArrayList<>(linkboxInfoMap.values());
+    }
+
+    private LinkboxInfoResponse prepareLinkboxInfoResponse(Linkbox linkbox) {
+        LinkboxInfoResponse info = new LinkboxInfoResponse();
+        info.setId(linkbox.getId());
+        info.setDesc(linkbox.getDesc());
+        info.setTitle(linkbox.getTitle());
+        info.setViewCount(linkbox.getViewCount());
+        info.setRegtime(linkbox.getRegtime());
+        info.setInterests(boxInterestRepository.findInterestNameByBoxid(linkbox.getId()));
+        info.setLikeCount(likesRepository.countByBoxid(linkbox.getId()));
+        info.setCommentCount(boxCommentRepository.countByBoxid(linkbox.getId()));
+        info.setScrapCount(boxScrapRepository.countByBoxid(linkbox.getId()));
+
+        Userbox userbox = userboxRepository.findByBoxidOrderById(linkbox.getId());
         info.setUid(userbox.getUid());
 
         return info;
@@ -190,4 +269,6 @@ public class LinkboxService {
     public List<String> searchInterestsByBoxid(Integer boxId) {
         return boxInterestRepository.findInterestNameByBoxid(boxId);
     }
+
+
 }

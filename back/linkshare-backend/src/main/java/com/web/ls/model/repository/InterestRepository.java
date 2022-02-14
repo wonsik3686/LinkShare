@@ -14,4 +14,5 @@ public interface InterestRepository extends JpaRepository<Interest, Integer> {
 
     @Query(value = "SELECT interest_id FROM interest i WHERE i.name = :interestName", nativeQuery = true)
     int findIdByName(String interestName);
+
 }
