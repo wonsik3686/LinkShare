@@ -72,20 +72,25 @@ public class LinkdetailController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/images")
-    @ApiOperation(value = "s3 사진 업로드 테스트")
-    public Object testPic(@RequestParam("images") @NotNull MultipartFile multipartFile) throws IOException {
-        final BasicResponse result = new BasicResponse();
-        result.object = s3Uploader.upload(multipartFile, "linkdetail");
-        result.msg = "success";
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    @PostMapping("/upload")
-    public Object fileUpload(@RequestParam("image") @NotNull MultipartFile multipartFile) {
-        final BasicResponse result = new BasicResponse();
-        result.object = s3Service.uploadToLinkdetailDir(multipartFile);
-        result.msg = "success";
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+//    @PostMapping("/images")
+//    @ApiOperation(value = "s3 사진 업로드 테스트")
+//    public Object testPic(@RequestParam("images") @NotNull MultipartFile multipartFile) throws IOException {
+//        final BasicResponse result = new BasicResponse();
+//        result.object = s3Uploader.upload(multipartFile, "linkdetail");
+//        result.msg = "success";
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/upload")
+//    public Object fileUpload(@RequestParam("image") @NotNull MultipartFile multipartFile) {
+//        final BasicResponse result = new BasicResponse();
+//        result.object = s3Service.uploadToLinkdetailDir(multipartFile);
+//        result.msg = "success";
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/download")
+//    public Object fileDownload() throws IOException {
+//        return s3Service.downloadFromLinkdetailDir("linkdetail/70dd8786-4696-4c06-97d4-2179f9fc73db-필수6.jpeg");
+//    }
 }
