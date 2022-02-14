@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LinkboxService {
@@ -125,6 +126,8 @@ public class LinkboxService {
         return list;
     }
 
+
+
     public List<LinkboxInfoResponse> searchLinkboxListByUserId(Integer userId) {
         List<LinkboxInfoResponse> responseList = new ArrayList<>();
 
@@ -169,6 +172,39 @@ public class LinkboxService {
         return info;
     }
 
+    public List<LinkboxInfoResponse> searchLinkboxListByLikes() {
+
+        List<Integer> boxIdList = linkboxRepository.findTopBoxIdOrderByCountLimit6();
+        List<LinkboxInfoResponse> resList = new ArrayList<>();
+
+
+        for (Integer boxid: boxIdList) {
+            Optional<Linkbox> box = linkboxRepository.findById(boxid);
+            if(box.isPresent()) {
+                resList.add(prepareLinkboxInfoResponse(box.get()));
+            }
+        }
+        return resList;
+    }
+
+    private LinkboxInfoResponse prepareLinkboxInfoResponse(Linkbox linkbox) {
+        LinkboxInfoResponse info = new LinkboxInfoResponse();
+        info.setId(linkbox.getId());
+        info.setDesc(linkbox.getDesc());
+        info.setTitle(linkbox.getTitle());
+        info.setViewCount(linkbox.getViewCount());
+        info.setRegtime(linkbox.getRegtime());
+        info.setInterests(boxInterestRepository.findInterestNameByBoxid(linkbox.getId()));
+        info.setLikeCount(likesRepository.countByBoxid(linkbox.getId()));
+        info.setCommentCount(boxCommentRepository.countByBoxid(linkbox.getId()));
+        info.setScrapCount(boxScrapRepository.countByBoxid(linkbox.getId()));
+
+        Userbox userbox = userboxRepository.findByBoxidOrderById(linkbox.getId());
+        info.setUid(userbox.getUid());
+
+        return info;
+    }
+
     public void createLinkboxInterest(LinkboxInterestRequest request) {
 
         if(!interestRepository.existsByName(request.getInterest())) {
@@ -190,4 +226,6 @@ public class LinkboxService {
     public List<String> searchInterestsByBoxid(Integer boxId) {
         return boxInterestRepository.findInterestNameByBoxid(boxId);
     }
+
+
 }

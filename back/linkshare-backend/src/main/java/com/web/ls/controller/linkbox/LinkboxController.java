@@ -145,6 +145,15 @@ public class LinkboxController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/popular")
+    @ApiOperation(value = "좋아요 기준 상위 6개 링크박스의 리스트 조회")
+    public Object searchPopularLinkbox() {
+        final BasicResponse result = new BasicResponse();
+        result.object = linkboxService.searchLinkboxListByLikes();
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     // 링크 박스 관심사
     
     @PostMapping("/interest")
