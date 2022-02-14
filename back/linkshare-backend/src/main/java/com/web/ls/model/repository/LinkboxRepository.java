@@ -21,4 +21,6 @@ public interface LinkboxRepository extends JpaRepository<Linkbox, Integer> {
 
     @Query(value = "select l.boxid from likes l group by l.boxid order by count(*) desc limit 6", nativeQuery = true)
     List<Integer> findTopBoxIdOrderByCountLimit6();
+
+
 }

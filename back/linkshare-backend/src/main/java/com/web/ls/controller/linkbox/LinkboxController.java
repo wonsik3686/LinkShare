@@ -154,6 +154,16 @@ public class LinkboxController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/interests/{uid}")
+    @ApiOperation(value = "유저의 관심사와 관련된 링크박스의 리스트 조회")
+    public Object searchLinkboxListByInterests(@PathVariable("uid") @ApiParam(value =
+            "유저 ID") Integer uid) {
+        final BasicResponse result = new BasicResponse();
+        result.object = linkboxService.searchLinkboxListByUserInterests(uid);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     // 링크 박스 관심사
     
     @PostMapping("/interest")
