@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import com.web.ls.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +26,11 @@ import com.web.ls.model.dto.User.ProfileEditRequest;
 import com.web.ls.model.dto.User.SigninRequest;
 import com.web.ls.model.dto.User.SignupRequest;
 import com.web.ls.model.entity.User;
-import com.web.ls.model.service.FollowService;
-import com.web.ls.model.service.ProfileService;
-import com.web.ls.model.service.SigninService;
-import com.web.ls.model.service.SignupService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE} , maxAge = 6000)
 @RestController
@@ -51,6 +49,9 @@ public class UserController {
 
 	@Autowired
 	private FollowService followService;
+
+	@Autowired
+	private S3Service s3Service;
 
 	@PostMapping("/signup")
 	@ApiOperation(value = "가입하기")
@@ -141,5 +142,69 @@ public class UserController {
     	result.msg = "success";
     	profileService.profileEdit(request);
     	return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	//사진
+	@PutMapping("/img")
+	@ApiOperation(value = "회원 프로필 사진 수정")
+	public Object updateUserImage(@RequestBody @ApiParam(value = "수정할 회원 사진 파일.", required = true) MultipartFile image,
+								  @ApiParam(value = "수정할 회원 아이디.", required = true) Integer uid) {
+		final BasicResponse result = new BasicResponse();
+		Map<String, Object> resultMap = new HashMap<>();
+
+		String path = s3Service.uploadToUserDir(image);
+		profileService.updateUserImgPath(uid, path);
+
+		resultMap.put("path", path);
+
+		result.object = resultMap;
+		result.msg = "success";
+
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/img/uid/{uid}")
+	@ApiOperation(value = "회원 프로필 사진 조회 by uid")
+	public Object searchUserImgPathByUid(@PathVariable("uid") @ApiParam(value = "유저의 uid.", required = true) Integer uid) {
+
+		final BasicResponse result = new BasicResponse();
+		Map<String, Object> resultMap = new HashMap<>();
+
+		String path = profileService.searchUserImgPathById(uid);
+		resultMap.put("path", path);
+		result.object = resultMap;
+		result.msg = "success";
+
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/img/email/{email}")
+	@ApiOperation(value = "회원 프로필 사진 조회 by email")
+	public Object searchUserImgPathByEmail(@PathVariable("email") @ApiParam(value = "유저의 email.", required = true) String email) {
+
+		final BasicResponse result = new BasicResponse();
+		Map<String, Object> resultMap = new HashMap<>();
+
+		String path = profileService.searchUserImgPathByEmail(email);
+		resultMap.put("path", path);
+		result.object = resultMap;
+		result.msg = "success";
+
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/img/nickname/{nickname}")
+	@ApiOperation(value = "회원 프로필 사진 조회 by nickname")
+	public Object searchUserImgPathByNickname(@PathVariable("nickname") @ApiParam(value = "유저의 nickname.", required = true) String nickname) {
+
+		final BasicResponse result = new BasicResponse();
+		Map<String, Object> resultMap = new HashMap<>();
+
+		String path = profileService.searchUserImgPathByNickname(nickname);
+		resultMap.put("path", path);
+		result.object = resultMap;
+		result.msg = "success";
+
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
