@@ -15,4 +15,8 @@ function userInfo (user, res, err) {
   api.get(`user/${user}`).then(res).catch(err)
 }
 
-export { signIn, userProfile, userInfo }
+function getUserUid (userid, res, err) {
+  api.get(`user?uid=${userid}`).then(res).catch(err)
+}
+
+export { signIn, userProfile, userInfo, getUserUid }

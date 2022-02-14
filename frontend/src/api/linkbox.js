@@ -61,6 +61,39 @@ function searchLinkBoxCommentByBoxId (boxid, res, err) {
   api.get(`linkbox/comment/${boxid}`).then(res).catch(err)
 }
 
+// 링크박스 좋아요 관련 코드
+function likeLinkbox (userboxdata, res, err) {
+  api.post('linkbox/like', JSON.stringify(userboxdata)).then(res).catch(err)
+}
+
+function unlikeLinkbox (userboxdata, res, err) {
+  api.post('linkbox/like', JSON.stringify(userboxdata)).then(res).catch(err)
+}
+
+function getLikeList(boxid, res, err) {
+  api.get(`linkbox/like/${boxid}`).then(res).catch(err)
+}
+
+function getUserLike(boxid, userid, res, err) {
+  api.get(`linkbox/like?boxid=${boxid}&uid=${userid}`).then(res).catch(err)
+}
+
+// 링크박스 스크랩 관련 코드
+function createScrap (userboxdata, res, err) {
+  api.post('linkbox/scrap', JSON.stringify(userboxdata)).then(res).catch(err)
+}
+
+function deleteScrap (scrapid, res, err) {
+  api.delete(`linkbox/scrap/${scrapid}`).then(res).catch(err)
+}
+
+function getScrapBoxid (boxid, res, err) {
+  api.get(`linkbox/scrap/box/${boxid}`).then(res).catch(err)
+}
+
+function getUserScrap(userid, res, err) {
+  api.get(`linkbox/scrap/user/${userid}`).then(res).catch(err)
+}
 
 // 링크박스 내 링크 관련 코드
 function createLink (linkdata, res, err) {
@@ -82,8 +115,15 @@ function deleteLink (linkid, res, err) {
 export {
   createLinkbox, listLinkbox, listUserLinkbox, viewLinkbox,
   updateLinkbox, deleteLinkbox,
+
   addLinkboxInterest, deleteLinkboxInterest,
   getLinkboxInfo, getLinkboxInterest,
+
   createLinkboxComment, deleteLinkboxComment, updateLinkboxComment, searchLinkBoxCommentByBoxId,
+
+  likeLinkbox, unlikeLinkbox, getLikeList, getUserLike,
+
+  createScrap, deleteScrap, getScrapBoxid, getUserScrap,
+
   createLink, listLink, updateLink, deleteLink
 }

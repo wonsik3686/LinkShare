@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <h1>링크트리</h1>
+    <!-- <v-btn>{{ changeButtonText }}</v-btn> -->
+    <v-btn @click="createUserLinktree">생성</v-btn>
+    <v-btn @click="updateUserLinktree">편집</v-btn>
+    <v-btn @click="deleteUserLinktree">삭제</v-btn>
 
     <div>
       <div class="row my-3">
@@ -53,7 +56,8 @@ import Vue from 'vue'
 import Block from './block'
 import Node from './node'
 import _ from 'lodash'
-import { listLink } from "@/api/linkbox"
+import { listLink } from '@/api/linkbox'
+import { createLinktree, listLinktree, updateLinktree, deleteLinktree } from '@/api/linktree'
 
 Vue.component('Node', Node)
 
@@ -63,6 +67,7 @@ export default {
     Node,
   },
   data: () => ({
+    editingTree: false,
     links: null,
     test: [],
     holder: [],
@@ -72,7 +77,7 @@ export default {
       {
         id: '1',
         parentId: -1,
-        nodeComponent: Node,
+        nodeComponent: 'Node',
         data: {
           text: 'Parent block',
           title: 'Root Node',
@@ -83,39 +88,79 @@ export default {
     ],
   }),
   created() {
+    console.log(this.nodes)
     const boxid = this.$route.params.boxid
     this.boxid = boxid
-
+    // tree의 blocks 정보 갖고오기
+    // 각 링크의 데이터 가져와 block 형태로 변형 
     listLink(boxid,
       (response) => {
         if (response.data.msg === "success") {
           this.links = response.data.object
-          const links = response.data.object
-          // console.log(links)
-          
-          // test용 array
-          
-
-          links.forEach((value) => {
+        
+          this.links.forEach((value) => {
             // block, node array에 값 추가
-            var testblock = {preview: { title: '', description: '' }, node: {title:'', description:''}}
-            testblock.preview.title = testblock.node.title = value.title
-            testblock.preview.description = testblock.node.description = value.desc
-
-            console.log(testblock)
-
-            this.blocks.push(testblock)
+            var linkBlock = {preview: { title: '', description: '' },
+                             node: {title:'', description:''}}
+            linkBlock.preview.title = linkBlock.node.title = value.title
+            linkBlock.preview.description = linkBlock.node.description = value.desc
+            this.blocks.push(linkBlock)
           })
-
         } else { console.log(response.data.msg) }
       }, (err) => console.log(err))
+    // tree의 node 정보 갖고오기
+    console.log(this.nodes)
+    this.listUserLinktree(boxid)
     },
   methods: {
+    createUserLinktree() {
+      const linktreeData = { boxid: this.boxid, treeContents: JSON.stringify({ nodes: this.nodes })}
+      console.log(linktreeData.treeContents)
+      createLinktree(linktreeData,
+      (res) => {
+        if (res.data.msg === 'success') {
+          console.log('success createLinktree')
+          console.log(res.data)
+        } else { console.log(res.data.msg) }
+      }, (err) => console.log(err))
+    },
+    listUserLinktree(boxid) {
+      listLinktree(boxid,
+      (res) => {
+        if (res.data.msg === 'success') {
+          console.log('success listLinktree')
+          console.log(res.data)
+          console.log(JSON.parse(res.data.object['0'].treeContents))
+          this.nodes = JSON.parse(res.data.object['0'].treeContents).nodes
+        } else { console.log(res.data.msg) }
+      }, (err) => console.log(err))
+    },
+    updateUserLinktree() {
+      const linktreeData = { boxid: this.boxid, treeContents: this.nodes }
+      updateLinktree(linktreeData, 
+      (res) => {
+        if (res.data.msg === 'success') {
+          console.log('success updateLinktree')
+          console.log(res.data)
+        } else { console.log(res.data.msg) }
+      }, (err) => console.log(err))
+    },
+    deleteUserLinktree() {
+      deleteLinktree(this.boxid, 
+      (res) => {
+        if (res.data.msg === 'success') {
+          console.log('success deleteLinktree')
+          console.log(res.data)
+        } else { console.log(res.data.msg) }
+      }, (err) => console.log(err))
+    },
+    // Flowy 관련 methods
     onDragStartNewBlock (event) {
       console.log('onDragStartNewBlock', event);
       // contains all the props and attributes passed to demo-node
       const { props } = event
       this.newDraggingBlock = props;
+      console.log(this.nodes)
     },
     onDragStopNewBlock (event) {
       console.log('onDragStopNewBlock', event);
@@ -208,8 +253,10 @@ export default {
       this.dragging = true;
     },
   },
-  watch: {
-
+  computed: {
+    changeButtonText() {
+      return this.editingTree ? 'edit' : 'save';
+    }
   },
 }
 </script>

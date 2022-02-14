@@ -50,6 +50,11 @@
       <v-container>
         <router-view></router-view>
       </v-container>
+
+      <like :userInfo="userInfo" :boxid="this.boxid"/>
+      <scrap :userInfo="userInfo" :boxid="this.boxid"/>
+      <commentList/>
+      
     </v-container>
 
   </v-container>
@@ -57,17 +62,25 @@
 
 <script>
 import linkboxSetting from '@/components/linkboxdetail/linkboxSetting'
+import like from '@/components/like/like'
+import scrap from '@/components/scrap/scrap'
+import commentList from '@/components/comment/commentList'
 import { getLinkboxInfo, deleteLinkbox } from "@/api/linkbox";
+import { mapState } from 'vuex'
 
 export default {
   components: {
     linkboxSetting,
+    like,
+    scrap,
+    commentList,
   },
   data: () => ({
     tab: null,
     linkboxSetting: false,
     linkbox: {},
     links: null,
+    boxid: null,
   }),
   methods: {
     deleteLinkbox,
@@ -88,6 +101,9 @@ export default {
         } else {console.log(response.data.msg)}
       },
       (err) => console.log(err))
+  },
+  computed: {
+    ...mapState('memberStore', ['userInfo']),
   }
 }
 </script>

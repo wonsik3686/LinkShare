@@ -117,7 +117,6 @@ export default {
     ...mapActions(memberStore, ['userSignin', 'getUserProfile']),
     // vuex에서 action 실행, action에서 api 통신
     onSubmit () {
-      console.log(this.params.user)
       this.loading = true
       this.userSignin(this.params.user)
       // let token = localStorage.getItem('token')
@@ -125,7 +124,6 @@ export default {
       
       if (this.loggedIn) {
         this.getUserProfile()
-        console.log(this.loggedIn)
         this.$router.replace('/').catch(()=>{})
         // replace : URL 방문기록을 리셋
         // push : URL 방문기록에 추가
@@ -135,11 +133,11 @@ export default {
         this.formReset()
       } else {
         console.log('로그인 실패')
+        alert('로그인에 실패했습니다.')
         this.loading = false
       }
 
       setTimeout(() => {
-        alert('로그인에 실패했습니다.')
         this.loading = false
       }, 1500)
     },
