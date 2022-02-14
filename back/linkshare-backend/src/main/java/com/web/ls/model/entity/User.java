@@ -19,7 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.web.ls.model.dto.linkbox.like.LikeUserResponse;
+import com.web.ls.model.dto.User.UserResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -103,7 +103,7 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-	public LikeUserResponse toResponse() {
-		return new LikeUserResponse(this.getId(), this.getEmail(), this.getNickname());
+	public UserResponse toResponse() {
+		return new UserResponse(this.getId(), this.getEmail(), this.getNickname());
 	}
 }
