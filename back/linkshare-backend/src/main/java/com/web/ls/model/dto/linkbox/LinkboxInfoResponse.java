@@ -28,5 +28,7 @@ public class LinkboxInfoResponse implements Serializable {
     public int commentCount;
     @ApiModelProperty(value = "linkbox scrap count", position = 9)
     public int scrapCount;
+    @ApiModelProperty(value = "linkbox user id", position = 9)
+    public int uid;
 
 }

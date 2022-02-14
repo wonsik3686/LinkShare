@@ -117,6 +117,9 @@ public class LinkboxService {
             info.setCommentCount(boxCommentRepository.countByBoxid(linkbox.getId()));
             info.setScrapCount(boxScrapRepository.countByBoxid(linkbox.getId()));
 
+            Userbox userbox = userboxRepository.findByBoxidOrderById(linkbox.getId());
+            info.setUid(userbox.getUid());
+
             list.add(info);
         }
         return list;
@@ -140,6 +143,7 @@ public class LinkboxService {
             info.setLikeCount(likesRepository.countByBoxid(box.getId()));
             info.setCommentCount(boxCommentRepository.countByBoxid(box.getId()));
             info.setScrapCount(boxScrapRepository.countByBoxid(box.getId()));
+            info.setUid(userId);
 
             responseList.add(info);
         }
@@ -158,6 +162,9 @@ public class LinkboxService {
         info.setLikeCount(likesRepository.countByBoxid(box.getId()));
         info.setCommentCount(boxCommentRepository.countByBoxid(box.getId()));
         info.setScrapCount(boxScrapRepository.countByBoxid(box.getId()));
+
+        Userbox userbox = userboxRepository.findByBoxidOrderById(boxId);
+        info.setUid(userbox.getUid());
 
         return info;
     }
