@@ -6,8 +6,8 @@
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-textarea outlined v-model="myComment.content"/>
-        <v-btn @click="onSubmit">post</v-btn>
+        <v-textarea outlined v-model="myComment.content" rows="3"/>
+        <v-btn @click="onSubmit" block>post</v-btn>
       </v-list-item-content>
     </v-list-item>
   </v-list>

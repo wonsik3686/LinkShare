@@ -35,7 +35,7 @@ const routes = [
       {
         path: "interest",
         name: "interest",
-        component: () => import('@/components/profile/Interest.vue'),
+        component: () => import('@/components/profile/UserInterest.vue'),
       },
       {
         path: "linkbox",
