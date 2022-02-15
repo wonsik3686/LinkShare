@@ -10,11 +10,11 @@ import lombok.Data;
 @Data
 public class UserInterestRequest {
 
-    @ApiModelProperty(value = "user id", position = 1, required = true)
+    @ApiModelProperty(value = "user id", required = true)
     @NotNull
     private Integer uid;
 
-    @ApiModelProperty(value = "interest name", position = 2, required = true)
+    @ApiModelProperty(value = "interest name", required = true)
     @NotNull
     private List<String> interests;
 }

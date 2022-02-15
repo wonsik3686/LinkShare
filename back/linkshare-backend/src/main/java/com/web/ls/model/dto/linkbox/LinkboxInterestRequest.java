@@ -10,11 +10,11 @@ import lombok.Data;
 @Data
 public class LinkboxInterestRequest {
 
-    @ApiModelProperty(value = "linkbox boxid", position = 1, required = true)
+    @ApiModelProperty(value = "linkbox boxid", required = true)
     @NotNull
     private Integer boxid;
 
-    @ApiModelProperty(value = "linkbox interest name", position = 2, required = true)
+    @ApiModelProperty(value = "linkbox interest name", required = true)
     @NotNull
     private List<String> interests;
 }

@@ -8,13 +8,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserResponse {
 
-    @ApiModelProperty(value = "user id", position = 1, required = true)
+    @ApiModelProperty(value = "user id", required = true)
     private Integer uid;
 
-    @ApiModelProperty(value = "user email", position = 2, required = true)
+    @ApiModelProperty(value = "user email", required = true)
     private String email;
     
-    @ApiModelProperty(value = "user nickname", position = 3, required = true)
+    @ApiModelProperty(value = "user nickname", required = true)
     private String nickname;
     
 }

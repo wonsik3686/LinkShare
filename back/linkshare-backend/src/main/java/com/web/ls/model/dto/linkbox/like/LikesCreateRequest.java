@@ -13,10 +13,10 @@ import java.io.Serializable;
 @Data
 public class LikesCreateRequest {
 
-    @ApiModelProperty(value = "user id", position = 1, required = true)
+    @ApiModelProperty(value = "user id", required = true)
     @NotNull
     private Integer uid;
-    @ApiModelProperty(value = "link box id", position = 2, required = true)
+    @ApiModelProperty(value = "link box id", required = true)
     @NotNull
     private Integer boxid;
 
