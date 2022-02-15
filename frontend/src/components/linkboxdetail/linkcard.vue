@@ -1,7 +1,6 @@
 <template>
   <v-card @dblclick="editCard" class="view">
     <v-card-title class="pb-0">
-      {{link.id}}
       {{ link.title }}
     </v-card-title>
     <v-container class="pt-1 pb-2">

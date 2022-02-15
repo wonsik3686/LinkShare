@@ -57,6 +57,7 @@
             color="blue"
             class="white--text"
             @click="onSubmit"
+            @keyup.enter="onSubmit"
           >
             로그인
           </v-btn>
@@ -103,6 +104,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(memberStore, ['loggedIn']),
     show: {
       get () {
         return this.value
@@ -113,17 +115,16 @@ export default {
     }
   },
   methods: {
-    ...mapState(memberStore, ['loggedIn']),
     ...mapActions(memberStore, ['userSignin', 'getUserProfile']),
     // vuex에서 action 실행, action에서 api 통신
-    onSubmit () {
+    async onSubmit () {
       this.loading = true
-      this.userSignin(this.params.user)
+      await this.userSignin(this.params.user)
       // let token = localStorage.getItem('token')
       // console.log(token)
-      
+      console.log(this.loggedIn)
       if (this.loggedIn) {
-        this.getUserProfile()
+        await this.getUserProfile()
         this.$router.replace('/').catch(()=>{})
         // replace : URL 방문기록을 리셋
         // push : URL 방문기록에 추가

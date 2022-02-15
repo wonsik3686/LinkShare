@@ -1,4 +1,4 @@
-import { signIn, userProfile, userInfo } from '@/api/member'
+import { signIn, userProfile, updateProfile, userInfo } from '@/api/member'
 import jwt_decode from 'jwt-decode'
 
 const memberStore = {
@@ -13,19 +13,32 @@ const memberStore = {
     setLoggedIn (state, payload) {
       state.loggedIn = payload
     },
-     setUserInfo (state, payload) {
-       state.userInfo = payload
-     },
-     fetchUserInfo (state, payload) {
-       state.userItem = payload
-     }
+    signout (state) {
+      state.loggedIn = false
+      state.userInfo = null
+      localStorage.removeItem('token')
+      location.reload()
+    },
+    setUserInfo (state, payload) {
+      state.userInfo = payload
+    },
+    editUserInfo (state, payload) {
+      console.log(payload)
+      state.userInfo.imagePath = payload.imagePath
+      state.userInfo.nickname = payload.nickname
+      state.userInfo.email = payload.email
+      state.userInfo.introduce = payload.introduce
+    },
+    fetchUserInfo (state, payload) {
+      state.userItem = payload
+    }
   },
   actions: {
     // userSignin 함수 실행되면 commit
-    userSignin ({ commit }, user) {
+    async userSignin ({ commit }, user) {
       // api 통신 후 response 수령
       // 로그인 성공
-      signIn(user,
+      await signIn(user,
         (response) => {
           if (response.data.msg === "success") {
             console.log('success userSignin')
@@ -44,13 +57,16 @@ const memberStore = {
         }
       )
     },
-    getUserProfile ({ commit }) {
+    userSignout ({ commit }) {
+      commit('signout')
+    },
+    async getUserProfile ({ commit }) {
       // 토큰 불러오기
       let token = localStorage.getItem('token')
       // console.log(token)
       let decode = jwt_decode(token)
       // console.log(decode)
-      userProfile(decode,
+      await userProfile(decode,
         (response) => {
           if (response.data.msg == 'success') {
             console.log('success getUserInfo')
@@ -63,8 +79,18 @@ const memberStore = {
         },
         (err) => console.log(err))
     },
-    fetchUserInfo({ commit }, user) {
-      userInfo(user,
+    updateUserProfile({ commit }, editedProfile) {
+      console.log(editedProfile)
+      updateProfile(editedProfile,
+        (response) => {
+          if (response.data.msg === "success") {
+            console.log('profile updated')
+            commit('editUserInfo', editedProfile)
+          } else {console.log(response.data.msg) }
+        }, (err) => console.log(err))
+    },
+    async fetchUserInfo({ commit }, user) {
+      await userInfo(user,
         (response) => {
           if (response.data.msg == 'success') {
             console.log('success fetchUserInfo')
@@ -84,6 +110,7 @@ const memberStore = {
   getters: {
     // state의 loggedIn값을 반환하는 loggedIn 함수 생성
     loggedIn: (state) => state.loggedIn,
+    userInfo: (state) => state.userInfo,
   }
 }
 
