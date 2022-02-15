@@ -1,15 +1,11 @@
 <template>
-  <v-container>
-    <v-row align="center" justify="center">
+  <v-dialog v-model="show" max-width="400px">
+    <v-card justify="center">
+      <v-card-title class="justify-center">
+        <h1 class="text-h5 font-weight-bold mt-3">로그인</h1>
+      </v-card-title>
 
-      <v-col cols="12" class="text-center">
-        <h1 class="text-h5 font-weight-bold">
-          로그인
-        </h1>
-      </v-col>
-
-      <v-card flat width="80%" max-width="350">
-        <!-- v-form 태그의 validation이 유효한 경우 ture 반환 -->
+      <v-card-text>
         <ValidationObserver v-slot="{ invalid }" ref="form">
           <ValidationProvider
             v-slot="{ errors }"
@@ -60,26 +56,23 @@
             block
             color="blue"
             class="white--text"
-            @click="login"
+            @click="onSubmit"
           >
             로그인
           </v-btn>
-        </ValidationObserver>
-        
+        </ValidationObserver>   
+      </v-card-text>
 
-          <!-- true 반환된 경우 버튼 무효화 -->
-        
-
-        <v-card-text>
-          {{ params }}
-        </v-card-text>
-        
+      <v-container>
         <snsLogin/>
+      </v-container>
 
-      </v-card>
-
-    </v-row>
-  </v-container>
+      <br>
+      <v-card-actions class="justify-center">
+        <v-btn text @click.stop="show=false">Close</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -89,6 +82,9 @@ extend('required', required)
 extend('email', email)
 extend('min', min)
 import snsLogin from "@/components/snsLogin/snsLogin"
+import { mapActions, mapState } from 'vuex'
+
+const memberStore = "memberStore"
 
 export default {
   components: {
@@ -96,24 +92,59 @@ export default {
     ValidationObserver,
     snsLogin
   },
+  props: {
+    value: Boolean
+  },
   data () {
     return {
-      value: '',
       showPassword: false,
       loading: false,
-      params: {user: { nickname: '', email: '', password: ''} }
+      params: {user: { email: '', password: ''} }
+    }
+  },
+  computed: {
+    show: {
+      get () {
+        return this.value
+      },
+      set (value) {
+        this.$emit('input', value)
+      }
     }
   },
   methods: {
-    login () {
+    ...mapState(memberStore, ['loggedIn']),
+    ...mapActions(memberStore, ['userSignin', 'getUserProfile']),
+    // vuex에서 action 실행, action에서 api 통신
+    onSubmit () {
       this.loading = true
+      this.userSignin(this.params.user)
+      // let token = localStorage.getItem('token')
+      // console.log(token)
+      
+      if (this.loggedIn) {
+        this.getUserProfile()
+        this.$router.replace('/').catch(()=>{})
+        // replace : URL 방문기록을 리셋
+        // push : URL 방문기록에 추가
+        alert('로그인 성공')
+        this.show = false
+        this.loading = false
+        this.formReset()
+      } else {
+        console.log('로그인 실패')
+        alert('로그인에 실패했습니다.')
+        this.loading = false
+      }
+
       setTimeout(() => {
-        // index.js의 action 매소드 불러오기
-        this.$store.dispatch('login')
-        // 메인화면으로 이동
-        this.$router.replace('/')
         this.loading = false
       }, 1500)
+    },
+    formReset () {
+      this.$refs.form.reset()
+      this.params = { user: { email: '', password: ''}}
+      this.v = ''
     },
   },
 }

@@ -17,14 +17,10 @@
       </v-spacer>
 
       <v-toolbar-items>
-        <v-btn plain class="text-subtitle-1 font-weight-bold" to="/about">About</v-btn>
         <v-btn plain class="text-subtitle-1 font-weight-bold" @click.stop="SignupForm=true">회원가입</v-btn>
         <SignupForm v-model="SignupForm"/>
-        <!-- <v-btn plain class="text-subtitle-1 font-weight-bold" @click.stop="Login=true">로그인</v-btn> -->
-        <!-- <Login v-model="Login"/> -->
-        <v-btn plain class="text-subtitle-1 font-weight-bold" to="/signup">signup</v-btn>
-        <v-btn plain class="text-subtitle-1 font-weight-bold" to="/login">login</v-btn>
-        <v-btn plain class="text-subtitle-1 font-weight-bold" to="/profile">profile</v-btn>
+        <v-btn plain class="text-subtitle-1 font-weight-bold" @click.stop="SigninForm=true">로그인</v-btn>
+        <SigninForm v-model="SigninForm"/>
       </v-toolbar-items>
     </v-app-bar>
   </div>
@@ -32,18 +28,18 @@
 
 <script>
 import SignupForm from '@/components/SignupForm'
-// import Login from '@/components/Login'
+import SigninForm from '@/components/SigninForm'
 
 export default {
   name: "NavBar",
   components: {
     SignupForm,
-    // Login,
+    SigninForm,
   },
   data () {
     return {
       SignupForm: false,
-      // Login: false,
+      SigninForm: false,
     }
   }
 }

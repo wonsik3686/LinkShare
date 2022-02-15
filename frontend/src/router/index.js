@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store/index.js'
 import Newsfeed from '../views/Newsfeed.vue'
-import Linkboxdetail from '../views/Linkboxdetail.vue'
 import Toplinkbox from '../views/Toplinkbox'
 
 
@@ -15,49 +14,62 @@ const routes = [
     component: () => import('../views/welcome.vue')
   },
   {
-    path: '/home',
-    name: 'home',
-    component: () => import('../views/home.vue')
+    path: '/newsfeed',
+    name: 'Newsfeed',
+    component: Newsfeed
   },
   {
     path: '/',
     redirect: () => {
-      if (store.state.loggedIn) {
-        return '/home';
+      if (store.getters['memberStore/loggedIn']) {
+        return '/newsfeed';
       } else {
         return '/welcome';
       }
     }
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/About.vue')
+    path: '/profile/:email',
+    component: () => import('../views/profile.vue'),
+    children: [
+      {
+        path: "interest",
+        name: "interest",
+        component: () => import('@/components/profile/Interest.vue'),
+      },
+      {
+        path: "linkbox",
+        component: () => import('@/components/profile/LinkboxList.vue'),
+      },
+      {
+        path: "scrap",
+        component: () => import('@/components/profile/Scrap.vue'),
+      },
+      {
+        path: "following",
+        component: () => import('@/components/profile/Following.vue'),
+      },
+      {
+        path: "follower",
+        component: () => import('@/components/profile/Follower.vue'),
+      },
+    ]
   },
   {
-    path: '/signup',
-    name: 'signup',
-    component: () => import('../views/signup.vue')
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/login.vue')
-  },
-  {
-    path: '/profile',
-    name: 'profile',
-    component: () => import('../views/profile.vue')
-  },
-  {
-    path: '/newsfeed',
-    name: 'Newsfeed',
-    component: Newsfeed
-  },
-  {
-    path: '/linkboxdetail',
-    name: 'Linkboxdetail',
-    component: Linkboxdetail
+    path: '/linkbox/:boxid',
+    component: () => import('../views/Linkboxdetail.vue'),
+    children: [
+      {
+        path: "linklist",
+        component: () => import('@/components/linkboxdetail/linklist.vue'),
+        props: true,
+      },
+      {
+        path: "linktree",
+        component: () => import('@/components/linkboxdetail/flowy/flowy.vue'),
+        props: true,
+      },
+    ]
   },
   {
     path: '/toplinkbox',

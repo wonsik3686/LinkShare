@@ -11,7 +11,7 @@
       </v-col>
       
       <v-col cols="6">
-        <!-- <h1 class="text-center">Image Placeholder</h1> -->
+        <h1 class="text-center">Image Placeholder</h1>
       </v-col>
     </v-row>
   </v-container>
@@ -19,7 +19,8 @@
 
 <script>
 export default {
-
+  components: {
+  }
 }
 </script>
 
