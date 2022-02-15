@@ -21,8 +21,8 @@ public class LinkboxScrapService {
     	}
     }
 
-    public void deleteBoxScrap(BoxScrapCreateRequest request) {
-    	BoxScrap boxScrap = boxScrapRepository.findByBoxidAndUid(request.getBoxid(), request.getUid());
+    public void deleteBoxScrap(int uid, int boxid) {
+    	BoxScrap boxScrap = boxScrapRepository.findByBoxidAndUid(boxid, uid);
     	if(boxScrap != null) {
     		boxScrapRepository.delete(boxScrap);
     	}

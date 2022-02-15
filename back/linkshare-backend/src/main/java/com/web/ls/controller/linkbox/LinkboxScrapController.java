@@ -29,12 +29,12 @@ public class LinkboxScrapController {
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+    
     @DeleteMapping
     @ApiOperation(value = "링크박스 스크랩 삭제")
-    public Object deleteLinkboxScrap(@RequestBody BoxScrapCreateRequest request) {
+    public Object deleteLinkboxScrap(@RequestParam("uid") int uid, @RequestParam("boxid") int boxid) {
         final BasicResponse result = new BasicResponse();
-        linkboxScrapService.deleteBoxScrap(request);
+        linkboxScrapService.deleteBoxScrap(uid, boxid);
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
