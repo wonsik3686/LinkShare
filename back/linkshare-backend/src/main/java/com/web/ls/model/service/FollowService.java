@@ -1,11 +1,13 @@
 package com.web.ls.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.ls.model.dto.Follow.FollowRequest;
+import com.web.ls.model.dto.User.UserResponse;
 import com.web.ls.model.entity.Follow;
 import com.web.ls.model.entity.User;
 import com.web.ls.model.repository.FollowRepository;
@@ -38,11 +40,19 @@ public class FollowService {
 		return followRepository.countByFolloweeId(id);
 	}
 	
-	public List<User> searchFollowingListByUserId(Integer uid){
-		return userRepository.findFollowingList(uid);
+	public List<UserResponse> searchFollowingListByUserId(Integer uid){
+		List<UserResponse> list = new ArrayList<>();
+		userRepository.findFollowingList(uid).forEach(i -> {
+			list.add(i.toResponse());
+		});
+		return list;
 	}
 	
-	public List<User> searchFollowerListByUserId(Integer uid){
-		return userRepository.findFollowerList(uid);
+	public List<UserResponse> searchFollowerListByUserId(Integer uid){
+		List<UserResponse> list = new ArrayList<>();
+		userRepository.findFollowerList(uid).forEach(i -> {
+			list.add(i.toResponse());
+		});
+		return list;
 	}
 }
