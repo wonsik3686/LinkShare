@@ -280,7 +280,7 @@ public class LinkboxController {
     }
     
     @GetMapping("/like")
-    @ApiOperation(value = "박스 ID로 링크박스 정보 조회하기")
+    @ApiOperation(value = "유저가 박스에 좋아요 했는지 여부")
     public Object checkUserLike(@RequestParam("boxid") @ApiParam(value =
             "조회할 박스의 박스ID") Integer boxid, @RequestParam("uid") @ApiParam(value =
                     "검사할 유저의 ID") Integer uid) {
