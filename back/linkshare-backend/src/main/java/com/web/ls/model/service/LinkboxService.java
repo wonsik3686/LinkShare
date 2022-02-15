@@ -1,13 +1,18 @@
 package com.web.ls.model.service;
 
+import com.web.ls.LinkshareBackendApplication;
 import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;
 import com.web.ls.model.dto.linkbox.LinkboxInfoResponse;
 import com.web.ls.model.dto.linkbox.LinkboxInterestRequest;
 import com.web.ls.model.entity.*;
 import com.web.ls.model.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Service;
 
+import java.io.Console;
 import java.util.*;
 
 @Service
@@ -135,8 +140,9 @@ public class LinkboxService {
 
     public List<LinkboxInfoResponse> searchLinkboxListByLikes() {
 
-        List<Integer> boxIdList = linkboxRepository.findTopBoxIdOrderByCountLimit6();
+        List<Integer> boxIdList = likesRepository.findTopBoxIdOrderByCountLimit6();
         List<LinkboxInfoResponse> resList = new ArrayList<>();
+
         for (Integer boxid: boxIdList) {
             Optional<Linkbox> box = linkboxRepository.findById(boxid);
             if(box.isPresent()) {
