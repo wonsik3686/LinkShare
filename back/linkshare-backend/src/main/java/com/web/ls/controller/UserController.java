@@ -225,9 +225,10 @@ public class UserController {
 
     @DeleteMapping("/interest")
     @ApiOperation(value = "유저 관심사 삭제하기")
-    public Object deleteLinkboxInterest(@RequestBody @Valid UserInterestRequest request) {
+    public Object deleteLinkboxInterest(@RequestParam("uid") @ApiParam(value = "유저의 id.", required = true) int uid, 
+    		@RequestParam("interest") @ApiParam(value = "관심사의 이름.", required = true) String interest) {
         final BasicResponse result = new BasicResponse();
-        profileService.deleteUserInterest(request);
+        profileService.deleteUserInterest(uid, interest);
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

@@ -105,12 +105,14 @@ public class ProfileService {
 			UserInterest userInterest = new UserInterest();
 	        userInterest.setUid(request.getUid());
 	        userInterest.setInterestId(interestRepository.findIdByName(i));
-	        userInterestRepository.save(userInterest);
+	        if(!userInterestRepository.existsByUidAndInterestId(userInterest.getUid(), userInterest.getInterestId())){
+	        	userInterestRepository.save(userInterest);
+	        }
 		});
 	}
 	
-    public void deleteUserInterest(UserInterestRequest request) {
-    	UserInterest userInterest = userInterestRepository.findByUidAndInterestId(request.getUid(),interestRepository.findIdByName(request.getInterests().get(0)));
+    public void deleteUserInterest(int uid, String interest) {
+    	UserInterest userInterest = userInterestRepository.findByUidAndInterestId(uid,interestRepository.findIdByName(interest));
     	userInterestRepository.delete(userInterest);
     }
     
