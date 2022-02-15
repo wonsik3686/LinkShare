@@ -58,4 +58,16 @@ public class LinkboxScrapController {
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    
+    @GetMapping
+    @ApiOperation(value = "유저가 박스를 스크랩 했는지 여부")
+    public Object checkUserLike(@RequestParam("boxid") @ApiParam(value =
+            "조회할 박스의 박스ID") Integer boxid, @RequestParam("uid") @ApiParam(value =
+                    "검사할 유저의 ID") Integer uid) {
+        final BasicResponse result = new BasicResponse();
+        
+        result.object = linkboxScrapService.checkScrapUser(boxid, uid);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
