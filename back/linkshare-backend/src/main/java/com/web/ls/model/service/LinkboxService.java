@@ -184,6 +184,40 @@ public class LinkboxService {
         return new ArrayList<>(linkboxInfoMap.values());
     }
 
+    public List<LinkboxInfoResponse> searchLinkboxListByKeyword(String keyword) {
+
+        Map<Integer, LinkboxInfoResponse> linkboxInfoMap = new HashMap<Integer, LinkboxInfoResponse>();
+
+        List<Interest> interestList = interestRepository.findAllByNameContains(keyword);
+        for (Interest interest:
+             interestList) {
+            List<BoxInterest> boxInterestList = boxInterestRepository.findAllByInterestId(interest.getId());
+            for (BoxInterest boxInterest:
+                 boxInterestList) {
+                linkboxInfoMap.put(boxInterest.getBoxid(), prepareLinkboxInfoResponse(
+                        linkboxRepository.getById(boxInterest.getBoxid())));
+            }
+        }
+
+        List<Linkbox> linkboxListTitle = linkboxRepository.findAllByTitleContains(keyword);
+        for (Linkbox box:
+             linkboxListTitle) {
+            linkboxInfoMap.put(box.getId(), prepareLinkboxInfoResponse(
+                    linkboxRepository.getById(box.getId())
+            ));
+        }
+
+        List<Linkbox> linkboxListDesc = linkboxRepository.findAllByDescContains(keyword);
+        for (Linkbox box:
+                linkboxListDesc) {
+            linkboxInfoMap.put(box.getId(), prepareLinkboxInfoResponse(
+                    linkboxRepository.getById(box.getId())
+            ));
+        }
+
+        return new ArrayList<>(linkboxInfoMap.values());
+    }
+
     private LinkboxInfoResponse prepareLinkboxInfoResponse(Linkbox linkbox) {
         LinkboxInfoResponse info = new LinkboxInfoResponse();
         info.setId(linkbox.getId());

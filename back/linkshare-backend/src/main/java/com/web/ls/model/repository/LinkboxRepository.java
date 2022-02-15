@@ -22,4 +22,7 @@ public interface LinkboxRepository extends JpaRepository<Linkbox, Integer> {
     @Modifying
     @Query("update Linkbox l set l.title = :inputDesc where l.id = :inputBoxid")
     void setDesc(@Param("inputDesc") String desc, @Param("inputBoxid") int boxid);
+
+    List<Linkbox> findAllByTitleContains(String keyword);
+    List<Linkbox> findAllByDescContains(String keyword);
 }
