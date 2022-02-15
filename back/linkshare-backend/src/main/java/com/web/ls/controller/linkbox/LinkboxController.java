@@ -265,7 +265,7 @@ public class LinkboxController {
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+    
     @DeleteMapping("/like")
     @ApiOperation(value = "링크 박스 좋아요 삭제하기")
     public Object deleteLikeboxLike(@RequestBody @Valid LikesCreateRequest request) {
