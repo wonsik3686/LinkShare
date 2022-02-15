@@ -21,4 +21,8 @@ public interface BoxInterestRepository extends JpaRepository<BoxInterest, Intege
     List<String> findInterestNameByBoxid(@Param("boxid") Integer boxid);
 
     List<BoxInterest> findAllByInterestId(Integer interestId);
+    
+    boolean existsByBoxidAndInterestId(Integer boxid, Integer interestId);
+    
+    BoxInterest findByBoxidAndInterestId(Integer boxid, Integer interestId);
 }

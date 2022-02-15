@@ -1,6 +1,7 @@
 package com.web.ls.model.service;
 
 import com.web.ls.LinkshareBackendApplication;
+import com.web.ls.model.dto.User.UserInterestRequest;
 import com.web.ls.model.dto.linkbox.LinkboxCreateRequest;
 import com.web.ls.model.dto.linkbox.LinkboxInfoResponse;
 import com.web.ls.model.dto.linkbox.LinkboxInterestRequest;
@@ -237,21 +238,25 @@ public class LinkboxService {
     }
 
     public void createLinkboxInterest(LinkboxInterestRequest request) {
-
-        if(!interestRepository.existsByName(request.getInterest())) {
-            Interest interest = new Interest();
-            interest.setName(request.getInterest());
-            interestRepository.save(interest);
-        }
-        BoxInterest boxInterest = new BoxInterest();
-        boxInterest.setBoxid(request.getBoxid());
-        boxInterest.setInterestId(interestRepository.findIdByName(request.getInterest()));
-        boxInterestRepository.save(boxInterest);
+    	request.getInterests().forEach(i ->{
+			if(!interestRepository.existsByName(i)) {
+				 Interest interest = new Interest();
+		         interest.setName(i);
+		         interestRepository.save(interest);
+			}
+			
+			BoxInterest boxInterest = new BoxInterest();
+			boxInterest.setBoxid(request.getBoxid());
+			boxInterest.setInterestId(interestRepository.findIdByName(i));
+	        if(!boxInterestRepository.existsByBoxidAndInterestId(boxInterest.getBoxid(), boxInterest.getInterestId())){
+	        	boxInterestRepository.save(boxInterest);
+	        }
+		});
     }
 
-    public void deleteLinkboxInterest(LinkboxInterestRequest request) {
-
-        boxInterestRepository.deleteByBoxidAndInterestId(request.getBoxid(), interestRepository.findIdByName(request.getInterest()));
+    public void deleteLinkboxInterest(int boxid, String interest) {
+        BoxInterest boxInterest = boxInterestRepository.findByBoxidAndInterestId(boxid, interestRepository.findIdByName(interest));
+        boxInterestRepository.delete(boxInterest);
     }
 
     public List<String> searchInterestsByBoxid(Integer boxId) {

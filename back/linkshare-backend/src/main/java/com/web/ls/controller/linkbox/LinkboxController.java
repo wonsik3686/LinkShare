@@ -199,9 +199,9 @@ public class LinkboxController {
 
     @DeleteMapping("/interest")
     @ApiOperation(value = "링크박스 관심사 삭제하기")
-    public Object deleteLinkboxInterest(@RequestBody @Valid LinkboxInterestRequest request) {
+    public Object deleteLinkboxInterest(@RequestParam("boxid") int boxid, @RequestParam("interest") String interest) {
         final BasicResponse result = new BasicResponse();
-        linkboxService.deleteLinkboxInterest(request);
+        linkboxService.deleteLinkboxInterest(boxid, interest);
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
