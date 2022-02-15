@@ -177,7 +177,7 @@ public class LinkboxController {
     }
 
     @GetMapping("/search/{keyword}")
-    @ApiOperation(value = "팔로우 한 사람의 링크박스 리스트 조회")
+    @ApiOperation(value = "키워드로 링크박스 리스트 조회")
     public Object searchLinkboxListByKeyword(@PathVariable("keyword") @ApiParam(value =
             "링크박스를 검색할 키워드") String keyword) {
         final BasicResponse result = new BasicResponse();
