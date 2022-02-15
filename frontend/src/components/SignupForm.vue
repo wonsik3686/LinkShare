@@ -147,8 +147,8 @@ export default {
 
       axios({
         method: 'post',
-        baseURL: process.env.VUE_APP_SERVER_URL,
-        // baseURL: 'http://3.38.246.117',
+        // baseURL: process.env.VUE_APP_SERVER_URL,
+        baseURL: 'http://3.38.246.117',
         url: 'user/signup',
         headers: {'Content-Type': 'application/json' },
         data: JSON.stringify(this.params.user),

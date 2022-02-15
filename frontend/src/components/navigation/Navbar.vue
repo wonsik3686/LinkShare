@@ -17,7 +17,7 @@
       </v-spacer>
 
       <v-toolbar-items>
-        <v-btn plain class="text-subtitle-1 font-weight-bold" to="#">Logout</v-btn>
+        <v-btn plain class="text-subtitle-1 font-weight-bold" @click="makelogout">Logout</v-btn>
 
         <v-btn plain class="text-subtitle-1 font-weight-bold" :to="`/profile/${userInfo.email}`">{{userInfo.nickname}}</v-btn>
       </v-toolbar-items>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: "NavBar",
@@ -51,9 +51,13 @@ export default {
     ...mapState('memberStore', ['userInfo']),
   },
   methods: {
+    ...mapActions('memberStore', ['userSignout']),
     replaceByDefault(e) {
       e.target.src = '../assets/logo.svg'
       console.log(e.target.src)
+    },
+    makelogout() {
+      this.userSignout()
     }
   }
 }

@@ -11,24 +11,33 @@ function listLinkbox (res, err) {
   api.get('linkbox/list').then(res).catch(err)
 }
 
+function listPopLinkbox (res, err) {
+  api.get('linkbox/popular').then(res).catch(err)
+}
+
 function listUserLinkbox (userid, res, err) {
   api.get(`linkbox/list/${userid}`).then(res).catch(err)
 }
 
-function viewLinkbox (boxdata, res, err) {
-  api.get(`linkbox/viewcount/${boxdata.boxid}`).then(res).catch(err)
+function viewLinkbox (boxid, res, err) {
+  api.get(`linkbox/viewcount/${boxid}`).then(res).catch(err)
 }
 
 function updateLinkbox (boxdata, res, err) {
-  api.post('linkbox', JSON.stringify(boxdata)).then(res).catch(err)
+  api.put('linkbox', JSON.stringify(boxdata)).then(res).catch(err)
 }
 
-function deleteLinkbox (boxdata, res, err) {
-  api.delete(`linkbox/${boxdata.boxid}`).then(res).catch(err)
+function deleteLinkbox (boxid, res, err) {
+  api.delete(`linkbox/${boxid}`).then(res).catch(err)
 }
 
+// 링크박스 관심사 관련 코드
 function addLinkboxInterest (boxdata, res, err) {
   api.post('linkbox/interest', JSON.stringify(boxdata)).then(res).catch(err)
+}
+
+function getInterestList (boxid, res, err) {
+  api.get(`linkbox/interest/${boxid}`).then(res).catch(err)
 }
 
 function deleteLinkboxInterest (boxdata, res, err) {
@@ -36,8 +45,8 @@ function deleteLinkboxInterest (boxdata, res, err) {
 }
 
 // 링크박스 정보 불러오기
-function getLinkboxInfo (boxid,  res, err) {
-  api.get(`linkbox/one/${boxid}`).then(res).catch(err)
+async function getLinkboxInfo (boxid,  res, err) {
+  await api.get(`linkbox/one/${boxid}`).then(res).catch(err)
 }
 
 function getLinkboxInterest (boxid,  res, err) {
@@ -83,16 +92,20 @@ function createScrap (userboxdata, res, err) {
   api.post('linkbox/scrap', JSON.stringify(userboxdata)).then(res).catch(err)
 }
 
-function deleteScrap (scrapid, res, err) {
-  api.delete(`linkbox/scrap/${scrapid}`).then(res).catch(err)
+function deleteScrap (userid, boxid, res, err) {
+  api.delete(`linkbox/scrap?uid=${userid}&boxid=${boxid}`).then(res).catch(err)
 }
 
 function getScrapBoxid (boxid, res, err) {
   api.get(`linkbox/scrap/box/${boxid}`).then(res).catch(err)
 }
 
-function getUserScrap(userid, res, err) {
+function getScrapUid(userid, res, err) {
   api.get(`linkbox/scrap/user/${userid}`).then(res).catch(err)
+}
+
+function getUserScrap(boxid, userid, res, err) {
+  api.get(`linkbox/scrap?boxid=${boxid}&uid=${userid}`).then(res).catch(err)
 }
 
 // 링크박스 내 링크 관련 코드
@@ -116,14 +129,16 @@ export {
   createLinkbox, listLinkbox, listUserLinkbox, viewLinkbox,
   updateLinkbox, deleteLinkbox,
 
-  addLinkboxInterest, deleteLinkboxInterest,
+  listPopLinkbox,
+
+  addLinkboxInterest, deleteLinkboxInterest, getInterestList,
   getLinkboxInfo, getLinkboxInterest,
 
   createLinkboxComment, deleteLinkboxComment, updateLinkboxComment, searchLinkBoxCommentByBoxId,
 
   likeLinkbox, unlikeLinkbox, getLikeList, getUserLike,
 
-  createScrap, deleteScrap, getScrapBoxid, getUserScrap,
+  createScrap, deleteScrap, getScrapBoxid, getScrapUid, getUserScrap,
 
   createLink, listLink, updateLink, deleteLink
 }

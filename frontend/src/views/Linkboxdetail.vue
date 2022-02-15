@@ -5,40 +5,8 @@
       <v-icon x-large>mdi-arrow-left</v-icon>
     </v-btn>
 
-    <!-- 제목 -->
-    <h1>{{ linkbox.title }}
-      <v-btn icon color="grey" @click.stop="linkboxSetting=true">
-        <v-icon medium>mdi-pencil</v-icon>
-      </v-btn>
-      <v-btn icon color="grey" @click="deleteLinkbox">
-        <v-icon medium>mdi-delete</v-icon>
-      </v-btn>
-    </h1>
-    <linkboxSetting v-model="linkboxSetting" :linkboxdata="this.linkbox"/>
-
-    <!-- 관심사 -->
-    <v-row class="mt-3">
-      <v-chip
-        class="ma-1 px-4"
-        v-for="interest in linkbox.interests"
-        :key="interest"
-        color="blue"
-        text-color="white"
-      >
-        <strong>{{ interest }}</strong>
-      </v-chip>
-
-    </v-row>
-
-    <!-- 본문 -->
-    <v-row class="mt-7">
-      <p class="text-justify">
-        {{ linkbox.desc }}
-      </p>
-    </v-row>
-
-    <br>
-    <br>
+    <linkboxDetail :linkbox="linkbox" @click-delete="clickDelete"/>
+    <linkboxDetailEdit :linkbox="linkbox" @done-edit="doneEdit"/>
 
     <v-container>
 
@@ -51,8 +19,11 @@
         <router-view></router-view>
       </v-container>
 
-      <like :userInfo="userInfo" :boxid="this.boxid"/>
-      <scrap :userInfo="userInfo" :boxid="this.boxid"/>
+      <iconLike v-if="linkbox !== '' && user !== ''"
+        :user="user" :linkbox="this.linkbox"/>
+      <iconScrap v-if="linkbox !== '' && user !== ''"
+        :user="user" :linkbox="this.linkbox"/>
+
       <commentList/>
       
     </v-container>
@@ -61,46 +32,68 @@
 </template>
 
 <script>
-import linkboxSetting from '@/components/linkboxdetail/linkboxSetting'
-import like from '@/components/like/like'
-import scrap from '@/components/scrap/scrap'
+import iconLike from '@/components/linkbox/iconLike'
+import iconScrap from '@/components/linkbox/iconScrap'
 import commentList from '@/components/comment/commentList'
-import { getLinkboxInfo, deleteLinkbox } from "@/api/linkbox";
+import { getLinkboxInfo, updateLinkbox, deleteLinkbox } from "@/api/linkbox";
 import { mapState } from 'vuex'
+import linkboxDetail from '@/components/linkboxdetail/LinkboxDetail'
+import linkboxDetailEdit from '@/components/linkboxdetail/LinkboxDetailEdit'
 
 export default {
   components: {
-    linkboxSetting,
-    like,
-    scrap,
+    iconLike,
+    iconScrap,
     commentList,
+    linkboxDetail,
+    linkboxDetailEdit,
   },
   data: () => ({
     tab: null,
-    linkboxSetting: false,
-    linkbox: {},
+    linkbox: '',
     links: null,
     boxid: null,
+    user: '',
+    editedLinkbox: null,
   }),
+  created() {
+    this.boxid = this.$route.params.boxid
+    this.user = this.userInfo
+    this.linkboxInfo()
+  },
   methods: {
-    deleteLinkbox,
+    linkboxInfo() {
+      getLinkboxInfo(this.boxid,
+      (res) => {
+        if (res.data.msg === "success") {
+          console.log(res.data.object)
+          this.linkbox = res.data.object
+        } else {console.log(res.data.msg)}
+      },
+      (err) => console.log(err))
+    },
+    clickDelete() {
+      deleteLinkbox(this.boxid,
+      (res) => {
+        if (res.data.msg === 'success') {
+          this.$router.replace('/')
+        } else { console.log(res.data.msg) }
+      }, (err) => console.log(err))
+    },
+    doneEdit(boxdata) {
+      boxdata.boxid = this.boxid
+      console.log(boxdata)
+      updateLinkbox(boxdata,
+      (res) => {
+        if (res.data.msg === 'success') {
+          console.log('success updateLinkbox')
+          this.linkboxInfo()
+        } else { console.log(res.data.msg) }
+      }, (err) => console.log(err))
+    },
     goBack() {
       this.$router.push('/')
     }
-  },
-  created() {
-    const boxid = this.$route.params.boxid
-    this.boxid = boxid
-    console.log(boxid)
-
-    getLinkboxInfo(boxid,
-      (response) => {
-        if (response.data.msg === "success") {
-          console.log(response.data.object)
-          this.linkbox = response.data.object
-        } else {console.log(response.data.msg)}
-      },
-      (err) => console.log(err))
   },
   computed: {
     ...mapState('memberStore', ['userInfo']),
