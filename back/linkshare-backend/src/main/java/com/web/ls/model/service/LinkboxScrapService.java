@@ -35,4 +35,8 @@ public class LinkboxScrapService {
     public List<BoxScrap> searchBoxScrapListByUid(Integer uid) {
         return boxScrapRepository.findAllByUidOrderByRegtime(uid);
     }
+    
+    public boolean checkScrapUser(Integer boxid, Integer uid) {
+    	return boxScrapRepository.existsByBoxidAndUid(boxid, uid);
+    }
 }
