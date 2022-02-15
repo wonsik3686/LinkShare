@@ -176,6 +176,16 @@ public class LinkboxController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/search/{keyword}")
+    @ApiOperation(value = "팔로우 한 사람의 링크박스 리스트 조회")
+    public Object searchLinkboxListByKeyword(@PathVariable("keyword") @ApiParam(value =
+            "링크박스를 검색할 키워드") String keyword) {
+        final BasicResponse result = new BasicResponse();
+        result.object = linkboxService.searchLinkboxListByKeyword(keyword);
+        result.msg = "success";
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     // 링크 박스 관심사
     
     @PostMapping("/interest")
