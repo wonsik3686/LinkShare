@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="mx-auto"
+    class="mx-5"
     max-width="344"
     outlined
     color="white"
@@ -16,32 +16,40 @@
 
       <v-list-item-content>
         <v-list-item-title class="text-h5 mb-1">
-          링크박스 제목
+          <router-link :to="`/linkbox/${boxid}`" style=text-decoration:none;>
+            {{ title }}
+          </router-link>
         </v-list-item-title>
-        <v-list-item-subtitle>링크박스 내용</v-list-item-subtitle>
+        <v-list-item-subtitle>{{ desc }}</v-list-item-subtitle>
       </v-list-item-content>
-
     </v-list-item>
 
     <v-card-actions class="justify-end pt-0">
+
       <v-btn icon @click="Commentmodal=true">💬</v-btn>
         <Commentmodal v-model="Commentmodal"/>
-      <v-btn icon>📂</v-btn>
+
+        <Complete v-model="Complete"/>
+
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
 import Commentmodal from '../components/Commentmodal.vue'
+import Complete from '../components/Complete.vue'
 
   export default {
     name: "Linkbox",
     components: {
       Commentmodal,
+      Complete,
     },
+    props: ['title', 'desc', 'boxid'],
     data () {
       return {
         Commentmodal: false,
+        Complete: false,
       }
     }
   }
