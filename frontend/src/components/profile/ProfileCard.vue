@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="400" height="500">
+  <v-card class="mx-auto rounded-xl" max-width="400" height="500">
     <v-container>
     <!-- 프로필 이미지 표시, 에러날 경우 디폴트 이미지 표시 -->
     <v-img
@@ -27,30 +27,49 @@
       <v-row class="subheading font-weight-regular justify-center">
         {{ userItem.email }}
       </v-row>
-      <v-row class="font-weight-regular justify-center" v-if="userItem.introduce">
+    </v-card-text>
+
+    <v-card-text>
+      <v-row class="text-body-1 font-weight-regular justify-center" v-if="userItem.introduce">
         {{ userItem.introduce }}
       </v-row>
-      <v-row v-else class="font-weight-regular justify-center">
+      <v-row v-else class="text-body-1 font-weight-regular justify-center">
         자기소개가 아직 없습니다.
       </v-row>
     </v-card-text>
-    
-    <div v-if="userInfo.email === userItem.email">
-      <v-btn text @click="editProfile">
-        edit
-      </v-btn>
-    </div>
+
+    <v-card-actions class="justify-center">
+      <div v-if="userInfo.email === userItem.email">
+        <v-btn text @click="clickEdit">
+          edit
+        </v-btn>
+      </div>
+    </v-card-actions>
+
     </v-container>
   </v-card>
 </template>
 
 <script>
+import { userInfo } from '@/api/member'
+
 export default {
-  props: ['userItem', 'userInfo'],
+  props: ['userEmail', 'userInfo'],
+  data: () => ({
+    userItem: '',
+  }),
+  created() {
+    userInfo(this.userEmail,
+    (res) => {
+      if (res.data.msg === 'success') {
+        this.userItem = res.data.object.userInfo
+      } else {console.log(res.data.msg)}
+    }, (err) => console.log(err))
+  },
   methods: {
-    editProfile() {
-      this.$emit('edit-profile', this.userItem)
-    },
+    clickEdit() {
+      this.$emit('click-edit')
+    }
   }
 }
 </script>

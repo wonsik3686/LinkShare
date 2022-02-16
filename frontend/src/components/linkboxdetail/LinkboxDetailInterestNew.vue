@@ -1,16 +1,25 @@
 <template>
-<v-container>
-  <v-combobox
-    v-model="select"
-    :items="items"
-    label="관심있는 분야를 선택해주세요"
-    clearable
-    multiple
-    chips
-  >
-  </v-combobox>
+  <v-container>
+    <v-row>
+      <v-combobox
+        v-model="select"
+        :items="items"
+        label="관심있는 분야를 선택해주세요"
+        clearable
+        multiple
+        chips
+      >
+      </v-combobox>
 
-  <v-btn @click="onSubmit">save</v-btn>
+      <v-btn
+        @click="onSubmit"
+        text
+        color="blue"
+        height="auto"
+      >
+        add
+      </v-btn>
+    </v-row>
   </v-container>
 </template>
 

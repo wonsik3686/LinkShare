@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-card class="mx-auto">
-      <v-card-title>Create a Linkbox</v-card-title>
+    <v-card class="mx-auto rounded-xl">
+      <v-card-title class="blue--text">Create a Linkbox</v-card-title>
       <v-card-text>
         <v-text-field
           label="제목"
@@ -27,11 +27,8 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn plain @click="onSubmit">
-          create
-        </v-btn>
-        <v-btn icon>
-          <v-icon large>mdi-plus</v-icon>
+        <v-btn rounded block color="blue" class="white--text" @click="onSubmit">
+          <span class="mx-3">create</span>
         </v-btn>
       </v-card-actions>
     </v-card>

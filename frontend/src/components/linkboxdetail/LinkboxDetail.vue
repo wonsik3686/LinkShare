@@ -11,14 +11,13 @@
           {{ linkbox.desc }}
         </div>
       </v-card-text>
-      <v-card-text>
-        <v-chip class="ma-1 px-4"
-          v-for="interest in linkbox.interests" :key="interest"
-        >
-          <strong>{{ interest }}</strong>
-        </v-chip>
-      </v-card-text>
-      <v-card-actions>
+
+      <linkboxDetail :linkbox="linkbox"/>
+
+      <v-card-actions class="justify-end">
+        <v-btn icon color="grey" @click="clickEdit">
+          <v-icon medium>mdi-pencil</v-icon>
+        </v-btn>
         <v-btn icon color="grey" @click="clickDelete">
           <v-icon medium>mdi-delete</v-icon>
         </v-btn>
@@ -28,12 +27,20 @@
 </template>
 
 <script>
+import linkboxDetail from './LinkboxDetailInterest.vue'
+
 export default {
+  components: {
+    linkboxDetail,
+  },
   props: ['linkbox'],
   methods: {
     clickDelete() {
       this.$emit('click-delete')
-    }
+    },
+    clickEdit() {
+      this.$emit('click-edit')
+    },
   }
 }
 </script>

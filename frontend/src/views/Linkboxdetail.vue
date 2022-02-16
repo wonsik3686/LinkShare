@@ -5,8 +5,16 @@
       <v-icon x-large>mdi-arrow-left</v-icon>
     </v-btn>
 
-    <linkboxDetail :linkbox="linkbox" @click-delete="clickDelete"/>
-    <linkboxDetailEdit :linkbox="linkbox" @done-edit="doneEdit"/>
+    <linkboxDetail
+      v-if="!editing"
+      :linkbox="linkbox"
+      @click-delete="clickDelete" 
+      @click-edit="clickEdit"
+    />
+    <linkboxDetailEdit
+      v-else :linkbox="linkbox"
+      @done-edit="doneEdit"
+    />
 
     <v-container>
 
@@ -18,11 +26,12 @@
       <v-container>
         <router-view></router-view>
       </v-container>
-
-      <iconLike v-if="linkbox !== '' && user !== ''"
-        :user="user" :linkbox="this.linkbox"/>
-      <iconScrap v-if="linkbox !== '' && user !== ''"
-        :user="user" :linkbox="this.linkbox"/>
+      <v-row justify="center">
+        <iconLike v-if="linkbox !== '' && user !== ''"
+          :user="user" :linkbox="this.linkbox"/>
+        <iconScrap v-if="linkbox !== '' && user !== ''"
+          :user="user" :linkbox="this.linkbox"/>
+      </v-row>
 
       <commentList/>
       
@@ -55,6 +64,7 @@ export default {
     boxid: null,
     user: '',
     editedLinkbox: null,
+    editing: false,
   }),
   created() {
     this.boxid = this.$route.params.boxid
@@ -80,6 +90,9 @@ export default {
         } else { console.log(res.data.msg) }
       }, (err) => console.log(err))
     },
+    clickEdit() {
+      this.editing = true
+    },
     doneEdit(boxdata) {
       boxdata.boxid = this.boxid
       console.log(boxdata)
@@ -88,6 +101,7 @@ export default {
         if (res.data.msg === 'success') {
           console.log('success updateLinkbox')
           this.linkboxInfo()
+          this.editing = false
         } else { console.log(res.data.msg) }
       }, (err) => console.log(err))
     },
