@@ -93,7 +93,6 @@
       <v-container>
         <snsLogin/>
       </v-container>
-
       <br>
       <v-card-actions class="justify-center">
         <v-btn text @click.stop="show=false">Close</v-btn>
@@ -110,14 +109,13 @@ extend('email', email)
 extend('confirmed', confirmed)
 extend('min', min)
 import snsLogin from "@/components/snsLogin/snsLogin"
-
-
+import axios from 'axios'
 
 export default {
   components: {
     ValidationProvider,
     ValidationObserver,
-    snsLogin
+    snsLogin,
   },
   props: {
     value: Boolean
@@ -143,7 +141,27 @@ export default {
   },
   methods: {
     signup () {
+      // 전송할 데이터 확인
+      console.log(this.params.user)
       this.loading = true
+
+      axios({
+        method: 'post',
+        // baseURL: process.env.VUE_APP_SERVER_URL,
+        baseURL: 'http://3.38.246.117',
+        url: 'user/signup',
+        headers: {'Content-Type': 'application/json' },
+        data: JSON.stringify(this.params.user),
+      })
+        .then((res) => {
+          console.log(res.data)
+          alert('회원가입성공')
+          this.show = false
+        })
+        .catch((err) => {
+          alert('회원가입실패')
+          console.log(err)
+        })
       setTimeout(() => {
         this.formReset()
         this.loading = false
@@ -151,7 +169,7 @@ export default {
     },
     formReset () {
       this.$refs.form.reset()
-      this.params = { user: { name: '', email: '', password: ''}}
+      this.params = { user: { nickname: '', email: '', password: ''}}
       this.v = ''
     }
   },
