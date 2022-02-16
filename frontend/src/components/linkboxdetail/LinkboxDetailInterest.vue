@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <LinkboxDetailInterestNew @add-interest="addInterest"/>
     <v-chip
       class="ma-1 px-4"
       v-for="interest in filteredInterests"
@@ -10,36 +9,39 @@
     >
       <strong>{{ interest }}</strong>
     </v-chip>
+    
+    <LinkboxDetailInterestNew @add-interest="addInterest"/>
   </v-container>
 </template>
 
 <script>
 import LinkboxDetailInterestNew from './LinkboxDetailInterestNew.vue'
-import { createUserInterest, getUserInterest, deleteUserInterest } from '@/api/member'
-import { mapState } from 'vuex'
+import { addLinkboxInterest, getInterestList, deleteLinkboxInterest } from '@/api/linkbox'
 
 export default {
   components: {
     LinkboxDetailInterestNew,
   },
+  props: ['linkbox'],
   data: () => ({
-    userid: null,
+    boxid: null,
     interests: [],
     toRemove: [],
   }),
   created() {
-    this.userid = this.userInfo.id
+    this.boxid = this.$route.params.boxid
+  },
+  mounted() {
     this.interestList()
   },
   computed: {
-    ...mapState('memberStore', ['userInfo', 'userItem']),
     filteredInterests () {
       return this.interests
-    }
+    },
   },
   methods: {
     remove (interest) {
-      deleteUserInterest(this.userInfo.id, interest,
+      deleteLinkboxInterest(this.boxid, interest,
       (res) => {
         if (res.data.msg === 'success') {
           this.interestList()
@@ -47,9 +49,9 @@ export default {
       }, (err) => console.log(err))
     },
     addInterest(selected) {
-      const interestdata = { uid: this.userInfo.id, interests: selected}
+      const interestdata = { boxid: this.linkbox.id, interests: selected}
       console.log(interestdata)
-      createUserInterest(interestdata,
+      addLinkboxInterest(interestdata,
       (res) => {
         if (res.data.msg === 'success') {
           this.interestList()
@@ -57,7 +59,7 @@ export default {
       }, (err) => console.log(err))
     },
     interestList() {
-      getUserInterest(this.userItem.id, { uid: this.userItem.id },
+      getInterestList(this.boxid,
       (res) => {
         if (res.data.msg === 'success') {
           this.interests = res.data.object

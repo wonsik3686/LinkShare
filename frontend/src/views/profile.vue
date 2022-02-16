@@ -1,11 +1,12 @@
 <template>
   <v-container>
     <profileCard
-      :userItem="userItem"
+      v-if="!editing"
+      :userEmail="userEmail"
       :userInfo="this.userInfo"
-      @edit-profile="editProfile"
+      @click-edit="clickEdit"
     />
-    <profileCardEdit :userInfo="userInfo" @done-edit="doneEdit"/>
+    <profileCardEdit v-else :userInfo="userInfo" @done-edit="doneEdit" @cancel-edit="cancelEdit"/>
 
     <br>
 
@@ -35,15 +36,18 @@ export default {
     profileCardEdit,
   },
   data: () => ({
+    userEmail: null,
+    editing: false,
     editedProfile: null,
   }),
   created() {
-    const userItem = this.$route.params.email;
-    this.fetchUserInfo(userItem)
+    const userEmail = this.$route.params.email;
+    this.fetchUserInfo(userEmail)
+    this.userEmail = userEmail
   },
   computed: {
     ...mapState('memberStore', ['userInfo', 'userItem']),
-    ...mapGetters('memberStore', ['userInfo'])
+    ...mapGetters('memberStore', ['userInfo']),
   },
   watch: {
     watch() {
@@ -56,8 +60,8 @@ export default {
       e.target.src = '../assets/logo.svg'
       console.log(e.target.src)
     },
-    editProfile(profileData) {
-      this.editedProfile = profileData
+    clickEdit() {
+      this.editing = true
     },
     doneEdit(profileData) {
       // if (!this.editedProfile) {
@@ -66,15 +70,17 @@ export default {
       if (profileData) {
         this.editedProfile = profileData
         this.updateUserProfile(this.editedProfile)
+        
+        this.editing = false
       } else {
         this.editedProfile = null
       }
       this.editedProfile = null
     },
+    cancelEdit() {
+      this.editing = false
+    }
   },
 }
 </script>
 
-<style>
-
-</style>

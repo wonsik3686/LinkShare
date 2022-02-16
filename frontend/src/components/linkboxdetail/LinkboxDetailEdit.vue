@@ -21,7 +21,7 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn @click="doneEdit">save</v-btn>
+        <v-btn block color="blue white--text" @click="doneEdit">save</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>

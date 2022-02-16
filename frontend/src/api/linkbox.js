@@ -15,6 +15,10 @@ function listPopLinkbox (res, err) {
   api.get('linkbox/popular').then(res).catch(err)
 }
 
+function listInterestLinkbox (userid, res, err) {
+  api.get(`linkbox/interests/${userid}`).then(res).catch(err)
+}
+
 function listUserLinkbox (userid, res, err) {
   api.get(`linkbox/list/${userid}`).then(res).catch(err)
 }
@@ -40,8 +44,8 @@ function getInterestList (boxid, res, err) {
   api.get(`linkbox/interest/${boxid}`).then(res).catch(err)
 }
 
-function deleteLinkboxInterest (boxdata, res, err) {
-  api.delete('linkbox/interest', JSON.stringify(boxdata)).then(res).catch(err)
+function deleteLinkboxInterest (boxid, interest, res, err) {
+  api.delete(`linkbox/interest?boxid=${boxid}&interest=${interest}`).then(res).catch(err)
 }
 
 // 링크박스 정보 불러오기
@@ -129,7 +133,7 @@ export {
   createLinkbox, listLinkbox, listUserLinkbox, viewLinkbox,
   updateLinkbox, deleteLinkbox,
 
-  listPopLinkbox,
+  listPopLinkbox, listInterestLinkbox, 
 
   addLinkboxInterest, deleteLinkboxInterest, getInterestList,
   getLinkboxInfo, getLinkboxInterest,

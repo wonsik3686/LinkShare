@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="400" height="500">
+  <v-card class="mx-auto rounded-xl" max-width="400" height="500">
     <v-container>
 
     <v-card-title class="text-h4 display-2 font-weight-bold justify-center">
@@ -30,7 +30,10 @@
         @input="onInputIntroduce"
         rows="4"
       />
-      <v-btn text color="green" class="text-center" @click="doneEdit">save</v-btn>
+      <v-row class="justify-center pt-3">
+        <v-btn text color="green" @click="doneEdit">save</v-btn>
+        <v-btn text color="red" @click="cancelEdit">cancel</v-btn>
+      </v-row>
     </v-card-text>
     
 
@@ -64,6 +67,10 @@ export default {
     },
     doneEdit() {
       this.$emit('done-edit', this.editedProfile)
+    },
+    cancelEdit() {
+      this.$emit('cancel-edit')
+      this.editedProfile = null
     },
   }
 }

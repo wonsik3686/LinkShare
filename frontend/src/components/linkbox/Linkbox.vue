@@ -1,7 +1,7 @@
 <template>
   <v-hover v-slot="{ hover }">
     <v-card
-      class="mx-auto"
+      class="mx-auto rounded-xl"
       max-width="400"
       :elevation="hover ? 12 : 2"
       :class="{ 'on-hover': hover }"
@@ -26,7 +26,7 @@
         </router-link>
       </v-card-text>
       
-      <v-card-text>
+      <v-card-text class="pb-0 pt-1">
         <v-chip class="ma-1 px-4"
           v-for="interest in linkbox.interests" :key="interest"
         >
@@ -36,14 +36,14 @@
       
       <v-card-actions>
         <v-list-item class="grow">
-          <v-list-item-avatar color="grey darken-3">
+          <!-- <v-list-item-avatar color="grey darken-3">
             <v-img
               class="elevation-6"
               :alt="user.nickname"
               :src="user.imagePath"
             >
             </v-img>
-          </v-list-item-avatar>
+          </v-list-item-avatar> -->
           
           <v-list-item-content>
             <router-link
