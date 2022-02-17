@@ -206,6 +206,7 @@ public class LinkboxController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+
     @GetMapping("/interest/{boxid}")
     @ApiOperation(value = "링크박스 관심사 조회하기")
     public Object searchLinkboxInterest(@PathVariable("boxid") @ApiParam(value =
@@ -266,11 +267,21 @@ public class LinkboxController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     
+//    @DeleteMapping("/like")
+//    @ApiOperation(value = "링크 박스 좋아요 삭제하기")
+//    public Object deleteLikeboxLike(@RequestBody @Valid LikesCreateRequest request) {
+//        final BasicResponse result = new BasicResponse();
+//        boxLikeService.deleteLinkboxLike(request);
+//        result.msg = "success";
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
+
     @DeleteMapping("/like")
     @ApiOperation(value = "링크 박스 좋아요 삭제하기")
-    public Object deleteLikeboxLike(@RequestBody @Valid LikesCreateRequest request) {
+    public Object deleteLikeboxLike(@RequestParam("uid") @ApiParam(value = "uid") Integer uid,
+                                    @RequestParam("boxid") @ApiParam(value = "좋아요 삭제할 boxid") Integer boxid) {
         final BasicResponse result = new BasicResponse();
-        boxLikeService.deleteLinkboxLike(request);
+        boxLikeService.deleteLinkboxLike(uid, boxid);
         result.msg = "success";
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
