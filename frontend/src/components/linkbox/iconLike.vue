@@ -16,22 +16,28 @@
 
 <script>
 import { likeLinkbox, unlikeLinkbox, getUserLike } from '@/api/linkbox'
+import { mapState } from 'vuex'
 
 export default {
   props: ['linkbox', 'user'],
   data: () => ({
+    myId: null,
     isliked: false,
     userboxdata: null,
   }),
-  created() {
-    this.userboxdata = { uid: this.user.id, boxid: this.linkbox.id }
-    getUserLike(this.linkbox.id, this.user.id,
+  async created() {
+    this.myId = this.userInfo.id
+    this.userboxdata = { uid: this.myId, boxid: this.linkbox.id }
+
+    await getUserLike(this.linkbox.id, this.myId,
     (res) => {
       if (res.data.msg === 'success') {
-        console.log('success getUserLike')
         this.isliked = res.data.object
       } else { console.log(res.data.msg) }
     }, (err) => console.log(err))
+  },
+  computed: {
+    ...mapState('memberStore', ['userInfo'])
   },
   methods: {
     clickLike() {
@@ -44,15 +50,17 @@ export default {
         } else { console.log(res.data.msg) }
       }, (err) => console.log(err))
     },
-    clickUnlike() {
-      unlikeLinkbox(this.userboxdata,
+    async clickUnlike() {
+      console.log(this.myId)
+      console.log(this.linkbox.id)
+      await unlikeLinkbox(this.myId, this.linkbox.id,
       (res) => {
         if (res.data.msg === 'success') {
           console.log('success unlikeLinkbox')
           this.linkbox.likeCount -= 1
           this.isliked = false
         } else { console.log(res.data.msg) }
-      }, (err) => console.log(err))
+      }, (err) => console.log(err.response))
     }
   }
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link class="text-decoration-none" :to="`/linkbox/${linkbox.id}`">
+    <router-link class="text-decoration-none" :to="`/${user.email}/linkbox/${linkbox.id}`">
       <v-icon class="mr-1">
         mdi-comment
       </v-icon>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  props: ['linkbox'],
+  props: ['linkbox', 'user'],
 }
 </script>
 

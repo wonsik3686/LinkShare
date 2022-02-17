@@ -5,11 +5,12 @@
       elevate-on-scroll
     >
       <v-toolbar-title
-        class="text-h5 blue--text"
+        class="text-h5 font-weight-medium blue--text"
         style="cursor: pointer"
         @click="$router.push('/')"
       >
-      LinkShare
+        <v-icon color="#2C97DE">mdi-folder</v-icon>
+        LinkShare
       </v-toolbar-title>
 
       <v-spacer class="text-center">

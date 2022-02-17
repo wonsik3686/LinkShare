@@ -27,11 +27,16 @@ public class BoxLikeService {
         }
     }
 
-    public void deleteLinkboxLike(LikesCreateRequest request) {
-    	Likes like = likesRepository.findByBoxidAndUid(request.getBoxid(),request.getUid());
-    	if(like != null) {
-    		likesRepository.delete(like);
-    	}
+//    public void deleteLinkboxLike(LikesCreateRequest request) {
+//    	Likes like = likesRepository.findByBoxidAndUid(request.getBoxid(),request.getUid());
+//    	if(like != null) {
+//    		likesRepository.delete(like);
+//    	}
+//    }
+
+    public void deleteLinkboxLike(Integer uid, Integer boxid) {
+        Likes like = likesRepository.findByBoxidAndUid(boxid, uid);
+        likesRepository.delete(like);
     }
 
     public List<User> searchLikeByBoxid(Integer boxid) {

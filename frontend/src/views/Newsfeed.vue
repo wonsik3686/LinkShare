@@ -1,34 +1,38 @@
 <template>
   <v-container>
-    <br>
-    <br>
+    <br><br>
 
-    <h1>인기 박스</h1>
-    <!-- https://iancoding.tistory.com/214 -->
-    
-    <br>
-    <br>
-
-    <v-row>
-      <v-col v-for="box in boxlist" v-bind:key="box.id" cols='6'>
+    <h1 style="color:#2C97DE;">인기 박스</h1>
+    <v-row class="pt-3">
+      <v-col v-for="box in boxlistPop" v-bind:key="box.id"
+        cols='col-xs-1 col-sm-6 col-md-4 col-lg-4 col-xl-3'
+      >
         <Linkbox :boxid="box.id"/>
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-btn block plain class="font-weight-bold" v-on:click="toplinkbox">
-        더보기 +
-      </v-btn>
+    <br><br>
+
+    <h1 style="color:#2C97DE;">추천 박스</h1>
+    <v-row class="pt-3">
+      <v-col v-for="box in boxlistInt" v-bind:key="box.id"
+        cols='col-xs-1 col-sm-6 col-md-4 col-lg-4 col-xl-3'
+      >
+        <Linkbox :boxid="box.id"/>
+      </v-col>
     </v-row>
+    
+    <br><br>
 
-    <br>
-    <br>
-
-    <h1>💡 님을 위한 추천 박스</h1>
-        <p class="mt-3 text-center">관심사를 선택해주세요</p>
-        <v-row justify="center">
-          <button class="font-weight-bold" @click="Interest=true">관심사 선택하기 ></button>
-        </v-row>
+    <v-row class="justify-center">
+      <router-link :to="'/toplinkbox'" class="text-decoration-none">
+        <v-btn block text x-large class="font-weight-bold">
+          더보기 +
+        </v-btn>
+      </router-link>
+    </v-row>
+    
+    <br><br>
 
   </v-container>
 
@@ -37,7 +41,8 @@
 
 <script>
 import Linkbox from '@/components/linkbox/Linkbox'
-import { listPopLinkbox } from '../api/linkbox.js'
+import { listPopLinkbox, listInterestLinkbox } from '@/api/linkbox'
+import { mapState } from 'vuex'
 
 export default {
   name: "Newsfeed",
@@ -47,26 +52,32 @@ export default {
   data () {
     return {
       Interest: false,
-      boxlist: null,
+      boxlistPop: null,
+      boxlistInt: null,
     }
   },
-  methods: {
-    toplinkbox() {
-      this.$router.replace('toplinkbox')
-    }
+  computed: {
+    ...mapState('memberStore', ['userInfo'])
   },
   created() {
+    const userid = this.userInfo.id
+
     listPopLinkbox(
-      (response) => {
-        if (response.data.msg === "success") {
-          console.log(response.data)
-          this.boxlist = response.data.object
-        } else {
-          console.log(response.data.msg)
-        }
-      }, (err) => console.log(err)
-    )
-  }
+      (res) => {
+        if (res.data.msg === "success") {
+          console.log(res.data)
+          this.boxlistPop = res.data.object
+        } else { console.log(res.data.msg) }
+      }, (err) => console.log(err)),
+
+    listInterestLinkbox(userid,
+      (res) => {
+        if (res.data.msg === "success") {
+          console.log(res.data)
+          this.boxlistInt = res.data.object
+        } else { console.log(res.data.msg) }
+      }, (err) => console.log(err))
+  },
 }
 
 </script>

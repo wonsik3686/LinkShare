@@ -24,7 +24,9 @@ const memberStore = {
     },
     editUserInfo (state, payload) {
       console.log(payload)
-      state.userInfo.imagePath = payload.imagePath
+      if (payload.imagePath) {
+        state.userInfo.imagePath = payload.imagePath
+      }
       state.userInfo.nickname = payload.nickname
       state.userInfo.email = payload.email
       state.userInfo.introduce = payload.introduce

@@ -1,13 +1,13 @@
 <template>
   <v-list>
     <v-list-item>
-      <v-list-item-avatar>
-        <img :src="this.userInfo.imagePath" alt="">
-      </v-list-item-avatar>
+      <v-list-item-icon>
+        <v-icon size="50">mdi-account-circle</v-icon>
+      </v-list-item-icon>
 
       <v-list-item-content>
-        <v-textarea outlined v-model="myComment.content" rows="3"/>
-        <v-btn @click="onSubmit" block>post</v-btn>
+        <v-textarea outlined v-model="myComment.content" rows="3" auto-grow/>
+        <v-btn color="#2C97DE" class="white--text" @click="onSubmit">comment</v-btn>
       </v-list-item-content>
     </v-list-item>
   </v-list>

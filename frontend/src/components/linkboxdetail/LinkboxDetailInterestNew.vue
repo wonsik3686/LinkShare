@@ -1,16 +1,28 @@
 <template>
-<v-container>
-  <v-combobox
-    v-model="select"
-    :items="items"
-    label="관심있는 분야를 선택해주세요"
-    clearable
-    multiple
-    chips
-  >
-  </v-combobox>
+  <v-container>
+    <v-row class="pt-7">
+      <v-icon class="pr-5">mdi-tag</v-icon>
 
-  <v-btn @click="onSubmit">save</v-btn>
+      <v-combobox
+        v-model="select"
+        :items="items"
+        label="관련 태그를 추가해주세요"
+        clearable
+        multiple
+        chips
+      >
+      </v-combobox>
+      
+      <v-btn
+        @click="onSubmit"
+        large
+        plain
+        color="blue"
+        height="auto"
+      >
+        add
+      </v-btn>
+    </v-row>
   </v-container>
 </template>
 

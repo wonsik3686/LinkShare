@@ -5,11 +5,12 @@
       elevate-on-scroll
     >
       <v-toolbar-title
-        class="text-h5 blue--text"
+        class="text-h5 font-weight-medium blue--text"
         style="cursor: pointer"
         @click="$router.push('/').catch(()=>{})"
       >
-      LinkShare
+        <v-icon color="#2C97DE">mdi-folder</v-icon>
+        LinkShare
       </v-toolbar-title>
 
       <v-spacer class="text-center">
@@ -17,26 +18,14 @@
       </v-spacer>
 
       <v-toolbar-items>
-        <v-btn plain class="text-subtitle-1 font-weight-bold" @click="makelogout">Logout</v-btn>
-
-        <v-btn plain class="text-subtitle-1 font-weight-bold" :to="`/profile/${userInfo.email}`">{{userInfo.nickname}}</v-btn>
+        <v-btn icon>
+          <profileImage :size="35" :imagePath="userInfo.imagePath" :nickname="userInfo.nickname"/>
+        </v-btn>
+        <v-btn plain class="text-subtitle-1 font-weight-bold px-1" :to="`/${userInfo.email}`">{{userInfo.nickname}}</v-btn>
+        
+        <v-btn plain class="text-subtitle-1 font-weight-bold" @click="makelogout">로그아웃</v-btn>
       </v-toolbar-items>
       
-      <!-- 프로필 이미지 -->
-      <v-btn icon class="mr-2">
-        <v-avatar>
-          <img
-            v-if="userInfo.imagePath"
-            :src="userInfo.imagePath"
-            @error="replaceByDefault"
-          />
-          <!-- imagePath가 비어있는 경우 표시 -->
-          <img
-            v-else
-            :src="require('../../assets/logo.svg')"
-          />
-        </v-avatar>
-      </v-btn>
 
     </v-app-bar>
   </div>
@@ -44,9 +33,13 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import profileImage from '@/components/common/ProfileImage'
 
 export default {
   name: "NavBar",
+  components: {
+    profileImage,
+  },
   computed: {
     ...mapState('memberStore', ['userInfo']),
   },
@@ -56,7 +49,7 @@ export default {
       e.target.src = '../assets/logo.svg'
       console.log(e.target.src)
     },
-    makelogout() {
+    async makelogout() {
       this.userSignout()
     }
   }

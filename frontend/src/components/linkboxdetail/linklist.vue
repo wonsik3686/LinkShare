@@ -1,17 +1,19 @@
 <template>
   <v-container>
-
-    <v-row dense class="justify-start">
-      <v-col cols="5" class="mx-3">
+    <v-row dense class="justify-center">
+      <v-col cols="10">
         <!-- 새 링크 생성 -->
         <!-- 해당 컴포넌트에서 done-create가 emit되면 doneCreate 함수 실행 -->
-        <linkCardNew @done-create="doneCreate"/>
+        <linkCardNew @done-create="doneCreate" v-if="this.boxUser.id===this.userInfo.id"/>
       </v-col>
-      <v-col cols="5" class="mx-3"
+    </v-row>
+    <v-row>
+      <v-col
+        cols='col-xs-1 col-sm-6 col-md-6 col-lg-4 col-xl-4'
         v-for="link in filteredData" :key="link.id" 
         :class="{completed: link.completed, editing: link == editedLink}"
       >
-        <linkCard :link="link" @edit-card="editCard"/>
+        <linkCard :link="link" :userInfo="userInfo" :boxUser="boxUser" @edit-card="editCard"/>
         <linkCardEdit :link="link" @done-edit="doneEdit" @done-delete="doneDelete"/>
       </v-col>
     </v-row>
@@ -21,9 +23,11 @@
 <script>
 // import LinkPrevue from 'link-prevue'
 import { listLink, createLink, updateLink, deleteLink } from "@/api/linkbox"
+import { userInfo } from '@/api/member'
 import linkCard from './linkcard.vue'
 import linkCardNew from './linkcardNew.vue'
 import linkCardEdit from './linkcardEdit.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -36,8 +40,11 @@ export default {
     editedLink: null,
     newLink: null,
     tempId: 0,
+    boxid: '',
+    boxUser: '',
   }),
   computed: {
+    ...mapState('memberStore', ['userInfo']),
     filteredData() {
       return this.links
     }
@@ -45,6 +52,9 @@ export default {
   created() {
     const boxid = this.$route.params.boxid
     this.boxid = boxid
+    this.myInfo = this.userInfo
+    const userEmail = this.$route.params.email
+    this.getUserEmail(userEmail)
 
     listLink(boxid,
       (response) => {
@@ -54,6 +64,15 @@ export default {
       }, (err) => console.log(err))
     },
   methods: {
+    getUserEmail(email) {
+      userInfo(email,
+      (res) => {
+        if (res.data.msg === 'success') {
+          this.boxUser = res.data.object.userInfo
+          console.log(this.boxUser)
+        } else { console.log(res.data.msg) }
+      }, (err) => console.log(err))
+    },
     doneCreate(cardData){
       // emit된 데이터 할당 후 boxid와 임시 id 부여
       // (id가 v-for의 key로 들어가있기 때문)
