@@ -1,41 +1,53 @@
 <template>
-  <v-container>
-    <v-card class="mx-auto">
-      <v-card-title>Create a Linkbox</v-card-title>
-      <v-card-text>
-        <v-text-field
-          label="제목"
-          placeholder="새 링크박스 제목"
-          outlined
-          v-model="boxdata.title"
-        />
-        <v-textarea
-          label="메모"
-          placeholder="새 링크박스 메모"
-          outlined
-          v-model="boxdata.desc"
-        />
-        <v-combobox
-            v-model="boxdata.interests"
-            :items="items"
-            label="관심있는 분야를 선택해주세요"
-            clearable
-            multiple
-            chips
-          >
-        </v-combobox>
-      </v-card-text>
+  <v-card outlined class="cardColor">
+    <v-card-text>
+      <v-row class="align-center">
 
-      <v-card-actions>
-        <v-btn plain @click="onSubmit">
-          create
-        </v-btn>
-        <v-btn icon>
-          <v-icon large>mdi-plus</v-icon>
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-container>
+        <v-col class="align-center">
+          <v-row class="justify-center">
+            <v-btn fab dark @click="cancelCreate" x-large color="#EF4B4C" class="white--text">
+              <v-icon>mdi-restart</v-icon>
+            </v-btn>
+          </v-row>
+        </v-col>
+
+        <v-col cols="7">
+          <v-text-field
+            label="Title"
+            rounded
+            outlined
+            v-model="boxdata.title"
+          />
+          <v-textarea
+            label="Description"
+            rounded
+            outlined
+            v-model="boxdata.desc"
+            rows="4"
+            auto-grow
+          />
+          <v-combobox
+              v-model="boxdata.interests"
+              :items="items"
+              label="관련 있는 태그를 추가해주세요"
+              clearable
+              multiple
+              chips
+            >
+          </v-combobox>
+        </v-col>
+
+        <v-col class="align-center">
+          <v-row class="justify-center">
+            <v-btn fab dark x-large color="#2C97DE" class="white--text" @click="onSubmit">
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </v-row>
+        </v-col>
+
+      </v-row>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -57,6 +69,9 @@ export default {
       this.$emit('create-linkbox', this.boxdata)
       this.boxdata = { uid: '', title: '', desc: '', interests: [] }
     },
+    cancelCreate() {
+      this.boxdata = { uid: '', title: '', desc: '', interests: [] }
+    }
   },
   created() {
     console.log(this.userInfo)
@@ -65,5 +80,7 @@ export default {
 </script>
 
 <style>
-
+.cardColor {
+  border-color: white !important;
+}
 </style>

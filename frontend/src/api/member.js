@@ -28,16 +28,16 @@ async function getUserUid (userid, res, err) {
 }
 
 // 관심사 관련 코드
-function createUserInterest (interestdata, res, err) {
-  api.post('user/interest', JSON.stringify(interestdata)).then(res).catch(err)
+async function createUserInterest (interestdata, res, err) {
+  await api.post('user/interest', JSON.stringify(interestdata)).then(res).catch(err)
 }
 
-function getUserInterest (userid, userdata, res, err) {
-  api.get(`user/interest/${userid}`, JSON.stringify(userdata)).then(res).catch(err)
+async function getUserInterest (userid, userdata, res, err) {
+  await api.get(`user/interest/${userid}`, JSON.stringify(userdata)).then(res).catch(err)
 }
 
-function deleteUserInterest (userid, interest, res, err) {
-  api.delete(`user/interest?uid=${userid}&interest=${interest}`).then(res).catch(err)
+async function deleteUserInterest (userid, interest, res, err) {
+  await api.delete(`user/interest?uid=${userid}&interest=${interest}`).then(res).catch(err)
 }
 
 export { signup, signIn, userProfile, updateProfile, userInfo, getUserUid }

@@ -81,7 +81,7 @@
             :disabled="invalid || loading"
             :loading="loading"
             block
-            color="blue"
+            color="#2C97DE"
             class="white--text"
             @click="signup"
           >
@@ -90,9 +90,9 @@
         </ValidationObserver>   
       </v-card-text>
 
-      <v-container>
+      <!-- <v-container>
         <snsLogin/>
-      </v-container>
+      </v-container> -->
       <br>
       <v-card-actions class="justify-center">
         <v-btn text @click.stop="show=false">Close</v-btn>
@@ -108,14 +108,14 @@ extend('required', required)
 extend('email', email)
 extend('confirmed', confirmed)
 extend('min', min)
-import snsLogin from "@/components/snsLogin/snsLogin"
+// import snsLogin from "@/components/snsLogin/snsLogin"
 import axios from 'axios'
 
 export default {
   components: {
     ValidationProvider,
     ValidationObserver,
-    snsLogin,
+    // snsLogin,
   },
   props: {
     value: Boolean
@@ -148,7 +148,7 @@ export default {
       axios({
         method: 'post',
         // baseURL: process.env.VUE_APP_SERVER_URL,
-        baseURL: 'http://3.38.246.117',
+        baseURL: 'http://3.38.246.117:8082',
         url: 'user/signup',
         headers: {'Content-Type': 'application/json' },
         data: JSON.stringify(this.params.user),

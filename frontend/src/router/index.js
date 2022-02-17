@@ -19,6 +19,11 @@ const routes = [
     component: Newsfeed
   },
   {
+    path: '/toplinkbox',
+    name: 'Toplinkbox',
+    component: Toplinkbox
+  },
+  {
     path: '/',
     redirect: () => {
       if (store.getters['memberStore/loggedIn']) {
@@ -29,7 +34,7 @@ const routes = [
     }
   },
   {
-    path: '/profile/:email',
+    path: '/:email',
     component: () => import('../views/profile.vue'),
     children: [
       {
@@ -56,7 +61,7 @@ const routes = [
     ]
   },
   {
-    path: '/linkbox/:boxid',
+    path: '/:email/linkbox/:boxid',
     component: () => import('../views/Linkboxdetail.vue'),
     children: [
       {
@@ -71,11 +76,6 @@ const routes = [
       },
     ]
   },
-  {
-    path: '/toplinkbox',
-    name: 'Toplinkbox',
-    component: Toplinkbox
-  }
 ]
 
 const router = new VueRouter({

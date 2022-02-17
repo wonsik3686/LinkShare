@@ -1,30 +1,34 @@
 <template>
-  <v-container>
-    <v-card>
+  <v-card>
+    <v-container>
       <v-card-title>
-        <div class="text-h3 font-weight-bold">
+        <div class="text-h3 font-weight-bold pt-5">
           편집
         </div>
       </v-card-title>
-      <v-card-text>
+
+      <v-card-text class="pt-2">
         <v-text-field
           label="제목"
           :value="linkbox.title"
           @input="onInputTitle"
         />
         <v-textarea
-          rows="4"
           label="개요"
           :value="linkbox.desc"
           @input="onInputDesc"
+          rows="4"
+          auto-grow
         />
       </v-card-text>
 
-      <v-card-actions>
-        <v-btn @click="doneEdit">save</v-btn>
+      <v-card-actions class="justify-center">
+        <v-btn plain x-large color="#2C97DE" @click="doneEdit">save</v-btn>
+        <v-btn plain x-large color="#353C45" @click="cancelEdit">cancel</v-btn>
       </v-card-actions>
-    </v-card>
-  </v-container>
+
+    </v-container>
+  </v-card>
 </template>
 
 <script>
@@ -53,7 +57,11 @@ export default {
     },
     doneEdit() {
       this.$emit('done-edit', this.editedLinkbox)
-    },    
+    },
+    cancelEdit() {
+      this.editedLinkbox = { boxid:'', title: '', desc: '' },
+      this.$emit('cancel-edit')
+    },  
   }
 }
 </script>

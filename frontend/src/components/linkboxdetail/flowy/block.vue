@@ -1,26 +1,29 @@
 <template>
-  <v-card outlined class="px-md py-sm my-1 items-center justify-between">
-    <div class="row items-center">
-      <div class="col">
-        <v-card-title>{{ title }}</v-card-title>
-      </div>
+  <v-card outlined class="px-md py-sm my-1 items-center justify-between" color="#EEEEEE">
+    <v-row class="items-center">
+      <v-col>
+        <v-card-title>{{ title|truncate(18, '...') }}</v-card-title>
+      </v-col>
       
-      <div class="col-auto">
+      <v-col cols="auto">
         <flowy-drag-handle>
           <v-btn icon>
             <v-icon>mdi-drag</v-icon>
           </v-btn>
         </flowy-drag-handle>
-      </div>
+      </v-col>
+    </v-row>
 
-      <v-card-text>{{ description }}</v-card-text>
-    </div>
+    <v-card-text class="py-0">{{ description|truncate(30, '...') }}</v-card-text>
+    <v-card-text>
+      <a :href="url" class="text-decoration-none">바로가기</a>
+    </v-card-text>
   </v-card>
 </template>
 
 <script>
 export default {
-  props: [ 'title', 'description' ],
+  props: [ 'title', 'description', 'url' ],
 }
 </script>
 

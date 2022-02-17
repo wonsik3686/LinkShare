@@ -12,4 +12,15 @@ function apiInstance() {
   return instance
 }
 
-export { apiInstance };
+// 이미지 전송용
+function apiInstanceMulti() {
+  const instance = axios.create({
+    baseURL: API_BASE_URL,
+    headers: {
+      'Content-type': 'multipart/form-data',
+    },
+  });
+  return instance
+}
+
+export { apiInstance, apiInstanceMulti };
