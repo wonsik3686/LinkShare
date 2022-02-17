@@ -43,18 +43,18 @@
             />
           </ValidationProvider>
 
-          <v-card-actions>
+          <!-- <v-card-actions>
             <v-spacer></v-spacer>
             <router-link to="#" class="body-2 text-decoration-none">
               비밀번호 찾기
             </router-link>
-          </v-card-actions>
+          </v-card-actions> -->
 
           <v-btn
             :disabled="invalid || loading"
             :loading="loading"
             block
-            color="blue"
+            color="#2C97DE"
             class="white--text"
             @click="onSubmit"
             @keyup.enter="onSubmit"
@@ -64,9 +64,9 @@
         </ValidationObserver>   
       </v-card-text>
 
-      <v-container>
+      <!-- <v-container>
         <snsLogin/>
-      </v-container>
+      </v-container> -->
 
       <br>
       <v-card-actions class="justify-center">
@@ -82,7 +82,7 @@ import { required, email, min } from 'vee-validate/dist/rules'
 extend('required', required)
 extend('email', email)
 extend('min', min)
-import snsLogin from "@/components/snsLogin/snsLogin"
+// import snsLogin from "@/components/snsLogin/snsLogin"
 import { mapActions, mapState } from 'vuex'
 
 const memberStore = "memberStore"
@@ -91,7 +91,7 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
-    snsLogin
+    // snsLogin
   },
   props: {
     value: Boolean
@@ -128,7 +128,7 @@ export default {
         this.$router.replace('/').catch(()=>{})
         // replace : URL 방문기록을 리셋
         // push : URL 방문기록에 추가
-        alert('로그인 성공')
+        alert('로그인에 성공했습니다.')
         this.show = false
         this.loading = false
         this.formReset()

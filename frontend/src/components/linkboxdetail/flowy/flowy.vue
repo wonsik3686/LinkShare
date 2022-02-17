@@ -1,10 +1,6 @@
 <template>
   <v-container>
-    <!-- <v-btn>{{ changeButtonText }}</v-btn> -->
-    <v-btn @click="createUserLinktree">생성</v-btn>
-    <v-btn @click="updateUserLinktree">편집</v-btn>
-    <v-btn @click="deleteUserLinktree">삭제</v-btn>
-
+    <br>
     <div>
       <div class="row my-3">
         <flowy-new-block
@@ -17,12 +13,14 @@
             <Block
               :title="block.preview.title"
               :description="block.preview.description"
+              :url="block.preview.url"
             />
           </template>
           <template v-slot:node="{}">
             <Node
               :title="block.node.title"
               :description="block.node.description"
+              :url="block.node.url"
               :custom-attribute="block.node.canBeAdded"
             />
           </template>
@@ -30,6 +28,14 @@
       </div>
 
       <v-divider></v-divider>
+      
+      <br>
+
+      <v-row class="justify-center">
+        <v-btn @click="createUserLinktree" text x-large color="#2C97DE">save</v-btn>
+        <v-btn @click="updateUserLinktree" text x-large color="#353C45">update</v-btn>
+        <v-btn @click="deleteUserLinktree" text x-large color="#EF4B4C">reset</v-btn>
+      </v-row>
 
       <div class="row my-5">
         <div class="flex-grow overflow-auto" style="width:100%">
@@ -100,10 +106,11 @@ export default {
         
           this.links.forEach((value) => {
             // block, node array에 값 추가
-            var linkBlock = {preview: { title: '', description: '' },
-                             node: {title:'', description:''}}
+            var linkBlock = {preview: { title: '', description: '', url: '' },
+                             node: { title:'', description:'', url: '' }}
             linkBlock.preview.title = linkBlock.node.title = value.title
             linkBlock.preview.description = linkBlock.node.description = value.desc
+            linkBlock.preview.url = linkBlock.node.url = value.url
             this.blocks.push(linkBlock)
           })
         } else { console.log(response.data.msg) }
@@ -124,12 +131,12 @@ export default {
         } else { console.log(res.data.msg) }
       }, (err) => console.log(err))
     },
-    listUserLinktree(boxid) {
-      listLinktree(boxid,
+    async listUserLinktree(boxid) {
+      await listLinktree(boxid,
       (res) => {
         if (res.data.msg === 'success') {
           console.log('success listLinktree')
-          console.log(res.data)
+          // console.log(res.data)
           console.log(JSON.parse(res.data.object['0'].treeContents))
           this.nodes = JSON.parse(res.data.object['0'].treeContents).nodes
         } else { console.log(res.data.msg) }
@@ -141,7 +148,8 @@ export default {
       (res) => {
         if (res.data.msg === 'success') {
           console.log('success updateLinktree')
-          console.log(res.data)
+          // console.log(res.data)
+          this.listUserLinktree(this.boxid)
         } else { console.log(res.data.msg) }
       }, (err) => console.log(err))
     },
@@ -150,7 +158,8 @@ export default {
       (res) => {
         if (res.data.msg === 'success') {
           console.log('success deleteLinktree')
-          console.log(res.data)
+          // console.log(res.data)
+          this.listUserLinktree(this.boxid)
         } else { console.log(res.data.msg) }
       }, (err) => console.log(err))
     },
@@ -256,7 +265,7 @@ export default {
   computed: {
     changeButtonText() {
       return this.editingTree ? 'edit' : 'save';
-    }
+    },
   },
 }
 </script>

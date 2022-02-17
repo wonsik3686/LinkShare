@@ -10,19 +10,20 @@
       <strong>{{ interest }}</strong>
     </v-chip>
     
-    <LinkboxDetailInterestNew @add-interest="addInterest"/>
+    <LinkboxDetailInterestNew @add-interest="addInterest" v-if="this.userInfo.id===this.boxUser.id"/>
   </v-container>
 </template>
 
 <script>
 import LinkboxDetailInterestNew from './LinkboxDetailInterestNew.vue'
 import { addLinkboxInterest, getInterestList, deleteLinkboxInterest } from '@/api/linkbox'
+import { mapState } from 'vuex'
 
 export default {
   components: {
     LinkboxDetailInterestNew,
   },
-  props: ['linkbox'],
+  props: ['linkbox', 'boxUser'],
   data: () => ({
     boxid: null,
     interests: [],
@@ -35,13 +36,18 @@ export default {
     this.interestList()
   },
   computed: {
+    ...mapState('memberStore', ['userInfo']),
     filteredInterests () {
       return this.interests
     },
   },
   methods: {
-    remove (interest) {
-      deleteLinkboxInterest(this.boxid, interest,
+    async remove (interest) {
+      if (this.userInfo.nickname !== this.boxUser.nickname){
+        alert('관심사는 작성자만 삭제할 수 있습니다.')
+        return;
+      }
+      await deleteLinkboxInterest(this.boxid, interest,
       (res) => {
         if (res.data.msg === 'success') {
           this.interestList()

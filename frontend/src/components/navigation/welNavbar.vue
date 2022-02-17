@@ -9,7 +9,7 @@
         style="cursor: pointer"
         @click="$router.push('/')"
       >
-        <v-icon color="blue">mdi-folder</v-icon>
+        <v-icon color="#2C97DE">mdi-folder</v-icon>
         LinkShare
       </v-toolbar-title>
 

@@ -30,7 +30,6 @@ export default {
     getUserScrap(this.userInfo.id, this.linkbox.id,
     (res) => {
       if (res.data.msg === 'success') {
-        console.log('success getUserScrap')
         this.isScrap = res.data.object
       } else { console.log(res.data.msg) }
     }, (err) => console.log(err))
@@ -50,7 +49,7 @@ export default {
       }, (err) => console.log(err))
     },
     clickUnscrap() {
-      deleteScrap(this.user.id, this.linkbox.id,
+      deleteScrap(this.userboxdata.uid, this.linkbox.id,
       (res) => {
         if (res.data.msg === 'success') {
           console.log('success deleteScrap')

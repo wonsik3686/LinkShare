@@ -1,24 +1,25 @@
 <template>
   <v-hover v-slot="{ hover }">
     <v-card
-      class="mx-auto rounded-xl"
+      outlined
+      class="mx-auto"
       max-width="400"
       :elevation="hover ? 12 : 2"
       :class="{ 'on-hover': hover }"
     >
       <v-card-title>
         <router-link
-          :to="`/linkbox/${boxid}`"
+          :to="`/${user.email}/linkbox/${boxid}`"
           style=color:black;text-decoration:none;
-          class="text-h4 font-weight-bold"
+          class="text-h4 font-weight-bold text-truncate"
         >
-          {{ linkbox.title | truncate(9, '...')  }}
+          {{ linkbox.title }}
         </router-link>
       </v-card-title>
       
       <v-card-text>
         <router-link
-          :to="`/linkbox/${boxid}`"
+          :to="`/${user.email}/linkbox/${boxid}`"
           style=color:grey;text-decoration:none;
           class="text-body-1 font-weight-medium"
         >
@@ -47,11 +48,11 @@
           
           <v-list-item-content>
             <router-link
-              :to="`/profile/${user.email}`"
+              :to="`/${user.email}`"
               style=color:grey;text-decoration:none;
               class="text-h5 font-weight-bold"
             >
-              <v-list-item-title>{{ user.nickname }}</v-list-item-title>
+              <v-list-item-title>by {{ user.nickname }}</v-list-item-title>
             </router-link>
           </v-list-item-content>
 
@@ -72,6 +73,7 @@
             <iconComment
               v-if="linkbox !== ''"
             :linkbox="linkbox"
+            :user="user"
             />
           </v-row>
         </v-list-item>
@@ -81,7 +83,7 @@
 </template>
 
 <script>
-import { getLinkboxInfo, searchLinkBoxCommentByBoxId, viewLinkbox } from '@/api/linkbox'
+import { getLinkboxInfo, searchLinkBoxCommentByBoxId } from '@/api/linkbox'
 import { getUserUid } from '@/api/member'
 import iconLike from './iconLike.vue'
 import iconScrap from './iconScrap.vue'
@@ -94,7 +96,7 @@ export default {
     iconComment,
   },
   data: () => ({
-    linkbox: '',
+    linkbox: { title: '', desc: '' },
     comments: '',
     user: '',
   }),
@@ -103,25 +105,25 @@ export default {
     getLinkboxInfo(this.boxid,
     (res) => {
       if (res.data.msg === "success") {
-        console.log('success getLinkboxInfo')
+        // console.log('success getLinkboxInfo')
         this.linkbox = res.data.object
-        console.log(this.linkbox)
+        // console.log(this.linkbox)
         this.getUserInfo(this.linkbox.uid)
       }
     }),
     searchLinkBoxCommentByBoxId(this.boxid,
     (res) => {
       if (res.data.msg === "success") {
-        console.log('success searchLinkBoxCommentByBoxId')
+        // console.log('success searchLinkBoxCommentByBoxId')
         this.comments = res.data.object
       }
-    }),
-    viewLinkbox(this.boxid,
-    (res) => {
-      if (res.data.msg === 'success') {
-        console.log('조회수 1 증가')
-      } else { console.log(res.data.msg) }
-    }, (err) => console.log(err))
+    })
+  //   viewLinkbox(this.boxid,
+  //   (res) => {
+  //     if (res.data.msg === 'success') {
+  //       console.log('조회수 1 증가')
+  //     } else { console.log(res.data.msg) }
+  //   }, (err) => console.log(err))
   },
   methods: {
     getUserInfo(userid) {
@@ -129,7 +131,7 @@ export default {
       (res) => {
         if (res.data.msg === 'success') {
           this.user = res.data.object.userInfo
-          console.log(this.user)
+          // console.log(this.user)
         } else { console.log(res.data.msg) }
       }, (err) => console.log(err))
       }

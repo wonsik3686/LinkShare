@@ -6,8 +6,8 @@
       </v-list-item-icon>
 
       <v-list-item-content>
-        <v-textarea outlined v-model="myComment.content" rows="3"/>
-        <v-btn block color="blue" class="white--text" @click="onSubmit">post</v-btn>
+        <v-textarea outlined v-model="myComment.content" rows="3" auto-grow/>
+        <v-btn color="#2C97DE" class="white--text" @click="onSubmit">comment</v-btn>
       </v-list-item-content>
     </v-list-item>
   </v-list>
