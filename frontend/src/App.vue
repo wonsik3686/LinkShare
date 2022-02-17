@@ -7,12 +7,14 @@
       <router-view/>
     </v-main>
     
+    <Footer/>
   </v-app>
 </template>
 
 <script>
 import Navbar from '@/components/navigation/Navbar'
 import welNavbar from '@/components/navigation/welNavbar'
+import Footer from '@/components/navigation/Footer'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
@@ -20,6 +22,7 @@ export default {
   components: {
     Navbar,
     welNavbar,
+    Footer
   },
 
   data: () => ({

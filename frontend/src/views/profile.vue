@@ -12,9 +12,9 @@
 
     <v-container>
       <v-tabs fixed-tabs>
-        <v-tab :to="`/profile/${userItem.email}/interest`">관심사</v-tab>
-        <v-tab :to="`/profile/${userItem.email}/linkbox`">링크박스</v-tab>
-        <v-tab :to="`/profile/${userItem.email}/scrap`">스크랩</v-tab>
+        <v-tab :to="`/${userItem.email}/interest`">관심사</v-tab>
+        <v-tab :to="`/${userItem.email}/linkbox`">링크박스</v-tab>
+        <v-tab :to="`/${userItem.email}/scrap`">스크랩</v-tab>
       </v-tabs>
 
       <v-container>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import store from '../store/index.js'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import profileCard from '@/components/profile/ProfileCard'
 import profileCardEdit from '@/components/profile/ProfileCardEdit'
@@ -40,6 +41,11 @@ export default {
     editing: false,
     editedProfile: null,
   }),
+  beforeCreate () {
+    if (!store.getters['memberStore/loggedIn']) {
+      this.$router.push({ name: 'welcome' })
+    }
+  },
   created() {
     const userEmail = this.$route.params.email;
     this.fetchUserInfo(userEmail)

@@ -1,15 +1,22 @@
 <template>
   <v-container>
-    <v-row v-if="userInfo.email === userItem.email">
-      <linkboxNew :userInfo="userInfo" @create-linkbox="createNewLinkbox"/>
+    <v-row dense class="justify-center">
+      <v-col cols="10">
+        <linkboxNew
+          v-if="userInfo.email === userItem.email"
+          :userInfo="userInfo" @create-linkbox="createNewLinkbox"
+        />
+      </v-col>
     </v-row>
 
     <v-row>
-      <v-col v-for="linkbox in linkboxList" :key="linkbox.id" cols="4">
+      <v-col
+        cols='col-xs-1 col-sm-6 col-md-6 col-lg-4 col-xl-4'
+        v-for="linkbox in linkboxList" :key="linkbox.id"
+      >
         <linkbox :boxid="linkbox.id"/>
       </v-col>
     </v-row>
-    
   </v-container>
 </template>
 

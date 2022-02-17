@@ -4,14 +4,14 @@
       <v-col cols="4">
         <p class="text-h1">Linkshare</p>
         <p class="text-h2">
-          Save content<br>
-          from<br>
-          anywhere
+          Save<br>
+          Share<br>
+          Make a Link
         </p>
       </v-col>
       
       <v-col cols="6">
-        <h1 class="text-center">Image Placeholder</h1>
+        <!-- <h1 class="text-center">Image Placeholder</h1> -->
       </v-col>
     </v-row>
   </v-container>

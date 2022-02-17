@@ -1,30 +1,38 @@
 <template>
   <v-container>
-    <br>
-    <br>
+    <br><br>
 
-    <h1>인기 박스</h1>
-    <v-row>
-      <v-col v-for="box in boxlistPop" v-bind:key="box.id" cols='6'>
+    <h1 style="color:#2C97DE;">인기 박스</h1>
+    <v-row class="pt-3">
+      <v-col v-for="box in boxlistPop" v-bind:key="box.id"
+        cols='col-xs-1 col-sm-6 col-md-4 col-lg-4 col-xl-3'
+      >
         <Linkbox :boxid="box.id"/>
       </v-col>
     </v-row>
 
-    <!-- <v-row>
-      <v-btn block plain class="font-weight-bold" v-on:click="toplinkbox">
-        더보기 +
-      </v-btn>
-    </v-row> -->
+    <br><br>
 
-    <br>
-    <br>
-
-    <h1>추천 박스</h1>
-    <v-row>
-      <v-col v-for="box in boxlistInt" v-bind:key="box.id" cols='6'>
+    <h1 style="color:#2C97DE;">추천 박스</h1>
+    <v-row class="pt-3">
+      <v-col v-for="box in boxlistInt" v-bind:key="box.id"
+        cols='col-xs-1 col-sm-6 col-md-4 col-lg-4 col-xl-3'
+      >
         <Linkbox :boxid="box.id"/>
       </v-col>
     </v-row>
+    
+    <br><br>
+
+    <v-row class="justify-center">
+      <router-link :to="'/toplinkbox'" class="text-decoration-none">
+        <v-btn block text x-large class="font-weight-bold">
+          더보기 +
+        </v-btn>
+      </router-link>
+    </v-row>
+    
+    <br><br>
 
   </v-container>
 
@@ -69,11 +77,6 @@ export default {
           this.boxlistInt = res.data.object
         } else { console.log(res.data.msg) }
       }, (err) => console.log(err))
-  },
-  methods: {
-    toplinkbox() {
-      this.$router.replace('toplinkbox')
-    }
   },
 }
 

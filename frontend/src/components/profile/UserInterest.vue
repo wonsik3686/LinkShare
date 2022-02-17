@@ -1,16 +1,22 @@
 <template>
-  <v-container>
-    <userInterestNew @add-interest="addInterest"/>
-    <v-chip
-      class="ma-1 px-4"
-      v-for="interest in filteredInterests"
-      :key="interest"
-      @click:close="remove(interest)"
-      close
-    >
-      <strong>{{ interest }}</strong>
-    </v-chip>
-  </v-container>
+  <v-row class="justify-center">
+    <v-col cols="9">
+      <userInterestNew @add-interest="addInterest"/>
+      <v-chip
+        class="ma-1 px-4"
+        v-for="interest in filteredInterests"
+        :key="interest"
+        @click:close="remove(interest)"
+        close
+      >
+        <strong>{{ interest }}</strong>
+      </v-chip>
+    </v-col>
+
+    <v-col cols="12"></v-col>
+    <v-col cols="12"></v-col>
+    
+  </v-row>
 </template>
 
 <script>

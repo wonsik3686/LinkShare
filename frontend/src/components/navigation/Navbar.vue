@@ -9,7 +9,7 @@
         style="cursor: pointer"
         @click="$router.push('/').catch(()=>{})"
       >
-        <v-icon color="blue">mdi-folder</v-icon>
+        <v-icon color="#2C97DE">mdi-folder</v-icon>
         LinkShare
       </v-toolbar-title>
 
@@ -21,7 +21,7 @@
         <v-btn icon>
           <profileImage :size="35" :imagePath="userInfo.imagePath" :nickname="userInfo.nickname"/>
         </v-btn>
-        <v-btn plain class="text-subtitle-1 font-weight-bold px-1" :to="`/profile/${userInfo.email}`">{{userInfo.nickname}}</v-btn>
+        <v-btn plain class="text-subtitle-1 font-weight-bold px-1" :to="`/${userInfo.email}`">{{userInfo.nickname}}</v-btn>
         
         <v-btn plain class="text-subtitle-1 font-weight-bold" @click="makelogout">로그아웃</v-btn>
       </v-toolbar-items>
@@ -49,7 +49,7 @@ export default {
       e.target.src = '../assets/logo.svg'
       console.log(e.target.src)
     },
-    makelogout() {
+    async makelogout() {
       this.userSignout()
     }
   }

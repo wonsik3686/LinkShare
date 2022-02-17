@@ -12,25 +12,29 @@
     <v-divider></v-divider>
 
     <!-- create-comment가 emit으로 전달되면 createCommen 함수 실행 -->
-    <commentInput
-      @create-comment="createComment"
-      :boxid="boxid"
-    />
-    <commentEdit
-      v-if="this.editing"
-      :commentToEdit="commentToEdit"
-      @done-edit="doneEdit"
-    />
-
-    <v-list>
-      <div v-for="comment in filteredComments" :key="comment.id">
-        <commentItem
-          :comment="comment"
-          @comment-edit="commentEdit"
-          @comment-delete="commentDelete"
+    <v-row class="justify-center">
+      <v-col cols="9">
+        <commentInput
+          @create-comment="createComment"
+          :boxid="boxid"
         />
-      </div>
-    </v-list>
+        <commentEdit
+          v-if="this.editing"
+          :commentToEdit="commentToEdit"
+          @done-edit="doneEdit"
+        />
+
+        <v-list>
+          <div v-for="comment in filteredComments" :key="comment.id">
+            <commentItem
+              :comment="comment"
+              @comment-edit="commentEdit"
+              @comment-delete="commentDelete"
+            />
+          </div>
+        </v-list>
+      </v-col>  
+    </v-row>
   </v-container>
 </template>
 
