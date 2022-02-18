@@ -37,7 +37,7 @@
 
   - ACL
 
-    [제목 없음](https://www.notion.so/137845ca0bbd4440bb9f67151e5b0bea)
+    버킷 소유자(AWS 계정)정식 ID: 6c8d52813f8ff4f62db168116b4e37b929e94a4cdb9e8aaaa6eaa203cfc42429 객체:	나열, 쓰기	 | 버킷ACL: 읽기, 쓰기
 
 ### 시스템 구성
 
