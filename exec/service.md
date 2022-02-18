@@ -73,9 +73,6 @@
 
     - IAM 설정 ( 사용자 설정 ) - KEY 저장해놓아야함
 
-  ![Untitled](%E1%84%8B%E1%85%AC%E1%84%87%E1%85%AE%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%200eded/Untitled%202.png)
-
-  ![Untitled](%E1%84%8B%E1%85%AC%E1%84%87%E1%85%AE%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%200eded/Untitled%203.png)
 
   [S3 버킷 CORS 설정 (json)](https://www.enteroa.com/2020/11/05/s3-%EB%B2%84%ED%82%B7-cors-%EC%84%A4%EC%A0%95-json/)
 
