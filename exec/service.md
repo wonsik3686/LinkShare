@@ -9,7 +9,6 @@
 
 - 젠킨스 세팅 후 회원가입 및 로그인
 
-![Untitled](%E1%84%8B%E1%85%AC%E1%84%87%E1%85%AE%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%200eded/Untitled.png)
 
 ### AWS
 
@@ -37,7 +36,6 @@
 
   - mysql 사용
 
-    ![Untitled](%E1%84%8B%E1%85%AC%E1%84%87%E1%85%AE%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%200eded/Untitled%201.png)
 
   [Docker, Nginx 활용 AWS EC2에 프로젝트 배포하기 + Docker Compose (1)](https://blog.naver.com/PostView.naver?blogId=jinwoo6612&logNo=222532202235&categoryNo=0&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postView)
 
