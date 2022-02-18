@@ -12,7 +12,7 @@
     <!-- imagePath가 비어있는 경우 표시 -->
     <v-img
       v-else
-      :src="require('@/assets/linkshare.png')"
+      :src="require('@/assets/logo.png')"
       class="my-3"
       contain
       height="150"
